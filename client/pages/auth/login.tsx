@@ -59,25 +59,55 @@ const login = () => {
                 </Link>
               </div>
             </div>
-            <button className="w-full bg-black text-white text-center py-2 rounded-md">Sign in</button>
+            <button className="w-full bg-black text-white text-center py-2 rounded-md">
+              Sign in
+            </button>
             <div>
-                <button className="w-full border text-black text-center py-2 rounded-md -mt-10 relative">
-                    <Image
-                        src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
-                        alt="Google Logo"
-                        width={25}
-                        height={25}
-                        className="inline-block -translate-y-0.5 mr-1"
-                    />
-                    Sign in with Google</button>
+              <button className="w-full border text-black text-center py-2 rounded-md -mt-10 relative">
+                <Image
+                  src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
+                  alt="Google Logo"
+                  width={25}
+                  height={25}
+                  className="inline-block -translate-y-0.5 mr-1"
+                />
+                Sign in with Google
+              </button>
             </div>
           </form>
           <div className="mt-8 text-center">
             <span className="text-gray-500">Don&apos;t have an account?</span>
-            <span className="ml-2"><Link href="/auth/register">Sign up for free</Link></span>
+            <span className="ml-2">
+              <Link href="/auth/register">Sign up for free</Link>
+            </span>
           </div>
         </div>
-        <div className="bg-red-300 col-span-2 h-screen">asdas</div>
+        <div className="col-span-2 h-screen relative">
+          {/* middle */}
+          <div className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <div className="text-white text-center franger">
+              <h1 className="text-5xl">Welcome back!</h1>
+              <p className="text-2xl">
+                We&apos;re so excited to see you again!
+              </p>
+            </div>
+          </div>
+          {/* bottom right */}
+            <div className="z-20 absolute bottom-0 right-0 mb-4 mr-4">
+                <div className="text-white text-center text-sm">
+                    <span>Wallpaper by </span>
+                    <Link href="https://www.artstation.com/mingjai" className="underline text-blue-400" target={'_blank'} rel="nofollow">mingjai</Link>
+                </div>
+            </div>
+          <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
+
+          <Image
+            src="https://images.alphacoders.com/129/1296180.jpg"
+            alt="Login Image"
+            fill
+            style={{ objectFit: "cover" }}
+          />
+        </div>
       </div>
     </div>
   );
