@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const login = () => {
+const Login = () => {
   return (
     <div className="h-screen">
       <div className="grid grid-cols-3 w-full h-full gap-4">
@@ -113,4 +113,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;

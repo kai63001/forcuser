@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 
-const register = () => {
+const Register = () => {
   return (
     <div className="h-screen">
       <div className="grid grid-cols-3 w-full h-full gap-4">
@@ -85,8 +85,7 @@ const register = () => {
             <div className="text-white text-center franger">
               <h1 className="text-5xl">Welcome!</h1>
               <p className="text-2xl">
-                Create your productivity free account and start using our
-                services
+                Create account for your productivity free and start using our services
               </p>
             </div>
           </div>
@@ -118,4 +117,4 @@ const register = () => {
   );
 };
 
-export default register;
+export default Register;
