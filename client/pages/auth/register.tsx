@@ -43,7 +43,7 @@ const Register = () => {
               </div>
               <div className="pt-4">
                 <label htmlFor="ConfirmPassword" className="mb-2">
-                  Confirm Password
+                  Confirm password
                 </label>
                 <input
                   id="ConfirmPassword"
@@ -52,7 +52,7 @@ const Register = () => {
                   autoComplete="current-password"
                   required
                   className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Confirm Password"
+                  placeholder="Confirm password"
                 />
               </div>
             </div>
@@ -94,20 +94,20 @@ const Register = () => {
             <div className="text-white text-center text-sm">
               <span>Wallpaper by </span>
               <Link
-                href="https://www.artstation.com/voyagerillustration"
+                href="https://www.deviantart.com/vsales"
                 className="underline text-blue-400"
                 target={"_blank"}
                 rel="nofollow"
               >
-                voyagerillustration
+                vsales
               </Link>
             </div>
           </div>
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
           <Image
-            src="https://cdna.artstation.com/p/assets/images/images/055/928/208/4k/voyager-mellow-dreams-3-compilation.jpg?1668051560"
-            alt="Login Image"
+            src="https://images4.alphacoders.com/123/1235114.jpg"
+            alt="Register Image"
             fill
             style={{ objectFit: "cover" }}
           />
