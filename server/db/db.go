@@ -14,7 +14,7 @@ import (
 const uri = "mongodb+srv://romeo:qw123456@focuser.ds21r.mongodb.net/?retryWrites=true&w=majority"
 
 // ClientDB is a pointer to a mongo.Client object
-var ClientDB *mongo.Client
+var ClientDB *mongo.Database
 
 // Mongodb returns a pointer to a mongo.Client object
 func Mongodb() *mongo.Client {
@@ -27,7 +27,7 @@ func Mongodb() *mongo.Client {
 	if err := client.Ping(context.TODO(), readpref.Primary()); err != nil {
 		panic(err)
 	}
-	ClientDB = client
+	ClientDB = client.Database("focuser")
 	fmt.Println("Successfully connected and pinged.")
 	return client
 }
