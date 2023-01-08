@@ -1,16 +1,42 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect } from "react";
+
+interface RegisterInterface {
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
 
 const Register = () => {
+  // env api
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const register = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const data: RegisterInterface = {
+      email: e.currentTarget.email.value,
+      password: e.currentTarget.password.value,
+      confirmPassword: e.currentTarget.confirmPassword.value,
+    };
+
+    if(data.password !== data.confirmPassword){
+      console.log("Passwords do not match");
+      return;
+    }
+
+    console.log(data);
+  }
+
   return (
     <div className="h-screen">
-      <div className="grid grid-cols-3 w-full h-full gap-4">
-        <div className="max-w-lg w-full m-auto order-2">
+      <div className="grid grid-cols-3 w-full h-full">
+        <div className="max-w-lg w-full m-auto order-2 p-10 md:p-3 col-span-3 md:col-span-1">
           <h1 className="franger text-3xl">Register</h1>
           <p className="text-gray-600">
             Please enter your register details below
           </p>
-          <form className="mt-12 space-y-6">
+          <form className="mt-12 space-y-6" onSubmit={register}>
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px">
               <div>
@@ -42,12 +68,12 @@ const Register = () => {
                 />
               </div>
               <div className="pt-4">
-                <label htmlFor="ConfirmPassword" className="mb-2">
+                <label htmlFor="confirmPassword" className="mb-2">
                   Confirm password
                 </label>
                 <input
-                  id="ConfirmPassword"
-                  name="ConfirmPassword"
+                  id="confirmPassword"
+                  name="confirmPassword"
                   type="password"
                   autoComplete="current-password"
                   required
@@ -56,8 +82,8 @@ const Register = () => {
                 />
               </div>
             </div>
-            <button className="w-full bg-black text-white text-center py-2 rounded-md">
-                Create account
+            <button type="submit" className="w-full bg-black text-white text-center py-2 rounded-md">
+              Create account
             </button>
             <div>
               <button className="w-full border text-black text-center py-2 rounded-md -mt-10 relative">
@@ -79,13 +105,14 @@ const Register = () => {
             </span>
           </div>
         </div>
-        <div className="col-span-2 h-screen relative ">
+        <div className="h-screen relative col-span-0 md:col-span-2 hidden md:block">
           {/* middle */}
           <div className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="text-white text-center franger">
               <h1 className="text-5xl">Welcome!</h1>
               <p className="text-2xl">
-                Create account for your productivity free and start using our services
+                Create account for your productivity free and start using our
+                services
               </p>
             </div>
           </div>
