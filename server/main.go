@@ -1,6 +1,7 @@
 package main
 
 import (
+	"focuser.com/server/db"
 	"focuser.com/server/router"
 	"github.com/gofiber/fiber/v2"
 )
@@ -8,6 +9,10 @@ import (
 func main() {
 	app := fiber.New()
 
+	db.Mongodb()
+	//insert one user
+
+	// db.ClientDB.Database("focuser").Collection("users").InsertOne()
 	app.Get("/", router.IndexRouter)
 
 	app.Listen(":3001")
