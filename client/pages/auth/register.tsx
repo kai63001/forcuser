@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect } from "react";
+import Input from "../../components/libs/Input";
 
 interface RegisterInterface {
   email: string;
@@ -19,14 +20,12 @@ const Register = () => {
       password: e.currentTarget.password.value,
       confirmPassword: e.currentTarget.confirmPassword.value,
     };
-
-    if(data.password !== data.confirmPassword){
+    console.log(data);
+    if (data.password !== data.confirmPassword) {
       console.log("Passwords do not match");
       return;
     }
-
-    console.log(data);
-  }
+  };
 
   return (
     <div className="h-screen">
@@ -40,49 +39,41 @@ const Register = () => {
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px">
               <div>
-                <label htmlFor="email-address" className="mb-2">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
+                <Input
                   name="email"
-                  type="email"
+                  label="Email address"
+                  required={true}
                   autoComplete="email"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  type="email"
                   placeholder="Email address"
                 />
               </div>
               <div className="pt-4">
-                <label htmlFor="password" className="mb-2">
-                  Password
-                </label>
-                <input
-                  id="password"
+                <Input
                   name="password"
+                  label="Password"
+                  required={true}
+                  autoComplete="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
               <div className="pt-4">
-                <label htmlFor="confirmPassword" className="mb-2">
-                  Confirm password
-                </label>
-                <input
-                  id="confirmPassword"
+              <Input
                   name="confirmPassword"
+                  label="Confirm password"
+                  required={true}
+                  autoComplete="password"
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Confirm password"
                 />
+                
               </div>
             </div>
-            <button type="submit" className="w-full bg-black text-white text-center py-2 rounded-md">
+            <button
+              type="submit"
+              className="w-full bg-black text-white text-center py-2 rounded-md"
+            >
               Create account
             </button>
             <div>
