@@ -29,24 +29,31 @@ func AuthRouterRegister(c *fiber.Ctx) error {
 	if user.Password != user.ConfirmPassword {
 		return c.Status(503).JSON(bson.M{"status": "error", "error": "Password not match"})
 	}
-
 	//find email on db
 	finder := User{}
 	if err := db.ClientDB.Collection("users").FindOne(context.Background(), bson.M{"email": user.Email}).Decode(&finder); err != nil {
 		fmt.Println(err)
 	}
 	if finder != (User{}) {
-		return c.Status(503).JSON(bson.M{"status": "error", "error": "Email already exists"})
+		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email already exists"})
 	}
 
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte("mypassword"), bcrypt.DefaultCost)
+	//print user
+	fmt.Println(&user)
+	fmt.Println(user)
+
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
+	if err != nil {
+		fmt.Println(user)
+		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+	}
 	// print
-	// fmt.Println(string(hashedPassword), bcrypt.DefaultCost)
+	fmt.Println(string(hashedPassword), bcrypt.DefaultCost)
 
 	//insert user on db
 	_, _err := db.ClientDB.Collection("users").InsertOne(context.Background(), bson.M{"email": user.Email, "password": string(hashedPassword)})
 	if _err != nil {
-		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+		return c.Status(503).JSON(bson.M{"status": "error", "error": _err.Error()})
 	}
 
 	return c.Status(200).JSON(bson.M{"status": "success", "message": "User created successfully"})
