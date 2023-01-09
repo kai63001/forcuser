@@ -11,7 +11,7 @@ import { faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 const Input = (e: InputInterface) => {
-
+    
     const [showPassword, setShowPassword] = useState(false);
 
   return (
