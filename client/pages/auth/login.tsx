@@ -4,8 +4,8 @@ import Link from "next/link";
 const Login = () => {
   return (
     <div className="h-screen">
-      <div className="grid grid-cols-3 w-full h-full gap-4">
-        <div className="max-w-lg w-full m-auto">
+      <div className="grid grid-cols-3 w-full h-full">
+        <div className="max-w-lg w-full m-auto order-2 p-10 md:p-3 col-span-3 md:col-span-1">
           <h1 className="franger text-3xl">Login</h1>
           <p className="text-gray-600">Please enter your login details below</p>
           <form className="mt-12 space-y-6">
@@ -82,7 +82,7 @@ const Login = () => {
             </span>
           </div>
         </div>
-        <div className="col-span-2 h-screen relative">
+        <div className="h-screen relative col-span-0 md:col-span-2 hidden md:block">
           {/* middle */}
           <div className="z-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="text-white text-center franger">
