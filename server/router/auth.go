@@ -19,6 +19,9 @@ type User struct {
 	ConfirmPassword string `json:"confirmPassword"`
 }
 
+var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
+var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
+
 // AuthRouterRegister takes a pointer to a fiber.Ctx object and returns an error
 func AuthRouterRegister(c *fiber.Ctx) error {
 
@@ -63,9 +66,6 @@ func AuthRouterRegister(c *fiber.Ctx) error {
 
 func AuthRouteLogin(c *fiber.Ctx) error {
 
-	var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
-	var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
-
 	//get body json
 	var user User
 	if err := c.BodyParser(&user); err != nil {
@@ -90,26 +90,31 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email not exists or Password not match"})
 	}
 
-	//jwt create
+	//jwt create access token
+	tokenString, tokenStringRefresh, err := createToken(&finder)
+
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh})
+}
+
+func createToken(user *User) (string, string, error) {
 	claims := jwt.MapClaims{
 		"email": user.Email,
 		"iat":   time.Now().Add(10 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _err := token.SignedString(accestTokenSecret)
-	if _err != nil {
-		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
+	tokenString, err := token.SignedString(accestTokenSecret)
+	if err != nil {
+		return "", "", err
 	}
-	fmt.Println(tokenString)
 	//jwt create refresh token
 	claimsRefresh := jwt.MapClaims{
 		"iat": time.Now().Add(50 * time.Hour).Unix(),
 	}
 	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
-	tokenStringRefresh, _err := tokenRefresh.SignedString(refreshTokenSecret)
-	if _err != nil {
-		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
+	tokenStringRefresh, err := tokenRefresh.SignedString(refreshTokenSecret)
+	if err != nil {
+		return "", "", err
 	}
 
-	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh})
+	return tokenString, tokenStringRefresh, nil
 }

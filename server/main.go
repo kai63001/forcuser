@@ -2,6 +2,7 @@ package main
 
 import (
 	"focuser.com/server/db"
+	"focuser.com/server/middleware"
 	"focuser.com/server/router"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
@@ -14,9 +15,10 @@ func main() {
 	//insert one user
 
 	// db.ClientDB.Database("focuser").Collection("users").InsertOne()
-	app.Get("/", router.IndexRouter)
 	app.Post("/auth/register", router.AuthRouterRegister)
 	app.Post("/auth/login", router.AuthRouteLogin)
+	app.Use(middleware.AuthMiddleware)
+	app.Get("/", router.IndexRouter)
 
 	app.Listen(":3001")
 }
