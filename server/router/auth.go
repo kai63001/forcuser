@@ -19,6 +19,11 @@ type User struct {
 	ConfirmPassword string `json:"confirmPassword"`
 }
 
+type Token struct {
+	AccessToken string `json:"accessToken`
+	Refresh     string `json:"refresh`
+}
+
 var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
 var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
 
@@ -96,10 +101,75 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh})
 }
 
+func AuthRouterRefreshToken(c *fiber.Ctx) error {
+	//get body json
+	var tokenData Token
+	if err := c.BodyParser(&tokenData); err != nil {
+		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+	}
+
+	//check refresh token
+	token, err := jwt.Parse(tokenData.Refresh, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+		}
+		return refreshTokenSecret, nil
+	})
+	if err != nil {
+		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+	}
+
+	tokenString, tokenStringRefresh := "", ""
+
+	// check token
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		if time.Now().Unix() < int64(claims["exp"].(float64)) {
+			// Create new claims
+			//convert claims email to string
+
+			//parese jwt accessToken
+			accessToken, err := jwt.Parse(tokenData.AccessToken, func(token *jwt.Token) (interface{}, error) {
+				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+					return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
+				}
+				return accestTokenSecret, nil
+			})
+			if err != nil {
+				return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+			}
+
+			// check token
+			if claimsToken, ok := accessToken.Claims.(jwt.MapClaims); ok && accessToken.Valid {
+				email := claimsToken["email"].(string)
+				userNew := User{
+					Email: email,
+				}
+
+				tokenString, tokenStringRefresh, err = createToken(&userNew)
+			}
+
+			// claims to user
+
+			if err != nil {
+				return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+			}
+
+			fmt.Println(claims)
+		} else {
+			fmt.Println("Refresh token expired")
+		}
+	} else {
+		fmt.Println("Invalid token")
+	}
+
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "Generated new refresh token", "token": tokenString, "refreshToken": tokenStringRefresh})
+}
+
 func createToken(user *User) (string, string, error) {
 	claims := jwt.MapClaims{
 		"email": user.Email,
-		"iat":   time.Now().Add(10 * time.Hour).Unix(),
+		"iat":   time.Now().Unix(),
+		"exp":   time.Now().Add(time.Hour * 24).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(accestTokenSecret)
@@ -108,7 +178,8 @@ func createToken(user *User) (string, string, error) {
 	}
 	//jwt create refresh token
 	claimsRefresh := jwt.MapClaims{
-		"iat": time.Now().Add(50 * time.Hour).Unix(),
+		"iat": time.Now().Unix(),
+		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(),
 	}
 	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
 	tokenStringRefresh, err := tokenRefresh.SignedString(refreshTokenSecret)

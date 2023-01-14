@@ -17,6 +17,7 @@ func main() {
 	// db.ClientDB.Database("focuser").Collection("users").InsertOne()
 	app.Post("/auth/register", router.AuthRouterRegister)
 	app.Post("/auth/login", router.AuthRouteLogin)
+	app.Post("/auth/refreshToken", router.AuthRouterRefreshToken)
 	app.Use(middleware.AuthMiddleware)
 	app.Get("/", router.IndexRouter)
 
