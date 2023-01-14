@@ -63,7 +63,8 @@ func AuthRouterRegister(c *fiber.Ctx) error {
 
 func AuthRouteLogin(c *fiber.Ctx) error {
 
-	var secetKey = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
+	var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
+	var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
 
 	//get body json
 	var user User
@@ -95,7 +96,7 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 		"iat":   time.Now().Add(10 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, _err := token.SignedString(secetKey)
+	tokenString, _err := token.SignedString(accestTokenSecret)
 	if _err != nil {
 		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
 	}
@@ -105,7 +106,7 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 		"iat": time.Now().Add(50 * time.Hour).Unix(),
 	}
 	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
-	tokenStringRefresh, _err := tokenRefresh.SignedString(secetKey)
+	tokenStringRefresh, _err := tokenRefresh.SignedString(refreshTokenSecret)
 	if _err != nil {
 		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
 	}
