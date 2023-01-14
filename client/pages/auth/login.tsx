@@ -1,41 +1,43 @@
 import Image from "next/image";
 import Link from "next/link";
+import Input from "@/components/libs/Input"
+import { useState } from "react";
 
 const Login = () => {
+
+  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const [error, setError]: any = useState({});
+
+
   return (
     <div className="h-screen">
       <div className="grid grid-cols-3 w-full h-full">
-        <div className="max-w-lg w-full m-auto order-2 p-10 md:p-3 col-span-3 md:col-span-1">
+        <div className="max-w-lg w-full m-auto p-10 md:p-3 col-span-3 md:col-span-1">
           <h1 className="franger text-3xl">Login</h1>
           <p className="text-gray-600">Please enter your login details below</p>
           <form className="mt-12 space-y-6">
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px">
               <div>
-                <label htmlFor="email-address" className="mb-2">
-                  Email address
-                </label>
-                <input
-                  id="email-address"
+                <Input
                   name="email"
-                  type="email"
+                  label="Email address"
+                  error={error.email}
+                  required={true}
                   autoComplete="email"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                  type="email"
                   placeholder="Email address"
                 />
               </div>
               <div className="pt-4">
-                <label htmlFor="password" className="mb-2">
-                  Password
-                </label>
-                <input
-                  id="password"
+              <Input
                   name="password"
+                  label="Password"
+                  required={true}
+                  autoComplete="password"
+                  error={error.password}
                   type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                   placeholder="Password"
                 />
               </div>
