@@ -7,13 +7,12 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 async function refreshAccessToken(tokenObject:any) {
     try {
-        // Get a new set of tokens with a refreshToken
         const tokenResponse = await axios.post(API_URL + '/auth/refreshToken', {
             accessToken: tokenObject.accessToken,
             refreshToken: tokenObject.refreshToken
         });
 
-        console.log(tokenResponse)
+        console.log("tokenResponse",tokenResponse)
 
         return {
             ...tokenObject,
@@ -35,11 +34,12 @@ const providers = [
         name: 'Credentials',
         authorize: async (credentials:any) => {
             try {
-                // Authenticate user with credentials
                 const user = await axios.post(API_URL + '/auth/login', {
                     password: credentials.password,
                     email: credentials.email
                 })
+
+                console.log("userData",user.data)
 
                 if (user.data.token) {
                     return user.data;
@@ -62,9 +62,8 @@ const callbacks = {
     jwt: async ({ token, user }:any) => {
         console.log("jwt",user)
         if (user) {
-            // This will only be executed at login. Each next invocation will skip this part.
             token.token = user.token;
-            token.exp = user.exp;
+            token.expires = user.exp;
             token.refreshToken = user.refreshToken;
         }else{
             return Promise.resolve(token);
@@ -79,10 +78,9 @@ const callbacks = {
         return Promise.resolve(token);
     },
     session: async ({ session, token }:any) => {
-        // Here we pass accessToken to the client to be used in authentication with your API
         session.token = token.token;
         session.refreshToken = token.refreshToken;
-        session.exp = token.exp;
+        session.expires = token.expires;
         session.error = token.error;
 
         console.log("session",session,token)
