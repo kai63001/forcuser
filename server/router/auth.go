@@ -92,14 +92,23 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 	//jwt create
 	claims := jwt.MapClaims{
 		"email": user.Email,
-		"iat":   time.Now().Add(72 * time.Hour).Unix(),
+		"iat":   time.Now().Add(10 * time.Hour).Unix(),
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, _err := token.SignedString(secetKey)
+	if _err != nil {
+		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
+	}
 	fmt.Println(tokenString)
+	//jwt create refresh token
+	claimsRefresh := jwt.MapClaims{
+		"iat": time.Now().Add(50 * time.Hour).Unix(),
+	}
+	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
+	tokenStringRefresh, _err := tokenRefresh.SignedString(secetKey)
 	if _err != nil {
 		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
 	}
 
-	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString})
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh})
 }
