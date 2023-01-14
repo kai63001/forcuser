@@ -20,8 +20,8 @@ type User struct {
 }
 
 type Token struct {
-	AccessToken string `json:"accessToken`
-	Refresh     string `json:"refresh`
+	AccessToken string `json:"accessToken"`
+	Refresh     string `json:"refresh"`
 }
 
 var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
