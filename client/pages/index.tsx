@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -38,6 +39,10 @@ export default function Home() {
         />
       </div>
       <p className="text-red-500">5000</p>
+
+      <button onClick={() => signOut()}>
+        Sign out
+      </button>
     </div>
   );
 }

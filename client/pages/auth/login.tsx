@@ -3,6 +3,7 @@ import Link from "next/link";
 import Input from "@/components/libs/Input";
 import React, { useEffect, useState } from "react";
 import axios from "@/lib/axios";
+import { signIn } from "next-auth/react";
 
 const Login = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
@@ -20,22 +21,52 @@ const Login = () => {
       password: e.currentTarget.password.value,
     };
     console.log(data);
-    axios
-      .post(`${API_URL}/auth/login`, data)
+    // axios
+    //   .post(`${API_URL}/auth/login`, data)
+    //   .then((res) => {
+    //     console.log(res);
+    //     setLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     setLoading(false);
+    //     setError({
+    //       email: "Email or password is incorrect",
+    //       password: "Email or password is incorrect",
+    //     })
+    //     const nameError = err.response?.data?.error;
+    //     console.log(err.response)
+    //     console.log(err)
+    //     console.log(nameError)
+    //   });
+    signIn(
+      "credentials",
+      {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      },
+      {
+        callbackUrl: `${window.location.origin}/`,
+      }
+    )
       .then((res) => {
-        console.log(res);
+        console.log("res",res);
         setLoading(false);
+        if(res?.error == 'Email not exists or Password not match'){
+          setError({
+            email: "Email or password is incorrect",
+            password: "Email or password is incorrect",
+          });
+          return
+        }
       })
       .catch((err) => {
         setLoading(false);
         setError({
           email: "Email or password is incorrect",
           password: "Email or password is incorrect",
-        })
-        const nameError = err.response?.data?.error;
-        console.log(err.response)
-        console.log(err)
-        console.log(nameError)
+        });
+        console.log(err);
       });
   };
 
@@ -92,30 +123,32 @@ const Login = () => {
             </div>
             <button
               type="submit"
-              className={`w-full ${loading ? 'bg-gray-500 cursor-not-allowed' :'bg-black'} text-white text-center py-2 rounded-md`}
+              className={`w-full ${
+                loading ? "bg-gray-500 cursor-not-allowed" : "bg-black"
+              } text-white text-center py-2 rounded-md`}
               disabled={loading}
             >
               {loading && (
-              <svg
-                className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block"
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
-              </svg>
+                <svg
+                  className="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline-block"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
               )}
               Sign in
             </button>

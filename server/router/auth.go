@@ -98,7 +98,7 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 	//jwt create access token
 	tokenString, tokenStringRefresh, err := createToken(&finder)
 
-	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh})
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString, "refreshToken": tokenStringRefresh, "exp": time.Now().Add(time.Hour*24).Unix() * 1000})
 }
 
 func AuthRouterRefreshToken(c *fiber.Ctx) error {
@@ -162,14 +162,14 @@ func AuthRouterRefreshToken(c *fiber.Ctx) error {
 		fmt.Println("Invalid token")
 	}
 
-	return c.Status(200).JSON(bson.M{"status": "success", "message": "Generated new refresh token", "token": tokenString, "refreshToken": tokenStringRefresh})
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "Generated new refresh token", "token": tokenString, "refreshToken": tokenStringRefresh, "exp": time.Now().Add(time.Hour*24).Unix() * 1000})
 }
 
 func createToken(user *User) (string, string, error) {
 	claims := jwt.MapClaims{
 		"email": user.Email,
 		"iat":   time.Now().Unix(),
-		"exp":   time.Now().Add(time.Hour * 24).Unix(),
+		"exp":   time.Now().Add(time.Hour*24).Unix() * 1000,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	tokenString, err := token.SignedString(accestTokenSecret)
@@ -179,7 +179,7 @@ func createToken(user *User) (string, string, error) {
 	//jwt create refresh token
 	claimsRefresh := jwt.MapClaims{
 		"iat": time.Now().Unix(),
-		"exp": time.Now().Add(time.Hour * 24 * 7).Unix(),
+		"exp": time.Now().Add(time.Hour*24*7).Unix() * 1000,
 	}
 	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
 	tokenStringRefresh, err := tokenRefresh.SignedString(refreshTokenSecret)
