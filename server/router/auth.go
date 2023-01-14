@@ -3,9 +3,11 @@ package router
 import (
 	"context"
 	"fmt"
+	"time"
 
 	"focuser.com/server/db"
 	"github.com/gofiber/fiber/v2"
+	"github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson"
 	"golang.org/x/crypto/bcrypt"
 )
@@ -57,4 +59,47 @@ func AuthRouterRegister(c *fiber.Ctx) error {
 	}
 
 	return c.Status(200).JSON(bson.M{"status": "success", "message": "User created successfully"})
+}
+
+func AuthRouteLogin(c *fiber.Ctx) error {
+
+	var secetKey = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
+
+	//get body json
+	var user User
+	if err := c.BodyParser(&user); err != nil {
+		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
+	}
+
+	//find email on db
+	finder := User{}
+	if err := db.ClientDB.Collection("users").FindOne(context.Background(), bson.M{"email": user.Email}).Decode(&finder); err != nil {
+		fmt.Println(err)
+	}
+	if finder == (User{}) {
+		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email not exists or Password not match"})
+	}
+
+	// print
+	fmt.Println(finder)
+
+	//compare password
+	err := bcrypt.CompareHashAndPassword([]byte(finder.Password), []byte(user.Password))
+	if err != nil {
+		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email not exists or Password not match"})
+	}
+
+	//jwt create
+	claims := jwt.MapClaims{
+		"email": user.Email,
+		"iat":   time.Now().Add(72 * time.Hour).Unix(),
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	tokenString, _err := token.SignedString(secetKey)
+	fmt.Println(tokenString)
+	if _err != nil {
+		return c.Status(500).JSON(bson.M{"status": "error", "error": _err})
+	}
+
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "User logged successfully", "token": tokenString})
 }

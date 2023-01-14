@@ -16,6 +16,7 @@ func main() {
 	// db.ClientDB.Database("focuser").Collection("users").InsertOne()
 	app.Get("/", router.IndexRouter)
 	app.Post("/auth/register", router.AuthRouterRegister)
+	app.Post("/auth/login", router.AuthRouteLogin)
 
 	app.Listen(":3001")
 }

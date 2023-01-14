@@ -1,14 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
-import Input from "@/components/libs/Input"
-import { useState } from "react";
+import Input from "@/components/libs/Input";
+import React, { useEffect, useState } from "react";
+import axios from "@/lib/axios";
 
 const Login = () => {
-
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [error, setError]: any = useState({});
 
+  const [loading, setLoading]: any = useState(false);
+
+  const login = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+    setError({});
+    const data = {
+      email: e.currentTarget.email.value,
+      password: e.currentTarget.password.value,
+    };
+    console.log(data);
+    axios
+      .post(`${API_URL}/auth/login`, data)
+      .then((res) => {
+        console.log(res);
+        setLoading(false);
+      })
+      .catch((err) => {
+        setLoading(false);
+        const nameError = err.response?.data?.error;
+        console.log(err.response)
+        console.log(err)
+        console.log(nameError)
+      });
+  };
 
   return (
     <div className="h-screen">
@@ -16,7 +41,7 @@ const Login = () => {
         <div className="max-w-lg w-full m-auto p-10 md:p-3 col-span-3 md:col-span-1">
           <h1 className="franger text-3xl">Login</h1>
           <p className="text-gray-600">Please enter your login details below</p>
-          <form className="mt-12 space-y-6">
+          <form className="mt-12 space-y-6" onSubmit={login}>
             <input type="hidden" name="remember" value="true" />
             <div className="-space-y-px">
               <div>
@@ -31,7 +56,7 @@ const Login = () => {
                 />
               </div>
               <div className="pt-4">
-              <Input
+                <Input
                   name="password"
                   label="Password"
                   required={true}
@@ -61,7 +86,10 @@ const Login = () => {
                 </Link>
               </div>
             </div>
-            <button className="w-full bg-black text-white text-center py-2 rounded-md">
+            <button
+              type="submit"
+              className="w-full bg-black text-white text-center py-2 rounded-md"
+            >
               Sign in
             </button>
             <div>
@@ -95,12 +123,19 @@ const Login = () => {
             </div>
           </div>
           {/* bottom right */}
-            <div className="z-20 absolute bottom-0 right-0 mb-4 mr-4">
-                <div className="text-white text-center text-sm">
-                    <span>Wallpaper by </span>
-                    <Link href="https://www.artstation.com/mingjai" className="underline text-blue-400" target={'_blank'} rel="nofollow">mingjai</Link>
-                </div>
+          <div className="z-20 absolute bottom-0 right-0 mb-4 mr-4">
+            <div className="text-white text-center text-sm">
+              <span>Wallpaper by </span>
+              <Link
+                href="https://www.artstation.com/mingjai"
+                className="underline text-blue-400"
+                target={"_blank"}
+                rel="nofollow"
+              >
+                mingjai
+              </Link>
             </div>
+          </div>
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
           <Image
