@@ -5,7 +5,7 @@ import RefreshTokenHandler from '@/components/libs/refreshTokenHandler';
 import { useState } from 'react';
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [interval, setInterval] = useState(0);
+  const [interval, setInterval] = useState(100000);
 
   return (
       <SessionProvider session={pageProps.session} refetchInterval={interval}>
