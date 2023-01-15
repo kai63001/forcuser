@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import Input from "@/components/libs/Input";
 import axios from "@/lib/axios";
+import {useRouter} from 'next/router'
 
 interface RegisterInterface {
   email: string;
@@ -15,6 +16,8 @@ const Register = () => {
   const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
   const [error, setError]: any = useState({});
+
+  const router = useRouter()
 
   const [loading, setLoading]: any = useState(false);
 
@@ -41,6 +44,8 @@ const Register = () => {
       .then((res) => {
         setLoading(false);
         console.log(res);
+        //redirect to login
+        router.replace('/auth/login')
       })
       .catch((err) => {
         setLoading(false);

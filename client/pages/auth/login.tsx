@@ -2,11 +2,16 @@ import Image from "next/image";
 import Link from "next/link";
 import Input from "@/components/libs/Input";
 import React, { useEffect, useState } from "react";
-import axios from "@/lib/axios";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/router";
+import useAuth from "@/components/libs/useAuth";
 
 const Login = () => {
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+  const isAuthenticated = useAuth(true);
+  const router = useRouter();
+
+  
 
   const [error, setError]: any = useState({});
 
@@ -21,23 +26,6 @@ const Login = () => {
       password: e.currentTarget.password.value,
     };
     console.log(data);
-    // axios
-    //   .post(`${API_URL}/auth/login`, data)
-    //   .then((res) => {
-    //     console.log(res);
-    //     setLoading(false);
-    //   })
-    //   .catch((err) => {
-    //     setLoading(false);
-    //     setError({
-    //       email: "Email or password is incorrect",
-    //       password: "Email or password is incorrect",
-    //     })
-    //     const nameError = err.response?.data?.error;
-    //     console.log(err.response)
-    //     console.log(err)
-    //     console.log(nameError)
-    //   });
     signIn(
       "credentials",
       {
@@ -59,6 +47,7 @@ const Login = () => {
           });
           return
         }
+        router.replace('/dashboard')
       })
       .catch((err) => {
         setLoading(false);
@@ -69,6 +58,10 @@ const Login = () => {
         console.log(err);
       });
   };
+
+  if (isAuthenticated == true) {
+    return <div></div>;
+  }
 
   return (
     <div className="h-screen">
