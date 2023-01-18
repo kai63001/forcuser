@@ -7,6 +7,7 @@ import jwt from "jsonwebtoken";
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
 
 async function refreshAccessToken(tokenObject:any) {
+    console.log("refreshAccessToken")
     try {
         const tokenResponse = await axios.post(API_URL + '/auth/refreshToken', {
             accessToken: tokenObject.accessToken,
@@ -61,7 +62,7 @@ const providers = [
 
 const callbacks = {
     jwt: async ({ token, user }:any) => {
-        // console.log("jwt",user)
+        console.log("jwt",user)
         if (user) {
             token.token = user.token;
             token.expires = user.exp;
