@@ -49,10 +49,39 @@ export default function Home() {
         {/* <button onClick={() => signOut()}>Sign out</button> */}
         <div className="max-w-screen-xl mx-auto mt-10 px-2 xs:px-0">
           <h2 className="text-3xl franger">Pomodoro Timer boost your productivity</h2>
-          <p className="indent-12 my-5">Set timers for specific time intervals, such as 10 minutes, 20 minutes, 30 minutes, or 5 minutes. The website may also offer features such as a clock, a work timer, and the ability to set multiple timers. The website primary function is to help users increase productivity and stay on track with tasks by breaking them into timed intervals</p>
-          <h2 className="text-3xl franger">Featured</h2>
+          <p className="indent-12 my-5">Focuser is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it's time for a break or to switch tasks.</p>
+          <p className="text-lg franger">Features:</p>
+          <ul className="">
+            <li>- Customize the timing of your work (pomodoro) and break intervals</li>
+            <li>- Pause button during work mode</li>
+            <li>- Built-in alarm setting to remind when you should take a break or start working</li>
+          </ul>
+          <p className="text-lg franger">Benefits:</p>
+          <ul className="">
+            <li>- Increase your productivity by breaking down large tasks into manageable chunks</li>
+            <li>- Know exactly how long you have been working/ taking a break for at any given moment</li>
+            <li>- Help with increasing focus and productivity while doing any task</li>
+          </ul>
+          <h2 className="text-3xl franger mt-5">Featured</h2>
         </div>
       </div>
     </Layout>
   );
 }
+
+// Description:  Pomofocus is an easy-to-use, customizable pomodoro timer that works on desktop & mobile browser. With its unique features such as customization of working and break time interval, ability to pause the timer during work mode, and built-in alarm to notify when you should take a break or start working, Pomofocus helps you be more productive and focus on any task you are working on - whether it's studying for school, writing a book or coding. Inspired by Pomodoro Technique, which is a time management method developed by Francesco Cirillo, Pomofocus helps increase concentration levels and encourages the users to take frequent breaks thus allowing them to stay productive throughout their tasks.
+// Features:
+// - Customize the timing of your work (pomodoro) and break intervals
+// - Pause button during work mode
+// - Built-in alarm setting to remind when you should take a break or start working      
+// Benefits: 
+// -Help with increasing focus and productivity while doing any task 
+// - Set specific intervals for work time vs. break time according to your needs 
+// - Know exactly how long you have been working/ taking a break for at any given moment
+
+// Product Description: Pomofocus is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it's time for a break or to switch tasks. 
+// Benefits: 
+// - Increase your productivity by breaking down large tasks into manageable chunks 
+// - Optimize focus levels during a long day of work 
+// - Customizable timer settings to suit your needs 
+// - Easily monitor progress with countdown timer
