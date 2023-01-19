@@ -6,12 +6,15 @@ const RefreshTokenHandler = (props:any) => {
 
     useEffect(() => {
         if(!!session) {
-            props.setInterval(session.expires <  Date.now()? 0 :session.expires - Date.now());
+            // console.log("sessction",session.expires - Date.now(),session.expires,Date.now())
+            // console.log("value retrun",session.expires <  Date.now()? 0 :session.expires - Date.now())
+            // console.log("return")
+            // props.setInterval(session.expires <  Date.now()? 0 :session.expires - Date.now());
             
-            // const timeRemaining = Math.round((((session.exp - 30 * 60 * 1000) - Date.now()) / 1000));
+            // const timeRemaining = Math.round(session.expires - Date.now());
             // props.setInterval(timeRemaining > 0 ? timeRemaining : 0);
         }
-    }, [props, session]);
+    }, [session]);
 
     return null;
 }
