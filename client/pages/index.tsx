@@ -12,7 +12,7 @@ export default function Home() {
       <div className="h-screen">
         <div className="relative h-5/6 block" onDragStart={preventDragHandler}>
           <div id="cover" className="absolute z-10">
-            asd
+            {/* asd */}
           </div>
           <div
             id="cover"
@@ -44,9 +44,14 @@ export default function Home() {
             style={{ objectFit: "cover" }}
           />
         </div>
-        <p className="text-red-500">5000</p>
+        {/* <p className="text-red-500">5000</p> */}
 
-        <button onClick={() => signOut()}>Sign out</button>
+        {/* <button onClick={() => signOut()}>Sign out</button> */}
+        <div className="max-w-screen-xl mx-auto mt-10 px-2 xs:px-0">
+          <h2 className="text-3xl franger">Pomodoro Timer boost your productivity</h2>
+          <p className="indent-12 my-5">Set timers for specific time intervals, such as 10 minutes, 20 minutes, 30 minutes, or 5 minutes. The website may also offer features such as a clock, a work timer, and the ability to set multiple timers. The website primary function is to help users increase productivity and stay on track with tasks by breaking them into timed intervals</p>
+          <h2 className="text-3xl franger">Featured</h2>
+        </div>
       </div>
     </Layout>
   );
