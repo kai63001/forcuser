@@ -13,6 +13,28 @@ const Dashboard = () => {
       <div>
         <h1>Dashboard</h1>
         <p>Number of users</p>
+        <h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p><h1>Dashboard</h1>
+        <p>Number of users</p>
       </div>
     </Layout>
   );
