@@ -49,7 +49,7 @@ export default function Home() {
         {/* <button onClick={() => signOut()}>Sign out</button> */}
         <div className="max-w-screen-xl mx-auto mt-10 px-2 xs:px-0">
           <h2 className="text-3xl franger">Pomodoro Timer boost your productivity</h2>
-          <p className="indent-12 my-5">Focuser is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it's time for a break or to switch tasks.</p>
+          <p className="indent-12 my-5">Focuser is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it&apos;s time for a break or to switch tasks.</p>
           <p className="text-lg franger">Features:</p>
           <ul className="">
             <li>- Customize the timing of your work (pomodoro) and break intervals</li>
