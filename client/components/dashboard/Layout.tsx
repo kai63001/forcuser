@@ -7,6 +7,7 @@ type LayoutInterface = {
   children?: any | undefined;
 };
 import { useRouter } from "next/router";
+import { signOut } from "next-auth/react";
 
 const DashboardLayout = (props: LayoutInterface) => {
   const router = useRouter();
@@ -17,7 +18,9 @@ const DashboardLayout = (props: LayoutInterface) => {
       icon: (
         <svg
           aria-hidden="true"
-          className={`flex-shrink-0 w-6 h-6 ${router.asPath == '/dashboard' ? 'text-blue-500' : 'text-gray-500'}  transition duration-75`}
+          className={`flex-shrink-0 w-6 h-6 ${
+            router.asPath == "/dashboard" ? "text-blue-500" : "text-gray-500"
+          }  transition duration-75`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -27,9 +30,9 @@ const DashboardLayout = (props: LayoutInterface) => {
       ),
     },
     {
-        name: "Users",
-        link: "/dashboard/users",
-    }
+      name: "Users",
+      link: "/dashboard/users",
+    },
   ];
   return (
     <>
@@ -44,7 +47,11 @@ const DashboardLayout = (props: LayoutInterface) => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`flex items-center pl-5 py-3 text-base font-normal ${router.asPath == item.link ? 'text-blue-500 bg-blue-200' : 'text-gray-500'}`}
+                      className={`flex items-center pl-5 py-3 text-base font-normal ${
+                        router.asPath == item.link
+                          ? "text-blue-500 bg-blue-200"
+                          : "text-gray-500"
+                      }`}
                     >
                       {item.icon}
                       <span className="ml-3">{item.name}</span>
@@ -52,14 +59,20 @@ const DashboardLayout = (props: LayoutInterface) => {
                   </li>
                 );
               })}
+              <li>
+                <a
+                  onClick={() => signOut()}
+                  className={`flex items-center pl-5 py-3 text-base font-normal text-gray-500`}
+                >
+                  Sign out
+                </a>
+              </li>
             </ul>
           </div>
         </aside>
         <main className="bg-gray-200 w-full">
-            <div className="bg-white h-16 w-full fixed"></div>
-            <div className="ml-20 mt-24">
-            {props.children}
-            </div>
+          <div className="bg-white h-16 w-full fixed"></div>
+          <div className="ml-20 mt-24">{props.children}</div>
         </main>
       </div>
     </>
