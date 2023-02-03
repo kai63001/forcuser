@@ -21,5 +21,5 @@ func main() {
 	app.Use(middleware.AuthMiddleware)
 	app.Get("/", router.IndexRouter)
 
-	app.Listen(":3001")
+	app.Listen(":4000")
 }
