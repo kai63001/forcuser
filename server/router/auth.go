@@ -74,8 +74,12 @@ func AuthRouteLogin(c *fiber.Ctx) error {
 	//get body json
 	var user User
 	if err := c.BodyParser(&user); err != nil {
+		fmt.Println(user)
+		fmt.Println(err.Error())
 		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
 	}
+
+	//log user
 
 	//find email on db
 	finder := User{}

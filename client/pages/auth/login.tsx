@@ -25,7 +25,7 @@ const Login = () => {
     };
     console.log(data);
     signIn(
-      "credentials",
+      "username-login",
       {
         redirect: false,
         email: data.email,
@@ -45,7 +45,7 @@ const Login = () => {
           });
           return;
         }
-        router.replace("/dashboard");
+        // router.replace("/dashboard");
       })
       .catch((err) => {
         setLoading(false);
@@ -53,7 +53,7 @@ const Login = () => {
           email: "Email or password is incorrect",
           password: "Email or password is incorrect",
         });
-        console.log(err);
+        console.log("error",err);
       });
   };
 

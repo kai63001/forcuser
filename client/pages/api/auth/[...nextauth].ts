@@ -33,15 +33,16 @@ async function refreshAccessToken(tokenObject:any) {
 
 const providers = [
     CredentialsProvider({
+        id: "username-login",
         name: 'Credentials',
         authorize: async (credentials:any) => {
             try {
-                const user = await axios.post(API_URL + '/auth/login', {
+                const user = await axios.post(`http://server:4000/auth/login`, {
                     password: credentials.password,
                     email: credentials.email
                 })
 
-                // console.log("userData",user.data)
+                console.log("userData",user)
 
                 if (user.data.token) {
                     return user.data;
@@ -49,12 +50,12 @@ const providers = [
 
                 return null;
             } catch (e:any) {
-                console.log(e.message, e.response.data)
+                console.log(e)
                 throw new Error(e.response.data.error)
             }
         },
         credentials: {
-            username: { label: "Username", type: "text", placeholder: "jsmith" },
+            email: { label: "Email", type: "text", placeholder: "jsmith" },
             password: { label: "Password", type: "password" }
         },
     })
