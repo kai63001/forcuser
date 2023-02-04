@@ -12,7 +12,7 @@ resource "google_cloud_run_service" "front_end" {
   template {
     spec {
       containers {
-        image = "gcr.io/focuser-376817/client:latest"
+        image = "gcr.io/focuser-376817/client:2"
       }
     }
   }
@@ -21,6 +21,7 @@ resource "google_cloud_run_service" "front_end" {
     percent         = 100
     latest_revision = true
   }
+
 }
 
 data "google_iam_policy" "noauth" {

@@ -27,7 +27,7 @@ export default function Home() {
             <div className="flex flex-col items-center">
               <h1 className="text-8xl franger text-white">Focuser</h1>
               <p className="text-white">
-                flexible and easy to boost your productivity free
+                flexible and easy to boost your productivity free2
               </p>
               <button className="bg-white px-7 py-2 mt-2 rounded-full hover:bg-transparent hover:text-white border-2 border-white duration-200 text-xl">
                 Create
