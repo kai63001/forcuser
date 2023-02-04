@@ -188,6 +188,7 @@ const Register = () => {
             <Image
               src="https://images4.alphacoders.com/123/1235114.jpg"
               alt="Register Image"
+              priority={true}
               fill
               style={{ objectFit: "cover" }}
             />

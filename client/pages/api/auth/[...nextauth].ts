@@ -63,7 +63,7 @@ const providers = [
 
 const callbacks = {
     jwt: async ({ token, user }:any) => {
-        console.log("jwt",user)
+        // console.log("jwt",user)
         if (user) {
             token.token = user.token;
             token.expires = user.exp;

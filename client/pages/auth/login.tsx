@@ -195,6 +195,7 @@ const Login = () => {
             <Image
               src="https://images.alphacoders.com/129/1296180.jpg"
               alt="Login Image"
+              priority={true}
               fill
               style={{ objectFit: "cover" }}
             />
