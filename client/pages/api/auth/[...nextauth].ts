@@ -4,7 +4,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
 async function refreshAccessToken(tokenObject:any) {
     console.log("refreshAccessToken")
@@ -37,7 +37,7 @@ const providers = [
         name: 'Credentials',
         authorize: async (credentials:any) => {
             try {
-                const user = await axios.post(`http://server:4000/auth/login`, {
+                const user = await axios.post(`${API_URL}/auth/login`, {
                     password: credentials.password,
                     email: credentials.email
                 })
