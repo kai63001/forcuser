@@ -193,9 +193,10 @@ const Login = () => {
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
             <Image
-              src="https://images.alphacoders.com/129/1296180.jpg"
+              src="https://storage.googleapis.com/wallpaper-focuser/wallpaper/1297352.jpg"
               alt="Login Image"
               priority={true}
+              unoptimized={true}
               fill
               style={{ objectFit: "cover" }}
             />

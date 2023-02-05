@@ -186,9 +186,10 @@ const Register = () => {
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
             <Image
-              src="https://images4.alphacoders.com/123/1235114.jpg"
+              src="https://storage.googleapis.com/wallpaper-focuser/wallpaper/1300189.jpg"
               alt="Register Image"
               priority={true}
+              unoptimized={true}
               fill
               style={{ objectFit: "cover" }}
             />

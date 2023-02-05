@@ -39,6 +39,7 @@ export default function Home() {
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-50"></div>
           <Image
             src="https://wallpaperaccess.com/full/2825725.gif"
+            unoptimized={true}
             alt="Focuser Background"
             fill
             style={{ objectFit: "cover" }}
