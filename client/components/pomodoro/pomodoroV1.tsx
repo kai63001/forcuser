@@ -96,7 +96,7 @@ const PomodoroV1 = () => {
             </div>
             <div className="text-9xl franger text-white my-6">25:00</div>
             <p className="text-xl franger text-white">
-              " Time management method where you work "
+              &quot; Time management method where you work &quot;
             </p>
             <div className="flex items-center space-x-5 my-4">
               <button className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger">

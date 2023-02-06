@@ -12,7 +12,7 @@ resource "google_cloud_run_service" "front_end" {
   template {
     spec {
       containers {
-        image = "gcr.io/focuser-376817/client:0.2.3"
+        image = "gcr.io/focuser-376817/client:0.2.4"
       }
     }
   }
