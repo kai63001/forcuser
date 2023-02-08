@@ -1,26 +1,86 @@
+import { useEffect, useState } from "react";
+
 const PomodoroWidget = () => {
+  const [listPomodoroTab, setListPomodoroTab] = useState([
+    { name: "POMODORO", time: 25 * 60 },
+    { name: "SHORT BREAK", time: 5 * 60 },
+    { name: "LONG BREAK", time: 15 * 60 },
+  ]);
+  const [tabSelectPomodoro, setTabSelectPomodoro] = useState(0);
+  const [timer, setTimer] = useState(25 * 60);
+  const [intervalId, setIntervalId]: any = useState(null);
+
+  const [isStart, setIsStart] = useState(false);
+
+  const tabSelect = (index: number) => {
+    setIsStart(false);
+    if(intervalId) clearInterval(intervalId);
+    setTabSelectPomodoro(index);
+    setTimer(listPomodoroTab[index].time);
+  };
+
+  const startTimer = () => {
+    //create countdown timer using setInterval start and pause
+    setIsStart(true);
+    const interval = setInterval(() => {
+      setTimer((prev) => prev - 1);
+    }, 1000);
+    setIntervalId(interval);
+    return () => clearInterval(interval);
+  };
+
+  const pauseTimer = () => {
+    setIsStart(false);
+    clearInterval(intervalId);
+  };
+
+  const timerShow = () => {
+    const minute = Math.floor(timer / 60);
+    const second = timer % 60;
+    return `${minute < 10 ? "0" + minute : minute}:${
+      second < 10 ? "0" + second : second
+    }`;
+  };
+
   return (
     <div className="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
       <div className="flex flex-col items-center">
         <div className="flex space-x-5">
-          <button className="text-black bg-white border-white border-[3px] rounded-full px-5 py-2 franger">
-            POMODORO
-          </button>
-          <button className="text-white border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150">
-            SHORT BREAK
-          </button>
-          <button className="text-white border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150">
-            LONG BREAK
-          </button>
+          {listPomodoroTab.map((item, index) => {
+            return (
+              <button
+                key={index}
+                onClick={() => tabSelect(index)}
+                className={`text-white border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150 ${
+                  tabSelectPomodoro === index ? "bg-white text-black" : ""
+                }`}
+              >
+                {item.name}
+              </button>
+            );
+          })}
         </div>
-        <div className="text-9xl franger text-white my-6">25:00</div>
+        <div className="text-9xl franger text-white my-6">{timerShow()}</div>
         <p className="text-xl franger text-white">
           &quot; Time management method where you work &quot;
         </p>
         <div className="flex items-center space-x-5 my-4">
-          <button className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger">
-            START
-          </button>
+          {isStart ? (
+            <button
+              onClick={() => pauseTimer()}
+              className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger"
+            >
+              PAUSE
+            </button>
+          ) : (
+            <button
+              onClick={() => startTimer()}
+              className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger"
+            >
+              START
+            </button>
+          )}
+
           <div className="cursor-pointer">
             <svg
               width="43"
