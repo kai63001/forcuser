@@ -14,7 +14,7 @@ const PomodoroWidget = () => {
 
   const tabSelect = (index: number) => {
     setIsStart(false);
-    if(intervalId) clearInterval(intervalId);
+    if (intervalId) clearInterval(intervalId);
     setTabSelectPomodoro(index);
     setTimer(listPomodoroTab[index].time);
   };
@@ -41,6 +41,20 @@ const PomodoroWidget = () => {
       second < 10 ? "0" + second : second
     }`;
   };
+
+  const resetTimer = () => {
+    setTimer(listPomodoroTab[tabSelectPomodoro].time);
+    setIsStart(false);
+    if (intervalId) clearInterval(intervalId);
+  };
+
+  useEffect(() => {
+    // stop timer when time is 0
+    if(timer <= 0){
+        clearInterval(intervalId);
+        setIsStart(false);
+    }
+  }, [timer]);
 
   return (
     <div className="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -81,7 +95,7 @@ const PomodoroWidget = () => {
             </button>
           )}
 
-          <div className="cursor-pointer">
+          <div onClick={() => resetTimer()} className="cursor-pointer">
             <svg
               width="43"
               height="37"
