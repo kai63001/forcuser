@@ -65,8 +65,8 @@ const PomodoroWidget = () => {
               <button
                 key={index}
                 onClick={() => tabSelect(index)}
-                className={`text-white border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150 ${
-                  tabSelectPomodoro === index ? "bg-white text-black" : ""
+                className={` border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150 ${
+                  tabSelectPomodoro === index ? "bg-white text-black " : "text-white"
                 }`}
               >
                 {item.name}
