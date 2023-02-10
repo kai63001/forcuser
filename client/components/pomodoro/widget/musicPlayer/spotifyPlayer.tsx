@@ -34,11 +34,13 @@ const SpotifyPlayer = () => {
 
   useEffect(() => {
     getDataSpotify();
+  }, []);
+
+  useEffect(() => {
     const script = document.createElement("script");
     script.src = "https://open.spotify.com/embed-podcast/iframe-api/v1";
     script.async = true;
     document.body.appendChild(script);
-    console.log(listMusic.items[listMusicSelect].track.uri);
     script.onload = () => {
       // @ts-ignore
       window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
@@ -76,7 +78,6 @@ const SpotifyPlayer = () => {
               }
               //@ts-ignore
               document.querySelector("#indexMusic").innerHTML = next.toString();
-              setListMusicSelect(listMusicSelect + 1);
               EmbedController.loadUri(listMusic.items[next].track.uri);
               EmbedController.play();
               setListMusicSelect(next);
@@ -84,7 +85,7 @@ const SpotifyPlayer = () => {
                 nexting = false;
               }, 2000);
             }
-            console.log("percent: ", percent);
+            // console.log("percent: ", percent);
             // console.log(parseInt((e.data.position / 1000).toString(), 10));
             // return console.log(
             //   `${parseInt(e.data.position/ 1000, 10)} s : ${parseInt(
@@ -135,7 +136,6 @@ const SpotifyPlayer = () => {
               }
               //@ts-ignore
               document.querySelector("#indexMusic").innerHTML = next.toString();
-              setListMusicSelect(listMusicSelect + 1);
               EmbedController.loadUri(listMusic.items[next].track.uri);
               EmbedController.play();
               setListMusicSelect(next);
@@ -159,7 +159,6 @@ const SpotifyPlayer = () => {
                 //@ts-ignore
                 document.querySelector("#indexMusic").innerHTML =
                   prev.toString();
-                setListMusicSelect(listMusicSelect - 1);
                 EmbedController.loadUri(listMusic.items[prev].track.uri);
                 EmbedController.play();
                 setListMusicSelect(prev);
