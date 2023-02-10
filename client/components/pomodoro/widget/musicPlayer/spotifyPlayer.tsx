@@ -71,6 +71,9 @@ const SpotifyPlayer = () => {
                 //@ts-ignore
                 parseInt(document.querySelector("#indexMusic")?.innerHTML) + 1;
               console.log(document.querySelector("#indexMusic")?.innerHTML);
+              if (next >= listMusic.items.length) {
+                next = 0;
+              }
               //@ts-ignore
               document.querySelector("#indexMusic").innerHTML = next.toString();
               setListMusicSelect(listMusicSelect + 1);
@@ -127,19 +130,19 @@ const SpotifyPlayer = () => {
                 //@ts-ignore
                 parseInt(document.querySelector("#indexMusic")?.innerHTML) + 1;
               console.log(document.querySelector("#indexMusic")?.innerHTML);
-              if (next < listMusic.items.length) {
-                //@ts-ignore
-                document.querySelector("#indexMusic").innerHTML =
-                  next.toString();
-                setListMusicSelect(listMusicSelect + 1);
-                EmbedController.loadUri(listMusic.items[next].track.uri);
-                EmbedController.play();
-                setListMusicSelect(next);
-                // ? playing
-                setPlaying(true);
-                //@ts-ignore
-                document.querySelector("#playing").innerHTML = "playing";
+              if (next >= listMusic.items.length) {
+                next = 0;
               }
+              //@ts-ignore
+              document.querySelector("#indexMusic").innerHTML = next.toString();
+              setListMusicSelect(listMusicSelect + 1);
+              EmbedController.loadUri(listMusic.items[next].track.uri);
+              EmbedController.play();
+              setListMusicSelect(next);
+              // ? playing
+              setPlaying(true);
+              //@ts-ignore
+              document.querySelector("#playing").innerHTML = "playing";
             });
           });
           //? prev music
@@ -242,7 +245,9 @@ const SpotifyPlayer = () => {
                   {listMusic.items[listMusicSelect].track.name} -{" "}
                   {listMusic.items[listMusicSelect].track.artists[0].name}
                 </p>
-                <div id="persenMusic" className="h-0 w-0 opacity-0">{musicProcress}</div>
+                <div id="persenMusic" className="h-0 w-0 opacity-0">
+                  {musicProcress}
+                </div>
                 <div id="indexMusic">{listMusicSelect}</div>
                 <div id="playing" className="h-0 w-0 opacity-0">
                   {playing ? "playing" : "puase"}
