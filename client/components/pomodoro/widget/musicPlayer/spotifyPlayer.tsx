@@ -20,6 +20,7 @@ const SpotifyPlayer = () => {
       description: "",
       thumbnail_url: "",
     });
+  const [playing, setPlaying] = useState(false);
 
   const [musicProcress, setMusicProcress] = useState(0);
 
@@ -27,7 +28,7 @@ const SpotifyPlayer = () => {
     const data = await axios.get(
       `https://open.spotify.com/oembed?url=${musicUrl}`
     );
-    console.log('data', data.data);
+    console.log("data", data.data);
     setMusicPlayerInfo(data.data);
   };
 
@@ -78,7 +79,7 @@ const SpotifyPlayer = () => {
               setListMusicSelect(next);
               setTimeout(() => {
                 nexting = false;
-              }, 4000);
+              }, 2000);
             }
             console.log("percent: ", percent);
             // console.log(parseInt((e.data.position / 1000).toString(), 10));
@@ -91,11 +92,19 @@ const SpotifyPlayer = () => {
           });
           document.querySelectorAll("#playMusic").forEach((episode: any) => {
             episode.addEventListener("click", () => {
-              console.log("play")
-              EmbedController.loadUri(
-                listMusic.items[listMusicSelect].track.uri
-              );
-              EmbedController.play();
+              console.log("play");
+              // EmbedController.loadUri(listMusic.items[next].track.uri);
+              EmbedController.togglePlay();
+              setTimeout(() => {
+                let playingStatus =
+                  //@ts-ignore
+                  document.querySelector("#playing").innerHTML;
+                let newStatus =
+                  playingStatus == "playing" ? "pause" : "playing";
+                setPlaying(newStatus == "playing" ? true : false);
+                //@ts-ignore
+                document.querySelector("#playing").innerHTML = newStatus;
+              }, 500);
             });
           });
         };
@@ -103,7 +112,7 @@ const SpotifyPlayer = () => {
       };
     };
     console.log("musicProcress", musicProcress);
-  },[]);
+  }, []);
 
   return (
     <div
@@ -118,7 +127,42 @@ const SpotifyPlayer = () => {
       <div className="bg-[#282828] text-white rounded-md">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 px-3 py-3">
-            <div className="w-24 h-24 relative rounded-md" id="playMusic">
+            <div
+              className="w-24 h-24 relative rounded-md cursor-pointer"
+              id="playMusic"
+            >
+              {/* background black opacity */}
+              <div className="absolute w-full h-full bg-black opacity-30 z-20 rounded-md"></div>
+              {/* middle play icon */}
+              <div className="absolute w-full h-full flex items-center justify-center z-30 group">
+                {playing ? (
+                  <svg
+                    fill="#000000"
+                    width="300px"
+                    className="w-14 h-14 fill-white opacity-10 group-hover:opacity-70"
+                    height="300px"
+                    viewBox="-5.5 0 32 32"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>pause</title>
+                    <path d="M0 6.563v18.875c0 0.531 0.438 0.969 0.969 0.969h6.625c0.5 0 0.906-0.438 0.906-0.969v-18.875c0-0.531-0.406-0.969-0.906-0.969h-6.625c-0.531 0-0.969 0.438-0.969 0.969zM12.281 6.563v18.875c0 0.531 0.438 0.969 0.938 0.969h6.625c0.531 0 0.969-0.438 0.969-0.969v-18.875c0-0.531-0.438-0.969-0.969-0.969h-6.625c-0.5 0-0.938 0.438-0.938 0.969z"></path>
+                  </svg>
+                ) : (
+                  <svg
+                    fill="#000000"
+                    width="300px"
+                    className="w-14 h-14 fill-white opacity-70"
+                    height="300px"
+                    viewBox="-7 0 32 32"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>play</title>
+                    <path d="M0 6.688v18.906c0 0.344 0.156 0.625 0.469 0.813 0.125 0.094 0.344 0.125 0.5 0.125s0.281-0.031 0.438-0.125l16.375-9.438c0.313-0.219 0.5-0.5 0.5-0.844 0-0.313-0.188-0.594-0.5-0.813l-16.375-9.438c-0.563-0.406-1.406 0.094-1.406 0.813z"></path>
+                  </svg>
+                )}
+              </div>
               <Image
                 src={musicPlayerInfo.thumbnail_url}
                 fill
@@ -129,21 +173,81 @@ const SpotifyPlayer = () => {
               />
             </div>
             <div className="w-60">
-              <div className="text-sm font-semibold">
+              <p className="text-sm font-semibold truncate animate-marquee">
                 {musicPlayerInfo.title}
-              </div>
+              </p>
               {/* playing */}
               <div className="text-xs text-gray-400 py-2">
-                {listMusic.items[listMusicSelect].track.name} -{" "}
-                {listMusic.items[listMusicSelect].track.artists[0].name}
+                <p className="truncate">{listMusic.items[listMusicSelect].track.name} -{" "}
+                {listMusic.items[listMusicSelect].track.artists[0].name}</p>
                 <div id="indexMusic">{listMusicSelect}</div>
+                <div id="playing" className="h-0 w-0 opacity-0">
+                  {playing ? "playing" : "puase"}
+                </div>
               </div>
               {/* procress */}
-              <div className="w-full h-1 bg-gray-400 rounded-full mt-4">
-                <div
-                  className={`h-full bg-[#1db954] rounded-full`}
-                  style={{ width: `${musicProcress}%` }}
-                ></div>
+              <div className="flex justify-between items-center -mt-3">
+                <div className="" id="prev">
+                  <svg
+                    width="300px"
+                    height="300px"
+                    className="fill-gray-100 h-8 w-8 relative top-2"
+                    viewBox="0 0 512 512"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>skip-back</title>
+                    <g
+                      id="Page-1"
+                      stroke="none"
+                      strokeWidth="1"
+                      fill="current"
+                      fillRule="evenodd"
+                    >
+                      <g id="add" transform="translate(128.000000, 128.000000)">
+                        <polygon
+                          id="Path"
+                          points="0 0 0 256 42.6666667 256 42.6666667 128.00512 256 256 256 0 42.6666667 127.989547 42.6666667 0"
+                        ></polygon>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
+                <div className="w-full h-1 bg-gray-400 rounded-full mt-4">
+                  <div
+                    className={`h-full bg-[#1db954] rounded-full`}
+                    style={{ width: `${musicProcress}%` }}
+                  ></div>
+                </div>
+                {/* rotate 180 */}
+                <div className="rotate-180" id="nextMusic">
+                  <svg
+                    width="300px"
+                    height="300px"
+                    className="fill-gray-100 h-8 w-8 relative bottom-2"
+                    viewBox="0 0 512 512"
+                    version="1.1"
+                    xmlns="http://www.w3.org/2000/svg"
+                    xmlnsXlink="http://www.w3.org/1999/xlink"
+                  >
+                    <title>skip-next</title>
+                    <g
+                      id="Page-1"
+                      stroke="none"
+                      strokeWidth="1"
+                      fill="current"
+                      fillRule="evenodd"
+                    >
+                      <g id="add" transform="translate(128.000000, 128.000000)">
+                        <polygon
+                          id="Path"
+                          points="0 0 0 256 42.6666667 256 42.6666667 128.00512 256 256 256 0 42.6666667 127.989547 42.6666667 0"
+                        ></polygon>
+                      </g>
+                    </g>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
