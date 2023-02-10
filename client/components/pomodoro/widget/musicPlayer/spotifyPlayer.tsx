@@ -90,21 +90,81 @@ const SpotifyPlayer = () => {
             //   )} s`
             // );
           });
+          //? play music
           document.querySelectorAll("#playMusic").forEach((episode: any) => {
             episode.addEventListener("click", () => {
-              console.log("play");
-              // EmbedController.loadUri(listMusic.items[next].track.uri);
-              EmbedController.togglePlay();
-              setTimeout(() => {
-                let playingStatus =
+              let persenMusic =
+                document.querySelector("#persenMusic")?.innerHTML;
+              if (persenMusic != undefined && ~~persenMusic > 0) {
+                EmbedController.togglePlay();
+                setTimeout(() => {
+                  let playingStatus =
+                    //@ts-ignore
+                    document.querySelector("#playing").innerHTML;
+                  let newStatus =
+                    playingStatus == "playing" ? "pause" : "playing";
+                  setPlaying(newStatus == "playing" ? true : false);
                   //@ts-ignore
-                  document.querySelector("#playing").innerHTML;
-                let newStatus =
-                  playingStatus == "playing" ? "pause" : "playing";
-                setPlaying(newStatus == "playing" ? true : false);
+                  document.querySelector("#playing").innerHTML = newStatus;
+                }, 500);
+              } else {
+                EmbedController.play();
+                setPlaying(true);
                 //@ts-ignore
-                document.querySelector("#playing").innerHTML = newStatus;
-              }, 500);
+                document.querySelector("#playing").innerHTML = "playing";
+              }
+              console.log("play", persenMusic);
+              // EmbedController.loadUri(listMusic.items[next].track.uri);
+            });
+          });
+          //? next music
+          document.querySelectorAll("#nextMusic").forEach((episode: any) => {
+            episode.addEventListener("click", () => {
+              setMusicProcress(0);
+              console.log("next");
+              //@ts-ignore
+              let next =
+                //@ts-ignore
+                parseInt(document.querySelector("#indexMusic")?.innerHTML) + 1;
+              console.log(document.querySelector("#indexMusic")?.innerHTML);
+              if (next < listMusic.items.length) {
+                //@ts-ignore
+                document.querySelector("#indexMusic").innerHTML =
+                  next.toString();
+                setListMusicSelect(listMusicSelect + 1);
+                EmbedController.loadUri(listMusic.items[next].track.uri);
+                EmbedController.play();
+                setListMusicSelect(next);
+                // ? playing
+                setPlaying(true);
+                //@ts-ignore
+                document.querySelector("#playing").innerHTML = "playing";
+              }
+            });
+          });
+          //? prev music
+          document.querySelectorAll("#prevMusic").forEach((episode: any) => {
+            episode.addEventListener("click", () => {
+              console.log("prev");
+              setMusicProcress(0);
+              //@ts-ignore
+              let prev =
+                //@ts-ignore
+                parseInt(document.querySelector("#indexMusic")?.innerHTML) - 1;
+              console.log(document.querySelector("#indexMusic")?.innerHTML);
+              if (prev >= 0) {
+                //@ts-ignore
+                document.querySelector("#indexMusic").innerHTML =
+                  prev.toString();
+                setListMusicSelect(listMusicSelect - 1);
+                EmbedController.loadUri(listMusic.items[prev].track.uri);
+                EmbedController.play();
+                setListMusicSelect(prev);
+                // ? playing
+                setPlaying(true);
+                //@ts-ignore
+                document.querySelector("#playing").innerHTML = "playing";
+              }
             });
           });
         };
@@ -178,8 +238,11 @@ const SpotifyPlayer = () => {
               </p>
               {/* playing */}
               <div className="text-xs text-gray-400 py-2">
-                <p className="truncate">{listMusic.items[listMusicSelect].track.name} -{" "}
-                {listMusic.items[listMusicSelect].track.artists[0].name}</p>
+                <p className="truncate">
+                  {listMusic.items[listMusicSelect].track.name} -{" "}
+                  {listMusic.items[listMusicSelect].track.artists[0].name}
+                </p>
+                <div id="persenMusic" className="h-0 w-0 opacity-0">{musicProcress}</div>
                 <div id="indexMusic">{listMusicSelect}</div>
                 <div id="playing" className="h-0 w-0 opacity-0">
                   {playing ? "playing" : "puase"}
@@ -187,11 +250,11 @@ const SpotifyPlayer = () => {
               </div>
               {/* procress */}
               <div className="flex justify-between items-center -mt-3">
-                <div className="" id="prev">
+                <div className="" id="prevMusic">
                   <svg
                     width="300px"
                     height="300px"
-                    className="fill-gray-100 h-8 w-8 relative top-2"
+                    className="fill-gray-100 h-8 w-8 relative top-2 cursor-pointer"
                     viewBox="0 0 512 512"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
@@ -225,7 +288,7 @@ const SpotifyPlayer = () => {
                   <svg
                     width="300px"
                     height="300px"
-                    className="fill-gray-100 h-8 w-8 relative bottom-2"
+                    className="fill-gray-100 h-8 w-8 relative bottom-2 cursor-pointer"
                     viewBox="0 0 512 512"
                     version="1.1"
                     xmlns="http://www.w3.org/2000/svg"
