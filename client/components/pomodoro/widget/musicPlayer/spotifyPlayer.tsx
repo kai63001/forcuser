@@ -1,5 +1,6 @@
 import axios from "axios";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import spotifyMusic from "./mock/spotify.json";
 
@@ -21,6 +22,8 @@ const SpotifyPlayer = () => {
       thumbnail_url: "",
     });
   const [playing, setPlaying] = useState(false);
+
+  const [previewOrNot, setPreviewOrNot] = useState(false);
 
   const [musicProcress, setMusicProcress] = useState(0);
 
@@ -63,6 +66,10 @@ const SpotifyPlayer = () => {
                 100
               ).toString()
             );
+            //To listen to music more than 30 seconds please login spotify.
+            if (parseInt((e.data.duration / 1000).toString(), 10) <= 35) {
+              setPreviewOrNot(true);
+            }
             let nexting = false;
             setMusicProcress(percent);
             if (percent >= 100 && nexting == false) {
@@ -186,7 +193,7 @@ const SpotifyPlayer = () => {
         <div id="embed-iframe" className="border-none"></div>
       </div>
       {/* <div id="playMusic"> play</div> */}
-      <div className="bg-[#282828] text-white rounded-md">
+      <div className="bg-[#282828] text-white rounded-md w-[370px]">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3 px-3 py-3">
             <div
@@ -319,6 +326,11 @@ const SpotifyPlayer = () => {
             </div>
           </div>
         </div>
+        {previewOrNot && (
+          <div className="px-3 pb-2">
+            <p className="text-[12px] text-gray-400 text-center">To listen to music more than 30 seconds please login <Link className="text-green-500" href={`https://accounts.spotify.com/en/login`} target={`_blank`} >spotify</Link>.</p>
+          </div>
+        )}
       </div>
     </div>
   );
