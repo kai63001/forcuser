@@ -46,8 +46,8 @@ const SpotifyPlayer = () => {
       window.onSpotifyIframeApiReady = (IFrameAPI: any) => {
         let element = document.getElementById("embed-iframe");
         let options = {
-          width: "100%",
-          height: "80",
+          width: "0",
+          height: "0",
           uri: listMusic.items[listMusicSelect].track.uri,
           theme: "0",
         };
@@ -239,7 +239,7 @@ const SpotifyPlayer = () => {
                 {musicPlayerInfo.title}
               </p>
               {/* playing */}
-              <div className="text-xs text-gray-400 py-2">
+              <div className="text-xs text-gray-400 mb-3 py-1">
                 <p className="truncate">
                   {listMusic.items[listMusicSelect].track.name} -{" "}
                   {listMusic.items[listMusicSelect].track.artists[0].name}
