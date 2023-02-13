@@ -10,6 +10,9 @@ import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
 import { useState } from "react";
+import dynamic from "next/dynamic";
+
+const ModalCreatePomodoro = dynamic(() => import("./modal/createPomodoro"));
 
 const DashboardLayout = (props: LayoutInterface) => {
   const [openModalCreate, setOpenModalCreate] = useState(false);
@@ -54,6 +57,7 @@ const DashboardLayout = (props: LayoutInterface) => {
     <>
       <Header title={props.title} des={props.des} image={props.image} />
       <div className="flex flex-item-fluid flex-nowrap">
+        <ModalCreatePomodoro/>
         <aside className="" aria-label="Sidebar">
           <div className="py-4 overflow-y-auto w-64 h-full bg-white fixed z-10 border-r-2">
             <div className="ml-5 text-2xl franger mb-4">Focuser</div>
