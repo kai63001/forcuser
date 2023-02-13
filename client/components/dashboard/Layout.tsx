@@ -9,8 +9,10 @@ type LayoutInterface = {
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
+import { useState } from "react";
 
 const DashboardLayout = (props: LayoutInterface) => {
+  const [openModalCreate, setOpenModalCreate] = useState(false);
   const router = useRouter();
   const listNavbar = [
     {
