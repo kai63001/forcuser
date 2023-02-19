@@ -22,6 +22,7 @@ services:
       - my-network
     volumes:
       - ./server:/app
+    restart: always
   redis:
     image: redis
     expose:
