@@ -1,4 +1,4 @@
-version: '3.2'
+version: "3.2"
 services:
   client:
     build: ./client
@@ -11,6 +11,7 @@ services:
     volumes:
       - /app/node_modules
       - ./client:/app
+      - /app/.next
   server:
     build: ./server
     expose:
@@ -21,8 +22,19 @@ services:
       - my-network
     volumes:
       - ./server:/app
+  redis:
+    image: redis
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+    networks:
+      - my-network
+    environment:
+      - REDIS_PASSWORD=password123
+    volumes:
+      - ./redis:/data
 volumes:
   data:
 networks:
   my-network:
-    

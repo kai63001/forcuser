@@ -8,5 +8,5 @@ import (
 func IndexRouter(c *fiber.Ctx) error {
 	// insert db
 	// _, err := db.ClientDB.Database("focuser").Collection("users").InsertOne(context.Background(), bson.D{{Key: "name", Value: "pi"}})
-	return c.SendString("Hello, World! exe")
+	return c.SendString("Hello, World! exess")
 }
