@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CardComponent from "../card/card.component";
 interface Props {
   setOpenModalCreate: (value: boolean) => void;
 }
@@ -10,17 +11,20 @@ const CreatePomodoros = (props: Props) => {
 
   const [continueToTemplate, setContinueToTemplate] = useState<boolean>(false);
 
+  const [error ,setError] = useState<any>({
+    pomodoroName: "",
+  })
+
   const addTag = (e: any) => {
     e.preventDefault();
     //get input value
-    if (e.target.pomodoroName.value === "") return;
-    const tag = e.target.pomodoroName.value;
+    if (e.target.tags.value === "") return;
+    const tag = e.target.tags.value;
     console.log(tag);
     //set to taglist
     setTagList([...tagList, tag]);
     //clear input
-    e.target.pomodoroName.value = "";
-    //get input value
+    e.target.tags.value = "";
   };
 
   const removeTag = (index: Number) => {
@@ -29,7 +33,26 @@ const CreatePomodoros = (props: Props) => {
     setTagList(newTagList);
   };
 
+  const clearError = () => {
+    setError({
+      ['pomodoroName']: "",
+    })
+  }
+
   const btnContinue = () => {
+    //clear error
+    clearError();
+    //check pomodoro name
+    if (pomodoroName === "") {
+      setError({
+        ['pomodoroName']: "Pomodoro name is required",
+      })
+      return
+    }
+
+    //check if taglist is empty
+    // if (tagList.length === 0) return;
+    //set continue to template to true
     setContinueToTemplate(true);
   };
 
@@ -55,7 +78,7 @@ const CreatePomodoros = (props: Props) => {
           &#8203;
         </span>
         <div
-          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-3xl sm:w-full"
+          className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-7xl sm:w-full"
           role="dialog"
           aria-modal="true"
           aria-labelledby="modal-title"
@@ -69,18 +92,16 @@ const CreatePomodoros = (props: Props) => {
                 >
                  Choose a template 
                 </h3>
-                <div className="mt-2 w-full">asdasdas</div>
-                {/* loop tag list */}
-                <div className="mt-2 w-full flex flex-wrap">
-                  {tagList.map((tag, index) => (
-                    <div
-                      key={index}
-                      className="flex items-center justify-between text-xs px-3 mb-2 bg-purple-500 text-white py-1 rounded-md mr-2 cursor-pointer"
-                      onClick={() => removeTag(index)}
-                    >
-                      <p>{tag}</p>
-                    </div>
-                  ))}
+                <div className="mt-5 w-full">
+                  {/* card with grid */}
+                  <div className="grid grid-cols-3 gap-4">
+                    <CardComponent/>
+                    <CardComponent/>
+                    <CardComponent/>
+                    <CardComponent/>
+                    <CardComponent/>
+                    <CardComponent/>
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,9 +172,14 @@ const CreatePomodoros = (props: Props) => {
                     type="text"
                     name="pomodoroName"
                     id="pomodoroName"
-                    className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-purple-500 block w-full sm:text-sm border-purple-600 border rounded-md px-5 py-2 mb-2"
+                    onChange={(e)=>setPomodoroName(e.target.value)}
+                    className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-purple-500 block w-full sm:text-sm ${error['pomodoroName'] ? 'border-red-600' : 'border-purple-600'} border rounded-md px-5 py-2 mb-2`}
                     placeholder="Pomodoro"
                   />
+                  {/* error */}
+                  {error['pomodoroName'] && (
+                    <p className="text-red-600 text-xs -mt-2">{error['pomodoroName']}</p>
+                  )}
                   <p>Tag</p>
                   <form
                     onSubmit={addTag}
@@ -162,10 +188,10 @@ const CreatePomodoros = (props: Props) => {
                     <div className="w-10/12">
                       <input
                         type="text"
-                        name="pomodoroName"
-                        id="pomodoroName"
+                        name="tags"
+                        id="tags"
                         className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-purple-500 block w-full sm:text-sm border-purple-600 border rounded-md px-5 py-2"
-                        placeholder="Add tag , ex: study, work, lofi"
+                        placeholder="Add tag , ex: study, work, lofi [Optional]"
                       />
                     </div>
                     <div className="w-2/12 h-full text-right">
