@@ -22,7 +22,7 @@ const Dashboard = () => {
       </div>
       <div className="pt-10 -flow-col grid grid-cols-2 ">
         <h1 className=" text-2xl  ">New Arrival Templates...</h1>
-        
+
         <div className="flex justify-end">
           {" "}
           <button
@@ -33,13 +33,13 @@ const Dashboard = () => {
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
               viewBox="0 0 24 24"
-              stroke-width="1.5"
+              strokeWidth="1.5"
               stroke="currentColor"
               className="w-6 h-6"
             >
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18"
               />
             </svg>
@@ -68,25 +68,20 @@ const Dashboard = () => {
 
       <div className="flex flex-cols-5 pt-5  space-x-4 ">
         <button className=" bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20 ">
-         
-           template{" "}
+          template{" "}
         </button>
         <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20  ">
-         
           template{" "}
-       </button>
-       <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20 ">
-         
+        </button>
+        <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20 ">
           template{" "}
-       </button>
-       <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20  ">
-         
+        </button>
+        <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20  ">
           template{" "}
-       </button>
-       <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20  ">
-         
+        </button>
+        <button className="bg-slate-200 hover:border-blue-500  hover:bg-slate-300 hover:text-slate-500 group w-full flex flex-col items-center justify-center rounded-md text-slate-400 py-20  ">
           template{" "}
-       </button>
+        </button>
       </div>
       <h1 className=" pt-10 text-2xl">Recents design...</h1>
 
