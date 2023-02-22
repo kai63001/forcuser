@@ -11,6 +11,8 @@ const CreatePomodoros = (props: Props) => {
 
   const [continueToTemplate, setContinueToTemplate] = useState<boolean>(false);
 
+  const [selectTemplate, setSelectTemplate] = useState<string>("");
+
   const [error ,setError] = useState<any>({
     pomodoroName: "",
   })
@@ -56,6 +58,16 @@ const CreatePomodoros = (props: Props) => {
     setContinueToTemplate(true);
   };
 
+  //function create pomodoro
+  const createPomodoro = () => {
+    //check if template is selected
+    if (selectTemplate === "") return;
+    //create pomodoro
+    console.log("create pomodoro");
+    //close modal
+  };
+
+
   if (continueToTemplate) {
     return (
       <div
@@ -95,12 +107,10 @@ const CreatePomodoros = (props: Props) => {
                 <div className="mt-5 w-full">
                   {/* card with grid */}
                   <div className="grid grid-cols-3 gap-4">
-                    <CardComponent/>
-                    <CardComponent/>
-                    <CardComponent/>
-                    <CardComponent/>
-                    <CardComponent/>
-                    <CardComponent/>
+                    <CardComponent templateId="1" selectTemplateId={selectTemplate} setSelectTemplateId={setSelectTemplate}/>
+                    <CardComponent templateId="2" selectTemplateId={selectTemplate} setSelectTemplateId={setSelectTemplate}/>
+                    <CardComponent templateId="3" selectTemplateId={selectTemplate} setSelectTemplateId={setSelectTemplate}/>
+                    <CardComponent templateId="4" selectTemplateId={selectTemplate} setSelectTemplateId={setSelectTemplate}/>
                   </div>
                 </div>
               </div>
@@ -112,7 +122,7 @@ const CreatePomodoros = (props: Props) => {
               className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
               onClick={btnContinue}
             >
-              Continue
+              Create
             </button>
             <button
               type="button"
