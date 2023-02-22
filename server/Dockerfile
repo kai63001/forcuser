@@ -8,4 +8,5 @@ WORKDIR /app
 COPY . .
 RUN go get github.com/githubnemo/CompileDaemon
 RUN go install github.com/githubnemo/CompileDaemon
+EXPOSE 4000
 ENTRYPOINT CompileDaemon --build="go build main.go" --command="./main" -polling=true -polling-interval=100

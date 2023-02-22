@@ -4,7 +4,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from "next-auth/providers/credentials";
 import jwt from "jsonwebtoken";
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL_DOCKER;
 
 async function refreshAccessToken(tokenObject:any) {
     console.log("refreshAccessToken")
