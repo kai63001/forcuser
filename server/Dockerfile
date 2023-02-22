@@ -1,34 +1,11 @@
-# golang
+FROM golang:latest
 
-# Pull base image.
-
-FROM golang:1.19.2-alpine
-
-# Set the Current Working Directory inside the container
+ENV PROJECT_DIR=/app \
+    GO111MODULE=on \
+    CGO_ENABLED=0
 
 WORKDIR /app
-
-# Copy go mod and sum files
-
-COPY go.mod go.sum ./
-
-# Download all dependencies. Dependencies will be cached if the go.mod and the go.sum files are not changed
-
-RUN go mod download
-
-# Copy the source from the current directory to the Working Directory inside the container
-
 COPY . .
-
-RUN go install github.com/cosmtrek/air@latest
-
-
-EXPOSE 4000
-
-# Command to run the executable
-
-CMD ["air"]
-
-# docker build -t server .
-
-# docker run -p 8080:8080 server
+RUN go get github.com/githubnemo/CompileDaemon
+RUN go install github.com/githubnemo/CompileDaemon
+ENTRYPOINT CompileDaemon --build="go build main.go" --command="./main" -polling=true -polling-interval=100

@@ -10,5 +10,11 @@ type PomodoroType struct {
 
 func CreatePomodoro(c *fiber.Ctx) error {
 
+	//get post data
+	var pomodoro PomodoroType
+	if err := c.BodyParser(&pomodoro); err != nil {
+		return err
+	}
+
 	return c.SendString("Hello, Worldasd! s👋!asda")
 }
