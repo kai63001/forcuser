@@ -1,11 +1,15 @@
 import { useState } from "react";
 import CardComponent from "../card/card.component";
 import axios from "axios";
+import { useRouter } from "next/router";
 interface Props {
   setOpenModalCreate: (value: boolean) => void;
 }
 
 const CreatePomodoros = (props: Props) => {
+
+  const router = useRouter();
+
   const [pomodoroName, setPomodoroName] = useState<string>("");
 
   const [tagList, setTagList] = useState<string[]>([]);
@@ -79,7 +83,12 @@ const CreatePomodoros = (props: Props) => {
         })
         .then((res) => res.data);
       console.log(data);
-    } catch (error) {}
+      if(data.status === "success"){
+        router.push(`/dashboard/pomodoro/edit/${data.id}`);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   if (continueToTemplate) {
