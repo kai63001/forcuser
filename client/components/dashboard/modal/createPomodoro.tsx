@@ -23,8 +23,12 @@ const CreatePomodoros = (props: Props) => {
     //get input value
     if (e.target.tags.value === "") return;
     const tag = e.target.tags.value;
-    console.log(tag);
     //set to taglist
+    //check if tag is already in taglist
+    if (tagList.includes(tag)) {
+      e.target.tags.value = "";
+      return;
+    }
     setTagList([...tagList, tag]);
     //clear input
     e.target.tags.value = "";
@@ -75,9 +79,7 @@ const CreatePomodoros = (props: Props) => {
         })
         .then((res) => res.data);
       console.log(data);
-    } catch (error) {
-      
-    }
+    } catch (error) {}
   };
 
   if (continueToTemplate) {
