@@ -7,7 +7,6 @@ const ApiClient = () => {
   });
   instance.interceptors.request.use(async (request: any) => {
     const session: any = await getSession();
-    console.log(session.token);
 
     if (session) {
       request.headers.Authorization = `Bearer ${session.token}`;
