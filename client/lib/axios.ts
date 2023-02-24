@@ -1,9 +1,30 @@
-import axios from 'axios'
-// import cookieCutter from 'cookie-cutter'
+import axios from "axios";
+import { getSession } from "next-auth/react";
 
-axios.interceptors.request.use((config) => {
+const ApiClient = () => {
+  const instance = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
+  });
+  instance.interceptors.request.use(async (request: any) => {
+    const session: any = await getSession();
+    console.log(session.token);
 
-    return config;
-});
+    if (session) {
+      request.headers.Authorization = `Bearer ${session.token}`;
+    }
+    return request;
+  });
 
-export default axios
+  instance.interceptors.response.use(
+    (response) => {
+      return response;
+    },
+    (error) => {
+      console.log(`error`, error);
+    }
+  );
+
+  return instance;
+};
+
+export default ApiClient();

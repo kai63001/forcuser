@@ -1,6 +1,6 @@
 import { useState } from "react";
 import CardComponent from "../card/card.component";
-import axios from "axios";
+import axiosInterCep from "@/lib/axios";
 import { useRouter } from "next/router";
 interface Props {
   setOpenModalCreate: (value: boolean) => void;
@@ -75,8 +75,8 @@ const CreatePomodoros = (props: Props) => {
     console.log("create pomodoro");
     //close modal
     try {
-      const data = await axios
-        .post(`${process.env.NEXT_PUBLIC_API_URL}/pomodoro/create`, {
+      const data = await axiosInterCep
+        .post(`/pomodoro/create`, {
           pomodoroName: pomodoroName,
           templateId: selectTemplate,
           tag: tagList,

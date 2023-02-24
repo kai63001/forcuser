@@ -18,10 +18,10 @@ func main() {
 	app.Post("/auth/register", router.AuthRouterRegister)
 	app.Post("/auth/login", router.AuthRouteLogin)
 	app.Post("/auth/refreshToken", router.AuthRouterRefreshToken)
-	app.Post("/pomodoro/create", router.CreatePomodoro)
-	app.Get("/pomodoro/get/:id", router.GetPomodoroData)
 	app.Get("/", router.IndexRouter)
 	app.Use(middleware.AuthMiddleware)
+	app.Post("/pomodoro/create", router.CreatePomodoro)
+	app.Get("/pomodoro/get/:id", router.GetPomodoroData)
 
 	app.Listen(":4000")
 }

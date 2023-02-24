@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"focuser.com/server/db"
+	"focuser.com/server/middleware"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -27,9 +28,14 @@ func CreatePomodoro(c *fiber.Ctx) error {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}
 
+	//get user data
+	var user middleware.TokenUserData
+
+	user, _ = middleware.DecodeAuth(c)
+
 	//insert db
 
-	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag})
+	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag, "templateId": pomodoro.TemplateId, "userId": user.Id})
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}

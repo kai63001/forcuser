@@ -1,6 +1,6 @@
 import useAuth from "@/components/libs/useAuth";
 import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
-import axios from "axios";
+import axios from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
@@ -21,7 +21,7 @@ const PomodoroEditPage = (props:any) => {
   const getDataFromId = async () => {
 
     const data = await axios
-      .get(`${process.env.NEXT_PUBLIC_API_URL}/pomodoro/get/${props.id}`)
+      .get(`/pomodoro/get/${props.id}`)
     console.log("getData",data);
   };
 

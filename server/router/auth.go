@@ -24,6 +24,12 @@ type Token struct {
 	Refresh     string `json:"refresh"`
 }
 
+type TokenData struct {
+	Email string `json:"email"`
+	Id    string `bson:"_id,omitempty"`
+	jwt.StandardClaims
+}
+
 var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
 var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
 
@@ -170,8 +176,16 @@ func AuthRouterRefreshToken(c *fiber.Ctx) error {
 }
 
 func createToken(user *User) (string, string, error) {
+	//get _id from user bt email
+	var userDB TokenData
+	if err := db.ClientDB.Collection("users").FindOne(context.Background(), bson.M{"email": user.Email}).Decode(&userDB); err != nil {
+		return "", "", err
+	}
+
+	//jwt create access token
 	claims := jwt.MapClaims{
 		"email": user.Email,
+		"_id":   userDB.Id,
 		"iat":   time.Now().Unix(),
 		"exp":   time.Now().Add(time.Hour*24).Unix() * 1000,
 	}
