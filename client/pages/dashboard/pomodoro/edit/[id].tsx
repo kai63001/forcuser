@@ -4,11 +4,15 @@ import axios from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const PomodoroEditPage = (props:any) => {
+const PomodoroEditPage = (props: any) => {
   const [test, setTest] = useState("test");
   const router = useRouter();
   //check auth
   const isAuthenticated = useAuth(true);
+
+  const [toggleId, setToggleId] = useState(0);
+
+  // 5 = image
 
   useEffect(() => {
     init();
@@ -19,10 +23,16 @@ const PomodoroEditPage = (props:any) => {
   };
 
   const getDataFromId = async () => {
+    const data = await axios.get(`/pomodoro/get/${props.id}`);
+    console.log("getData", data);
+  };
 
-    const data = await axios
-      .get(`/pomodoro/get/${props.id}`)
-    console.log("getData",data);
+  const openToggle = (id: number) => {
+    if (id == toggleId) {
+      setToggleId(0);
+      return;
+    }
+    setToggleId(id);
   };
 
   if (isAuthenticated == false) {
@@ -32,7 +42,11 @@ const PomodoroEditPage = (props:any) => {
   return (
     <div className="flex">
       <div className="h-screen bg-black w-12 flex flex-col items-center space-y-10 pt-5">
-        <div className="text-white cursor-pointer px-3" id="upload image">
+        <div
+          className="text-white cursor-pointer px-3"
+          id="upload image"
+          onClick={() => openToggle(5)}
+        >
           <svg
             width="16"
             height="16"
@@ -64,19 +78,25 @@ const PomodoroEditPage = (props:any) => {
             />
           </svg>
         </div>
-        <div className="text-white">Ho</div>
       </div>
       <div className="w-full">
         <PomodoroV1 />
+      </div>
+      <div id="toggle">
+        {toggleId == 5 && (
+          <div className="absolute z-50 text-white left-[45px] bg-[#0f0f0f] w-2/12 h-screen px-5 py-4 top-0">
+            image upload
+          </div>
+        )}
       </div>
     </div>
   );
 };
 
 //get parame id
-export async function getServerSideProps(context:any) {
+export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  console.log("id", id)
+  console.log("id", id);
   return {
     props: {
       id: id,
