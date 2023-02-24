@@ -1,19 +1,28 @@
 import useAuth from "@/components/libs/useAuth";
 import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
+import axios from "axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const PomodoroEditPage = () => {
+const PomodoroEditPage = (props:any) => {
   const [test, setTest] = useState("test");
-
+  const router = useRouter();
   //check auth
   const isAuthenticated = useAuth(true);
 
   useEffect(() => {
     init();
+    getDataFromId();
   }, []);
   const init = () => {
     setTest("test2");
+  };
+
+  const getDataFromId = async () => {
+
+    const data = await axios
+      .get(`${process.env.NEXT_PUBLIC_API_URL}/pomodoro/get/${props.id}`)
+    console.log("getData",data);
   };
 
   if (isAuthenticated == false) {
@@ -63,5 +72,16 @@ const PomodoroEditPage = () => {
     </div>
   );
 };
+
+//get parame id
+export async function getServerSideProps(context:any) {
+  const { id } = context.query;
+  console.log("id", id)
+  return {
+    props: {
+      id: id,
+    },
+  };
+}
 
 export default PomodoroEditPage;
