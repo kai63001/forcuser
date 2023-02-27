@@ -84,11 +84,19 @@ const PomodoroEditPage = (props: any) => {
             <hr className="bg-gray-500 border-gray-500 my-2" />
             <h3>Custom Image</h3>
             <label htmlFor="uploadCustomImage" className="cursor-pointer">
-              <div className="bg-purple-400 text-white w-full h-28 flex mt-4 items-center text-center">
-                <div className="m-auto">Upload</div>
+              <div className="bg-purple-500 text-white w-full py-3 flex mt-4 items-center text-center rounded-md">
+                <div className="m-auto">Upload Image</div>
               </div>
             </label>
-            <input type="file" className="hidden" id="uploadCustomImage" />
+            {/* png,jpg */}
+            <input
+              type="file"
+              className="hidden"
+              id="uploadCustomImage"
+              accept="image/png, image/jpeg"
+            />
+
+            <h3 className="my-3">Recommended Wallpaper</h3>
           </div>
         )}
       </div>
