@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
 const PomodoroEditPage = (props: any) => {
-  const [test, setTest] = useState("test");
   const router = useRouter();
   //check auth
   const isAuthenticated = useAuth(true);
@@ -15,12 +14,8 @@ const PomodoroEditPage = (props: any) => {
   // 5 = image
 
   useEffect(() => {
-    init();
     getDataFromId();
   }, []);
-  const init = () => {
-    setTest("test2");
-  };
 
   const getDataFromId = async () => {
     const data = await axios.get(`/pomodoro/get/${props.id}`);
@@ -85,7 +80,15 @@ const PomodoroEditPage = (props: any) => {
       <div id="toggle">
         {toggleId == 5 && (
           <div className="absolute z-50 text-white left-[45px] bg-[#0f0f0f] w-2/12 h-screen px-5 py-4 top-0">
-            image upload
+            <h2 className="text-2xl">Background</h2>
+            <hr className="bg-gray-500 border-gray-500 my-2" />
+            <h3>Custom Image</h3>
+            <label htmlFor="uploadCustomImage" className="cursor-pointer">
+              <div className="bg-purple-400 text-white w-full h-28 flex mt-4 items-center text-center">
+                <div className="m-auto">Upload</div>
+              </div>
+            </label>
+            <input type="file" className="hidden" id="uploadCustomImage" />
           </div>
         )}
       </div>
