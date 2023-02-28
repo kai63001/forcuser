@@ -12,3 +12,16 @@ html,body {
   font-family: 'Fredoka One', cursive;
   font-display: swap;
 }
+
+/* scroll bar */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: #161616;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #1e1e1e;
+  border-radius: 10px;
+}
+

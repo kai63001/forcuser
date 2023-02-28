@@ -12,6 +12,13 @@ const PomodoroEditPage = (props: any) => {
 
   const [toggleId, setToggleId] = useState(0);
 
+  const [template,setTemplate] = useState({
+    wallpaper: {
+      type: 0,
+      url: "",
+    }
+  })
+
   // 5 = image
 
   useEffect(() => {
