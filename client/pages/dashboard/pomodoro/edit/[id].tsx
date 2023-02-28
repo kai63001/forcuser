@@ -4,6 +4,7 @@ import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
 import axios from "@/lib/axios";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 
 const PomodoroEditPage = (props: any) => {
   const router = useRouter();
@@ -12,12 +13,12 @@ const PomodoroEditPage = (props: any) => {
 
   const [toggleId, setToggleId] = useState(0);
 
-  const [template,setTemplate] = useState({
+  const [template, setTemplate] = useState<PomodoroV1State>({
     wallpaper: {
       type: 0,
       url: "",
-    }
-  })
+    },
+  });
 
   // 5 = image
 
@@ -83,11 +84,11 @@ const PomodoroEditPage = (props: any) => {
         </div>
       </div>
       <div className="w-full">
-        <PomodoroV1 />
+        <PomodoroV1 template={template} />
       </div>
       <div id="toggle">
         {toggleId == 5 && (
-          <UploadWallpaper/>
+          <UploadWallpaper setTemplate={setTemplate} template={template} />
         )}
       </div>
     </div>

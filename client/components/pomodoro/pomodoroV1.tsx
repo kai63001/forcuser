@@ -1,10 +1,14 @@
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const PomodoroWidget = dynamic(() => import('./widget/middle/pomodoroWidget'))
-const SpotifyPlayer = dynamic(() => import('./widget/musicPlayer/spotifyPlayer'))
+const PomodoroWidget = dynamic(() => import("./widget/middle/pomodoroWidget"));
+const SpotifyPlayer = dynamic(
+  () => import("./widget/musicPlayer/spotifyPlayer")
+);
 
-const PomodoroV1 = () => {
+import { PomodoroV1Props } from "@/components/pomodoro/type/pomodoroV1";
+
+const PomodoroV1 = (props: PomodoroV1Props) => {
   const preventDragHandler = (e: any) => {
     e.preventDefault();
   };
@@ -55,7 +59,7 @@ const PomodoroV1 = () => {
         <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
         <Image
-          src="/demo/demo.jpg"
+          src={`${props.template.wallpaper.url || "/demo/demo.jpg"}`}
           alt="Focuser Background"
           unoptimized={true}
           fill
