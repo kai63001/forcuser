@@ -15,7 +15,7 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
     },
     {
       id: 2,
-      url: "https://images2.alphacoders.com/130/1301855.jpg",
+      url: "https://images2.alphacoders.com/130/1300189.jpg",
       type: 0,
     },
     {
@@ -61,7 +61,6 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
   ];
 
   const selectWallpaper = (id: number, url: string) => {
-    console.log("select wallpaper", id);
     props.setTemplate({
         ...props.template,
         wallpaper: {

@@ -232,14 +232,16 @@ const SpotifyPlayer = () => {
                   </svg>
                 )}
               </div>
-              <Image
-                src={musicPlayerInfo.thumbnail_url}
-                fill
-                style={{ objectFit: "cover" }}
-                className="rounded-md"
-                unoptimized={true}
-                alt={musicPlayerInfo.title}
-              />
+              {musicPlayerInfo.thumbnail_url && (
+                <Image
+                  src={musicPlayerInfo.thumbnail_url}
+                  fill
+                  style={{ objectFit: "cover" }}
+                  className="rounded-md"
+                  unoptimized={true}
+                  alt={musicPlayerInfo.title}
+                />
+              )}
             </div>
             <div className="w-60">
               <p className="text-sm font-semibold truncate animate-marquee">
@@ -328,7 +330,17 @@ const SpotifyPlayer = () => {
         </div>
         {previewOrNot && (
           <div className="px-3 pb-2">
-            <p className="text-[12px] text-gray-400 text-center">To listen to music more than 30 seconds please login <Link className="text-green-500" href={`https://accounts.spotify.com/en/login`} target={`_blank`} >spotify</Link>.</p>
+            <p className="text-[12px] text-gray-400 text-center">
+              To listen to music more than 30 seconds please login{" "}
+              <Link
+                className="text-green-500"
+                href={`https://accounts.spotify.com/en/login`}
+                target={`_blank`}
+              >
+                spotify
+              </Link>
+              .
+            </p>
           </div>
         )}
       </div>
