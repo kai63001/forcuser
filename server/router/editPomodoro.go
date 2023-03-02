@@ -1,8 +1,6 @@
 package router
 
 import (
-	"fmt"
-
 	"focuser.com/server/db"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
@@ -36,12 +34,12 @@ func EditPomodoro(c *fiber.Ctx) error {
 	}
 
 	//print data
-	fmt.Println(editPomodoro)
+	// fmt.Println(editPomodoro)
 
 	//update data
 	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro}}).Err(); err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}
 
-	return c.SendString("EditPomodoro")
+	return c.Status(409).JSON(bson.M{"status": "success", "error": "update success"})
 }
