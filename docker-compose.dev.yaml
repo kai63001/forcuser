@@ -34,6 +34,17 @@ services:
       - REDIS_PASSWORD=password123
     volumes:
       - ./redis:/data
+  # gowissness
+  gowitness:
+    image: "leonjza/gowitness:latest"
+    restart: unless-stopped
+    command: gowitness server --address 0.0.0.0:7171
+    expose:
+      - 7171
+    ports:
+      - "7171:7171"
+    networks:
+      - my-network
 volumes:
   data:
 networks:

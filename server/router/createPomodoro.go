@@ -32,10 +32,13 @@ func CreatePomodoro(c *fiber.Ctx) error {
 	var user middleware.TokenUserData
 
 	user, _ = middleware.DecodeAuth(c)
+	//convert user.id to primitive.ObjectID
+	var newId primitive.ObjectID
+	newId, _ = primitive.ObjectIDFromHex(user.Id)
 
 	//insert db
 
-	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag, "templateId": pomodoro.TemplateId, "userId": user.Id})
+	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag, "templateId": pomodoro.TemplateId, "userId": newId})
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}
