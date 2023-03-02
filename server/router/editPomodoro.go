@@ -3,8 +3,10 @@ package router
 import (
 	"fmt"
 
+	"focuser.com/server/db"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // template: {
@@ -24,6 +26,10 @@ type EditPomodoroDataType struct {
 
 func EditPomodoro(c *fiber.Ctx) error {
 
+	var id = c.Params("id")
+	var newId primitive.ObjectID
+	newId, _ = primitive.ObjectIDFromHex(id)
+
 	var editPomodoro EditPomodoroDataType
 	if err := c.BodyParser(&editPomodoro); err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
@@ -31,6 +37,11 @@ func EditPomodoro(c *fiber.Ctx) error {
 
 	//print data
 	fmt.Println(editPomodoro)
+
+	//update data
+	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro}}).Err(); err != nil {
+		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+	}
 
 	return c.SendString("EditPomodoro")
 }

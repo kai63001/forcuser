@@ -4,7 +4,7 @@ import axios from "@/lib/axios";
 const SaveWidget = (props: PomodoroV1Props) => {
   const save = async () => {
     console.log(props);
-    const data = await axios.post(`/pomodoro/edit/123123`, props.template);
+    const data = await axios.post(`/pomodoro/edit/${props.id}`, props.template);
     console.log(data);
   };
 

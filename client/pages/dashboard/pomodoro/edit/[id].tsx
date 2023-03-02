@@ -127,7 +127,7 @@ const PomodoroEditPage = (props: any) => {
           <MusicPlayer setTemplate={setTemplate} template={template} />
         )}
       </div>
-      <SaveWidget template={template} />
+      <SaveWidget template={template} id={props.id} />
     </div>
   );
 };
