@@ -25,11 +25,14 @@ const PomodoroEditPage = (props: any) => {
   });
 
   //function check owner
-  const checkOwner = (data: any) => {
+  const checkOwner = async (data: any) => {
     // console.log(data)
-    // console.log(session.token)
+    // console.log(session)
+    if(!session){
+      return
+    }
     //decode jwt
-    const token = session.token;
+    const token = await session.token;
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace("-", "+").replace("_", "/");
     const decodedData = JSON.parse(window.atob(base64));
