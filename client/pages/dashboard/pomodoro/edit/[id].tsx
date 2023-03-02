@@ -6,8 +6,10 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import MusicPlayer from "@/components/editPomodoro/musicPlayer";
-
+import { useSession } from "next-auth/react";
 const PomodoroEditPage = (props: any) => {
+  const { data: session }: any = useSession();
+
   const router = useRouter();
   //check auth
   const isAuthenticated = useAuth(true);
@@ -21,6 +23,21 @@ const PomodoroEditPage = (props: any) => {
     },
   });
 
+  //function check owner
+  const checkOwner = (data: any) => {
+    // console.log(data)
+    // console.log(session.token)
+    //decode jwt
+    const token = session.token;
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace("-", "+").replace("_", "/");
+    const decodedData = JSON.parse(window.atob(base64));
+    // console.log(decodedData._id,data.userId);
+    if (data.userId != decodedData._id) {
+      router.push("/dashboard");
+    }
+  };
+
   // 5 = image
 
   useEffect(() => {
@@ -30,6 +47,7 @@ const PomodoroEditPage = (props: any) => {
   const getDataFromId = async () => {
     const data = await axios.get(`/pomodoro/get/${props.id}`);
     console.log("getData", data);
+    checkOwner(data.data.data);
   };
 
   const openToggle = (id: number) => {
