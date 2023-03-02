@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import MusicPlayer from "@/components/editPomodoro/musicPlayer";
 import { useSession } from "next-auth/react";
+import SaveWidget from "@/components/editPomodoro/saveWidget";
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
 
@@ -123,6 +124,7 @@ const PomodoroEditPage = (props: any) => {
           <MusicPlayer setTemplate={setTemplate} template={template} />
         )}
       </div>
+      <SaveWidget template={template} />
     </div>
   );
 };
