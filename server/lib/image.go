@@ -72,7 +72,7 @@ func GetImage(site string) {
 		fmt.Println("Error converting image:", err)
 		return
 	}
-	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 75})
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 75, Compression: 6, Width: 640, Height: 321})
 	if err != nil {
 		fmt.Println("Error processed image:", err)
 		return
