@@ -65,7 +65,6 @@ func GetImage(site string) {
 	// fmt.Println("Encoded Image Data:", imageDataEncoded)
 
 	// respBody to png file
-	ioutil.WriteFile("test.png", respBody, 0644)
 
 	//optimize image with bimg
 
@@ -89,7 +88,7 @@ func GetImage(site string) {
 			"DO00N7N3Z4UAAF22FKCP",
 			"UNnMNaCknnZyiPl+YESDZw02pKf1qxpV2h7TNLPMI9o",
 			""),
-		Endpoint: aws.String("sgp1.digitaloceanspaces.com"),
+		Endpoint: aws.String("sgp1.digitaloceanspaces.com/screenshot"),
 		Region:   aws.String("sgp1"),
 	}
 
