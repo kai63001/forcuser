@@ -7,6 +7,10 @@ import (
 	"net/http"
 	"strings"
 
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
+	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"github.com/google/uuid"
 	"github.com/h2non/bimg"
 )
@@ -78,6 +82,36 @@ func GetImage(site string) {
 		return
 	}
 
-	ioutil.WriteFile(filename, processed, 0644)
+	// ioutil.WriteFile(filename, processed, 0644)
+
+	s3Config := &aws.Config{
+		Credentials: credentials.NewStaticCredentials(
+			"DO00N7N3Z4UAAF22FKCP",
+			"UNnMNaCknnZyiPl+YESDZw02pKf1qxpV2h7TNLPMI9o",
+			""),
+		Endpoint: aws.String("sgp1.digitaloceanspaces.com"),
+		Region:   aws.String("sgp1"),
+	}
+
+	newSession := session.New(s3Config)
+	s3Client := s3.New(newSession)
+
+	size := int64(len(processed))
+
+	object := s3.PutObjectInput{
+		Bucket:             aws.String("focuserimage"),
+		Key:                aws.String(filename),
+		Body:               bytes.NewReader(processed),
+		ContentLength:      aws.Int64(size),
+		ContentType:        aws.String(http.DetectContentType(processed)),
+		ContentDisposition: aws.String("attachment"),
+		ACL:                aws.String("public-read"),
+	}
+
+	fmt.Printf("%v\n", object)
+	_, err = s3Client.PutObject(&object)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
 
 }

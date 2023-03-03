@@ -25,7 +25,7 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
     },
     {
       id: 4,
-      url: "https://images2.alphacoders.com/130/1301855.jpg",
+      url: "https://focuserimage.sgp1.cdn.digitaloceanspaces.com/bd9b77b0518d492186d2ee1950b80009.webp",
       type: 0,
     },
     {
