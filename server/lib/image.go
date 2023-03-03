@@ -85,11 +85,10 @@ func GetImage(site string) {
 
 	s3Config := &aws.Config{
 		Credentials: credentials.NewStaticCredentials(
-			"DO00N7N3Z4UAAF22FKCP",
-			"UNnMNaCknnZyiPl+YESDZw02pKf1qxpV2h7TNLPMI9o",
+			"AKIAXBH2BFUXL66TCIWO",
+			"4CZ1kzSBJIKIo0XGnSfrKS8HT4D/or73ikMkYnw4",
 			""),
-		Endpoint: aws.String("sgp1.digitaloceanspaces.com/screenshot"),
-		Region:   aws.String("sgp1"),
+		Region: aws.String("us-east-2"),
 	}
 
 	newSession := session.New(s3Config)
