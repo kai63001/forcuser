@@ -3,6 +3,7 @@ package router
 import (
 	"context"
 	"fmt"
+	"os"
 	"time"
 
 	"focuser.com/server/db"
@@ -30,8 +31,8 @@ type TokenData struct {
 	jwt.StandardClaims
 }
 
-var accestTokenSecret = []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#(")
-var refreshTokenSecret = []byte("refrshsceretRomeoKeyjiosddfjiojioj12io3ji0U*!@#&@!*#&!@*(#&!*(@#&*(!@(#)")
+var accestTokenSecret = []byte(os.Getenv("ACCESS_TOKEN_SECRET"))
+var refreshTokenSecret = []byte(os.Getenv("REFRESH_TOKEN_SECRET"))
 
 // AuthRouterRegister takes a pointer to a fiber.Ctx object and returns an error
 func AuthRouterRegister(c *fiber.Ctx) error {

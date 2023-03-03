@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -85,8 +86,8 @@ func GetImage(site string) {
 
 	s3Config := &aws.Config{
 		Credentials: credentials.NewStaticCredentials(
-			"AKIAXBH2BFUXL66TCIWO",
-			"4CZ1kzSBJIKIo0XGnSfrKS8HT4D/or73ikMkYnw4",
+			os.Getenv("S3_BUCKET_KEY"),
+			os.Getenv("S3_SECRET_KEY"),
 			""),
 		Region: aws.String("us-east-2"),
 	}
@@ -98,7 +99,7 @@ func GetImage(site string) {
 
 	object := s3.PutObjectInput{
 		Bucket:             aws.String("focuserimage"),
-		Key:                aws.String(filename),
+		Key:                aws.String("screenshot/" + filename),
 		Body:               bytes.NewReader(processed),
 		ContentLength:      aws.Int64(size),
 		ContentType:        aws.String(http.DetectContentType(processed)),

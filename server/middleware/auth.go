@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"os"
 	"strings"
 
 	"github.com/gofiber/fiber/v2"
@@ -30,7 +31,7 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized
 		}
-		return []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#("), nil
+		return []byte(os.Getenv("ACCESS_TOKEN_SECRET")), nil
 	})
 	if err != nil {
 		return c.Status(401).JSON(fiber.Map{"status": "error", "error": "Unauthorized"})
@@ -48,7 +49,7 @@ func DecodeAuth(c *fiber.Ctx) (TokenUserData, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized
 		}
-		return []byte("secretRomeoKey@#!@#(!@*#()!@#*()!@*)#("), nil
+		return []byte(os.Getenv("ACCESS_TOKEN_SECRET")), nil
 	})
 	if err != nil {
 		return TokenUserData{}, err
