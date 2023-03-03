@@ -1,12 +1,8 @@
 package router
 
 import (
-	"bytes"
-	"fmt"
-	"io/ioutil"
-	"net/http"
-
 	"focuser.com/server/db"
+	"focuser.com/server/lib"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -46,56 +42,6 @@ func EditPomodoro(c *fiber.Ctx) error {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}
 
-	getImage("github.com/kbinani/screenshot")
+	lib.GetImage("google.com")
 	return c.Status(200).JSON(bson.M{"status": "success", "error": "update success"})
-}
-
-func getImage(site string) {
-	//http://localhost:7171/api/screenshot
-
-	// use gowitness api to screenshot website
-
-	//http post request to http://localhost:7171/api/screenshot
-	requestBody := []byte(`{"url": "http://client:3000", "oneshot": "true"}`)
-
-	// Create a new HTTP POST request
-	req, err := http.NewRequest("POST", "http://gowitness:7171/api/screenshot", bytes.NewBuffer(requestBody))
-	if err != nil {
-		fmt.Println("Error creating HTTP request:", err)
-		return
-	}
-
-	// Set the request header content-type
-	req.Header.Set("Content-Type", "application/json")
-
-	// Send the request
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-
-		fmt.Println("Error sending HTTP request:", err)
-		return
-	}
-
-	// Read the response body
-	respBody, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-
-		fmt.Println("Error reading HTTP response:", err)
-		return
-	}
-	//respBody binary data to base64
-
-	// Print the response body
-	// fmt.Println(string(respBody))
-
-	//!base 64
-	// imageDataEncoded := base64.StdEncoding.EncodeToString(respBody)
-
-	// Print the encoded data
-	// fmt.Println("Encoded Image Data:", imageDataEncoded)
-
-	// respBody to png file
-	ioutil.WriteFile("test.png", respBody, 0644)
-
 }
