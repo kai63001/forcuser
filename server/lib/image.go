@@ -54,20 +54,6 @@ func GetImage(site string) {
 		fmt.Println("Error reading HTTP response:", err)
 		return
 	}
-	//respBody binary data to base64
-
-	// Print the response body
-	// fmt.Println(string(respBody))
-
-	//!base 64
-	// imageDataEncoded := base64.StdEncoding.EncodeToString(respBody)
-
-	// Print the encoded data
-	// fmt.Println("Encoded Image Data:", imageDataEncoded)
-
-	// respBody to png file
-
-	//optimize image with bimg
 
 	filename := strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
 	fmt.Println("filename:", filename)
