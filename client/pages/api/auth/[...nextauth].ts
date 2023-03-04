@@ -103,7 +103,7 @@ export const options = {
     providers,
     callbacks,
     pages: {},
-    secret: 'secretRomeoKey@#!@#(!@*#()!@#*()!@*)#('
+    secret: process.env.NEXT_PUBLIC_SECRET_JWT
 }
 
 const Auth = (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, options)

@@ -4,7 +4,7 @@ import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
 const DemoLofi = () => {
   return (
     <Layout>
-      <PomodoroV1 />
+      {/* <PomodoroV1 /> */}
     </Layout>
   );
 };
