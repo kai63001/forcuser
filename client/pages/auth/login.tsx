@@ -4,11 +4,11 @@ import Input from "@/components/libs/Input";
 import React, { useEffect, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import useAuth from "@/components/libs/useAuth";
+import UseAuth from "@/components/libs/useAuth";
 import Layout from "@/components/Layout";
 
 const Login = () => {
-  const isAuthenticated = useAuth(true);
+  const isAuthenticated = UseAuth(true);
   const router = useRouter();
 
   const [error, setError]: any = useState({});

@@ -1,5 +1,4 @@
 import UploadWallpaper from "@/components/editPomodoro/uploadWallpaper";
-import useAuth from "@/components/libs/useAuth";
 import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
 import axios from "@/lib/axios";
 import { useRouter } from "next/router";
@@ -8,12 +7,13 @@ import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import MusicPlayer from "@/components/editPomodoro/musicPlayer";
 import { useSession } from "next-auth/react";
 import SaveWidget from "@/components/editPomodoro/saveWidget";
+import UseAuth from "@/components/libs/useAuth";
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
 
   const router = useRouter();
   //check auth
-  const isAuthenticated = useAuth(true);
+  const isAuthenticated = UseAuth(true);
 
   const [toggleId, setToggleId] = useState(0);
 

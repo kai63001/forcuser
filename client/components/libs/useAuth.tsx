@@ -2,7 +2,7 @@ import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-export default function useAuth(shouldRedirect:any) {
+export default function UseAuth(shouldRedirect:any) {
     const { data: session }:any = useSession();
     const router = useRouter();
     const [isAuthenticated, setIsAuthenticated] = useState(false);

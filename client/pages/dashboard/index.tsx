@@ -1,9 +1,8 @@
 import Layout from "@/components/dashboard/Layout";
-import useAuth from "@/components/libs/useAuth";
+import UseAuth from "@/components/libs/useAuth";
 
 const Dashboard = () => {
-  const isAuthenticated = useAuth(true);
-  //   console.log(isAuthenticated);
+  const isAuthenticated = UseAuth(true);
   if (isAuthenticated == false) {
     return <div></div>;
   }

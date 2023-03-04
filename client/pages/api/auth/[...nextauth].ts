@@ -6,7 +6,7 @@ import jwt from "jsonwebtoken";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL_DOCKER;
 
-async function refreshAccessToken(tokenObject:any) {
+async function RefreshAccessToken(tokenObject:any) {
     console.log("refreshAccessToken")
     try {
         const tokenResponse = await axios.post(API_URL + '/auth/refreshToken', {
@@ -75,7 +75,7 @@ const callbacks = {
         // console.log("jwt EXP",token.exp < Date.now(),token.exp, Date.now())
         //if token expired, refresh it
         if (token.exp && token.exp < Date.now()) {
-            token = refreshAccessToken(token);
+            token = RefreshAccessToken(token);
         }
 
         return Promise.resolve(token);
@@ -99,12 +99,12 @@ const callbacks = {
     },
 }
 
-export const options = {
+export const Options = {
     providers,
     callbacks,
     pages: {},
     secret: process.env.NEXT_PUBLIC_SECRET_JWT
 }
 
-const Auth = (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, options)
+const Auth = (req: NextApiRequest, res: NextApiResponse<any>) => NextAuth(req, res, Options)
 export default Auth;
