@@ -40,10 +40,6 @@ const DashboardLayout = (props: LayoutInterface) => {
     };
   }, [dropdown]);
 
-  const openDropdownOrClose = () => {
-    setOpenDropdown(!openDropdown);
-  };
-
   const listNavbar = [
     {
       name: "Home",
@@ -131,7 +127,7 @@ const DashboardLayout = (props: LayoutInterface) => {
               <div className="mr-5 flex space-x-7">
                 <button
                   className="bg-purple-600 text-white px-5 py-2 rounded-md"
-                  onClick={openDropdownOrClose}
+                  onClick={() => setOpenModalCreate(true)}
                 >
                   Create a Pomodoro
                 </button>
@@ -180,7 +176,10 @@ const DashboardLayout = (props: LayoutInterface) => {
                 </div>
                 {/* dropdown */}
                 {openDropdown && (
-                  <div ref={dropdown} className="absolute top-0 right-0">
+                  <div
+                    ref={dropdown}
+                    className="absolute top-14 right-2 bg-white px-3 py-2 shadow-md rounded-lg w-40"
+                  >
                     <div>asdas</div>
                   </div>
                 )}
