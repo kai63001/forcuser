@@ -9,14 +9,41 @@ type LayoutInterface = {
 import { useRouter } from "next/router";
 import { signOut } from "next-auth/react";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 
 const ModalCreatePomodoro = dynamic(() => import("./modal/createPomodoro"));
 
 const DashboardLayout = (props: LayoutInterface) => {
   const [openModalCreate, setOpenModalCreate] = useState(false);
+
+  const [openDropdown, setOpenDropdown] = useState(false);
+  const dropdown: any = useRef(null);
+  const userImageDropdown: any = useRef(null);
+
   const router = useRouter();
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        dropdown.current &&
+        !dropdown.current.contains(event.target) &&
+        userImageDropdown.current &&
+        !userImageDropdown.current.contains(event.target)
+      ) {
+        setOpenDropdown(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdown]);
+
+  const openDropdownOrClose = () => {
+    setOpenDropdown(!openDropdown);
+  };
+
   const listNavbar = [
     {
       name: "Home",
@@ -57,8 +84,10 @@ const DashboardLayout = (props: LayoutInterface) => {
     <>
       <Header title={props.title} des={props.des} image={props.image} />
       <div className="flex flex-item-fluid flex-nowrap">
-        {openModalCreate && <ModalCreatePomodoro setOpenModalCreate={setOpenModalCreate}/>}
-        
+        {openModalCreate && (
+          <ModalCreatePomodoro setOpenModalCreate={setOpenModalCreate} />
+        )}
+
         <aside className="" aria-label="Sidebar">
           <div className="py-4 overflow-y-auto w-64 h-full bg-white fixed z-10 border-r-2">
             <div className="ml-5 text-2xl franger mb-4">Focuser</div>
@@ -100,7 +129,10 @@ const DashboardLayout = (props: LayoutInterface) => {
             <div className="flex justify-between items-center h-full">
               <div className="ml-5 text-2xl franger">Focuser</div>
               <div className="mr-5 flex space-x-7">
-                <button className="bg-purple-600 text-white px-5 py-2 rounded-md" onClick={(e)=>setOpenModalCreate(true)}>
+                <button
+                  className="bg-purple-600 text-white px-5 py-2 rounded-md"
+                  onClick={openDropdownOrClose}
+                >
                   Create a Pomodoro
                 </button>
                 <div className="flex items-center">
@@ -133,7 +165,12 @@ const DashboardLayout = (props: LayoutInterface) => {
                     />
                   </svg>
                 </div>
-                <div className="flex items-center">
+                {/* avatar */}
+                <div
+                  className="flex items-center cursor-pointer"
+                  ref={userImageDropdown}
+                  onClick={() => setOpenDropdown((b) => !b)}
+                >
                   <Image
                     src="/icon/man.png"
                     alt="Picture of the author"
@@ -141,6 +178,12 @@ const DashboardLayout = (props: LayoutInterface) => {
                     height={40}
                   />
                 </div>
+                {/* dropdown */}
+                {openDropdown && (
+                  <div ref={dropdown} className="absolute top-0 right-0">
+                    <div>asdas</div>
+                  </div>
+                )}
               </div>
             </div>
           </div>
