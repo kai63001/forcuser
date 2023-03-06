@@ -105,18 +105,6 @@ const DashboardLayout = (props: LayoutInterface) => {
                   </li>
                 );
               })}
-              <li>
-                <a
-                  onClick={() =>
-                    signOut({
-                      callbackUrl: "/auth/login",
-                    })
-                  }
-                  className={`flex items-center pl-5 py-3 text-base font-normal text-gray-500`}
-                >
-                  Sign out
-                </a>
-              </li>
             </ul>
           </div>
         </aside>
@@ -178,9 +166,28 @@ const DashboardLayout = (props: LayoutInterface) => {
                 {openDropdown && (
                   <div
                     ref={dropdown}
-                    className="absolute top-14 right-2 bg-white px-3 py-2 shadow-md rounded-lg w-40"
+                    className="absolute top-14 right-2 bg-white px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
                   >
-                    <div>asdas</div>
+                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                      Profile
+                    </div>
+                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                      Settings
+                    </div>
+                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                      Subscription
+                    </div>
+                    <hr />
+                    <div
+                      className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md"
+                      onClick={() =>
+                        signOut({
+                          callbackUrl: "/auth/login",
+                        })
+                      }
+                    >
+                      Sign out
+                    </div>
                   </div>
                 )}
               </div>
