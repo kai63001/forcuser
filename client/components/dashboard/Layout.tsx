@@ -86,7 +86,7 @@ const DashboardLayout = (props: LayoutInterface) => {
 
         <aside className="" aria-label="Sidebar">
           <div className="py-4 overflow-y-auto w-64 h-full bg-white fixed z-10 border-r-2">
-            <div className="ml-5 text-2xl franger mb-4">Focuser</div>
+            <div className="ml-5 text-2xl franger mb-4">Focusify</div>
             <ul className="space-y-2 px-5 mt-10">
               {listNavbar.map((item, index) => {
                 return (
@@ -95,7 +95,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                       href="#"
                       className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${
                         router.asPath == item.link
-                          ? "text-white bg-purple-500"
+                          ? "text-white bg-purple-600"
                           : "text-gray-500"
                       }`}
                     >
@@ -111,14 +111,8 @@ const DashboardLayout = (props: LayoutInterface) => {
         <main className="w-full">
           <div className="bg-white h-16 w-full fixed border-b-2 z-20">
             <div className="flex justify-between items-center h-full">
-              <div className="ml-5 text-2xl franger">Focuser</div>
+              <div className="ml-5 text-2xl franger">Focusify</div>
               <div className="mr-5 flex space-x-7">
-                <button
-                  className="bg-purple-600 text-white px-5 py-2 rounded-md"
-                  onClick={() => setOpenModalCreate(true)}
-                >
-                  Create a Pomodoro
-                </button>
                 <div className="flex items-center">
                   <svg
                     width="14"
@@ -149,6 +143,12 @@ const DashboardLayout = (props: LayoutInterface) => {
                     />
                   </svg>
                 </div>
+                <button
+                  className="bg-purple-600 text-white px-5 py-2 rounded-md"
+                  onClick={() => setOpenModalCreate(true)}
+                >
+                  Create a Focus
+                </button>
                 {/* avatar */}
                 <div
                   className="flex items-center cursor-pointer"
