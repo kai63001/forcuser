@@ -37,7 +37,7 @@ services:
   # gowissness
   gowitness:
     image: "leonjza/gowitness:latest"
-    restart: unless-stopped
+    # restart: unless-stopped
     command: gowitness server --address 0.0.0.0:7171
     expose:
       - 7171
