@@ -1,11 +1,31 @@
 import Image from "next/image";
 import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const HomeCard = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
   const openDropdown = (e: any) => {
     e.preventDefault();
+    setIsOpen(!isOpen);
   };
 
+  const dropdown: any = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: any) => {
+      if (
+        dropdown.current &&
+        !dropdown.current.contains(event.target)
+      ) {
+        setIsOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [dropdown]);
   return (
     <Link href="/dashboard/myfocus">
       <div className="bg-white rounded-md group cursor-pointer">
@@ -16,8 +36,11 @@ const HomeCard = () => {
             fill
             className="rounded-md"
           />
-          <div className="absolute right-1 top-1 z-30 opacity-0 group-hover:opacity-100 duration-200">
-            <div className="bg-white hover:bg-purple-600 hover:text-white px-2 py-1 shadow-md rounded-md" onClick={openDropdown}>
+          <div className={`absolute right-1 top-1 z-30 opacity-0 group-hover:opacity-100 duration-200 ${isOpen && 'opacity-100'}`}>
+            <div
+              className={`${isOpen ? 'bg-purple-600 text-white' : 'bg-white'} hover:bg-purple-600 hover:text-white px-2 py-1 shadow-md rounded-md`}
+              onClick={openDropdown}
+            >
               <svg
                 fill="currentColor"
                 className=""
@@ -36,6 +59,15 @@ const HomeCard = () => {
               </svg>
             </div>
           </div>
+          {isOpen && (
+            <div ref={dropdown} onClick={(e)=>e.preventDefault()} className="absolute right-1 top-8 bg-white py-1 rounded-md shadow-md">
+              <div className="flex flex-col space-y-2 w-52">
+                <div className="cursor-pointer hover:bg-gray-200 px-2 py-1 text-sm">
+                  Edit
+                </div>
+              </div>
+            </div>
+          )}
         </div>
         <p className="text-gray-800 mt-2">My Lofi Study</p>
       </div>
