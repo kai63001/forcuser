@@ -2,6 +2,7 @@ package lib
 
 import (
 	"bytes"
+	"encoding/base64"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -56,7 +57,7 @@ func GetImage(site string) (string, error) {
 	}
 
 	filename := strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
-	fmt.Println("filename:", filename)
+	// fmt.Println("filename:", filename)
 	converted, err := bimg.NewImage(respBody).Convert(bimg.WEBP)
 	if err != nil {
 		fmt.Println("Error converting image:", err)
@@ -70,6 +71,51 @@ func GetImage(site string) (string, error) {
 
 	// ioutil.WriteFile(filename, processed, 0644)
 
+	refilename, reerr := UploadToS3(processed, filename, "screenshot")
+	if reerr != nil {
+		fmt.Println("Error uploading image:", err)
+		return "", err
+	}
+	return refilename, nil
+
+}
+
+func UploadImage(base64String string) (string, error) {
+	// base64 convert to []byte
+	//decode base64 to []byte
+	//slice the base64 string to get the data
+	b64data := base64String[strings.IndexByte(base64String, ',')+1:]
+	decoded, err := base64.StdEncoding.DecodeString(b64data)
+
+	if err != nil {
+		fmt.Println("Error decoding image:", err)
+		return "", err
+	}
+	//decode to buffer
+	buf := bytes.NewBuffer(decoded)
+
+	filename := strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
+	converted, err := bimg.NewImage([]byte(buf.String())).Convert(bimg.WEBP)
+	if err != nil {
+		fmt.Println("Error converting image:", err)
+	}
+	// fmt.Println("converted:", []byte(base64))
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1960, Height: 1080})
+	if err != nil {
+		fmt.Println("Error processed image:", err)
+	}
+
+	refilename, reerr := UploadToS3(processed, filename, "wallpapers")
+	if reerr != nil {
+		fmt.Println("Error uploading image:", err)
+		return "", err
+	}
+	return refilename, nil
+}
+
+// func Base64ConvertToByte(base64 string) ([]byte, error) {
+
+func UploadToS3(processed []byte, filename string, path string) (string, error) {
 	s3Config := &aws.Config{
 		Credentials: credentials.NewStaticCredentials(
 			os.Getenv("S3_BUCKET_KEY"),
@@ -85,7 +131,7 @@ func GetImage(site string) (string, error) {
 
 	object := s3.PutObjectInput{
 		Bucket:             aws.String("focuserimage"),
-		Key:                aws.String("screenshot/" + filename),
+		Key:                aws.String(path + "/" + filename),
 		Body:               bytes.NewReader(processed),
 		ContentLength:      aws.Int64(size),
 		ContentType:        aws.String(http.DetectContentType(processed)),
@@ -93,12 +139,12 @@ func GetImage(site string) (string, error) {
 		ACL:                aws.String("public-read"),
 	}
 
-	fmt.Printf("%v\n", object)
-	_, err = s3Client.PutObject(&object)
+	// fmt.Printf("%v\n", object)
+	_, err := s3Client.PutObject(&object)
 	if err != nil {
 		fmt.Println(err.Error())
+		return "", err
 	}
 
-	return "screenshot/" + filename, nil
-
+	return path + "/" + filename, nil
 }

@@ -34,6 +34,19 @@ func EditPomodoro(c *fiber.Ctx) error {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
+	//check if type is equal 0 upload image
+	if editPomodoro.Wallpaper.Type == 0 {
+		//read type base64 image
+
+		//upload image
+		path, err := lib.UploadImage(editPomodoro.Wallpaper.URL)
+		if err != nil {
+			return c.Status(409).JSON(bson.M{"status": "error", "message": err})
+		}
+		editPomodoro.Wallpaper.URL = path
+		editPomodoro.Wallpaper.Type = 1 //change type to 1 dont upload image again
+	}
+
 	//print data
 	// fmt.Println(editPomodoro)
 

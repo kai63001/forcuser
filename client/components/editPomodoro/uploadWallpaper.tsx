@@ -92,7 +92,7 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
         },
       });
     };
-    console.log(props.template);
+    console.log("props.template",props.template);
   };
 
   const validateImageType = (file: any) => {
