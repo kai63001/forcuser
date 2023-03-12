@@ -1,11 +1,12 @@
+import Toast from "@/lib/toast";
 import Image from "next/image";
 
 interface UploadWallpaperProps {
-    setTemplate: Function;
-    template: Object;
+  setTemplate: Function;
+  template: Object;
 }
 
-const UploadWallpaper = (props:UploadWallpaperProps) => {
+const UploadWallpaper = (props: UploadWallpaperProps) => {
   //mock wallpaper data
   const wallpaperData = [
     {
@@ -62,12 +63,44 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
 
   const selectWallpaper = (id: number, url: string) => {
     props.setTemplate({
+      ...props.template,
+      wallpaper: {
+        type: 1,
+        url: url,
+      },
+    });
+  };
+
+  const uploadImage = (e: any) => {
+    const file = e.target.files[0];
+    console.log(file);
+    if (!validateImageType(file)) {
+      Toast.fire({
+        icon: "error",
+        title: "Invalid image type",
+      });
+      return;
+    }
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onloadend = () => {
+      props.setTemplate({
         ...props.template,
         wallpaper: {
-            type: 0,
-            url: url
-        }
-    })
+          type: 0,
+          url: reader.result,
+        },
+      });
+    };
+    console.log(props.template);
+  };
+
+  const validateImageType = (file: any) => {
+    const validTypes = ["image/png", "image/jpeg"];
+    if (validTypes.indexOf(file.type) === -1) {
+      return false;
+    }
+    return true;
   };
 
   return (
@@ -86,7 +119,15 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
         className="hidden"
         id="uploadCustomImage"
         accept="image/png, image/jpeg"
+        onChange={uploadImage}
       />
+      <span className="text-xs block mt-2 text-gray-400">
+        Limit 10 MB {`(JPG,PNG)`}
+      </span>
+      <span className="text-xs block text-gray-400">
+        {" "}
+        GIF format, please subscribe to our service.
+      </span>
 
       <h3 className="my-3">Recommended Wallpaper</h3>
       {/* image grid 2 */}
