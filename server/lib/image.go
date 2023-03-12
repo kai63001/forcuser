@@ -16,7 +16,7 @@ import (
 	"github.com/h2non/bimg"
 )
 
-func GetImage(site string) {
+func GetImage(site string) (string, error) {
 	//http://localhost:7171/api/screenshot
 
 	// use gowitness api to screenshot website
@@ -32,7 +32,7 @@ func GetImage(site string) {
 	req, err := http.NewRequest("POST", "http://gowitness:7171/api/screenshot", bytes.NewBuffer(requestBody))
 	if err != nil {
 		fmt.Println("Error creating HTTP request:", err)
-		return
+		return "", err
 	}
 
 	// Set the request header content-type
@@ -44,7 +44,7 @@ func GetImage(site string) {
 	if err != nil {
 
 		fmt.Println("Error sending HTTP request:", err)
-		return
+		return "", err
 	}
 
 	// Read the response body
@@ -52,7 +52,7 @@ func GetImage(site string) {
 	if err != nil {
 
 		fmt.Println("Error reading HTTP response:", err)
-		return
+		return "", err
 	}
 
 	filename := strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
@@ -60,12 +60,12 @@ func GetImage(site string) {
 	converted, err := bimg.NewImage(respBody).Convert(bimg.WEBP)
 	if err != nil {
 		fmt.Println("Error converting image:", err)
-		return
+		return "", err
 	}
 	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 75, Compression: 6, Width: 640, Height: 321})
 	if err != nil {
 		fmt.Println("Error processed image:", err)
-		return
+		return "", err
 	}
 
 	// ioutil.WriteFile(filename, processed, 0644)
@@ -98,5 +98,7 @@ func GetImage(site string) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
+	return "screenshot/" + filename, nil
 
 }
