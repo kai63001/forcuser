@@ -25,7 +25,7 @@ const UploadWallpaper = (props:UploadWallpaperProps) => {
     },
     {
       id: 4,
-      url: "https://focuserimage.s3.us-east-2.amazonaws.com/47b25f8a61d44736af064c079c85a02a.webp",
+      url: "https://focuserimage.s3.us-east-2.amazonaws.com/screenshot/fb90520fa4974d789a97542e505ae6d9.webp",
       type: 0,
     },
     {
