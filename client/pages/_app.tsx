@@ -1,4 +1,5 @@
-import '../styles/globals.css'
+import '../styles/globals.scss'
+import '@sweetalert2/theme-dark'
 import type { AppProps } from 'next/app'
 import { SessionProvider } from 'next-auth/react';
 import RefreshTokenHandler from '@/components/libs/refreshTokenHandler';

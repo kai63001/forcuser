@@ -31,7 +31,7 @@ func EditPomodoro(c *fiber.Ctx) error {
 
 	var editPomodoro EditPomodoroDataType
 	if err := c.BodyParser(&editPomodoro); err != nil {
-		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
 	//print data
@@ -39,13 +39,13 @@ func EditPomodoro(c *fiber.Ctx) error {
 
 	//update data
 	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro}}).Err(); err != nil {
-		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
 	urlImage, err := lib.GetImage("http://client:3000")
 	if err != nil {
-		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
-	return c.Status(200).JSON(bson.M{"status": "success", "error": "update success", "urlImage": urlImage})
+	return c.Status(200).JSON(bson.M{"status": "success", "message": "update success", "urlImage": urlImage})
 }

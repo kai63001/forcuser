@@ -1,15 +1,33 @@
 import { PomodoroV1Props } from "@/components/pomodoro/type/pomodoroV1";
 import axios from "@/lib/axios";
+import Toast from "@/lib/toast";
 import { useState } from "react";
+import Swal from "sweetalert2";
 
 const SaveWidget = (props: PomodoroV1Props) => {
   const [saving, setSaving] = useState(false);
   const save = async () => {
-    if (saving) return;
-    setSaving(true);
-    const data = await axios.post(`/pomodoro/edit/${props.id}`, props.template);
-    setSaving(false);
-    console.log(data);
+    Toast.fire({
+      icon: "success",
+      title: "data.message",
+    });
+    // if (saving) return;
+    // setSaving(true);
+    // try {
+    //   const { data } = await axios.post(
+    //     `/pomodoro/edit/${props.id}`,
+    //     props.template
+    //   );
+    //   console.log(data);
+    //   setSaving(false);
+    //   Toast.fire({
+    //     icon: "success",
+    //     title: data.message,
+    //   });
+    // } catch (error) {
+    //   setSaving(false);
+    // }
+    // setSaving(false);
   };
 
   return (
