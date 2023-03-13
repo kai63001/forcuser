@@ -6,6 +6,7 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
 import UseAuth from "@/components/libs/useAuth";
 import Layout from "@/components/Layout";
+import Loading from "@/components/libs/Loading";
 
 const Login = () => {
   const isAuthenticated = UseAuth(true);
@@ -58,7 +59,7 @@ const Login = () => {
   };
 
   if (isAuthenticated == true) {
-    return <div></div>;
+    return <Loading/>;
   }
 
   return (

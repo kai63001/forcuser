@@ -1,4 +1,5 @@
 import Layout from "@/components/dashboard/Layout";
+import Loading from "@/components/libs/Loading";
 import UseAuth from "@/components/libs/useAuth";
 import dynamic from "next/dynamic";
 
@@ -7,7 +8,7 @@ const MyFocus = dynamic(() => import("@/components/dashboard/home/myFocus"));
 const Dashboard = () => {
   const isAuthenticated = UseAuth(true);
   if (isAuthenticated == false) {
-    return <div></div>;
+    return <Loading/>;
   }
 
   return (

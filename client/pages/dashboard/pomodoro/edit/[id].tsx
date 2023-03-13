@@ -8,6 +8,7 @@ import MusicPlayer from "@/components/editPomodoro/musicPlayer";
 import { useSession } from "next-auth/react";
 import SaveWidget from "@/components/editPomodoro/saveWidget";
 import UseAuth from "@/components/libs/useAuth";
+import Loading from "@/components/libs/Loading";
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
 
@@ -70,11 +71,11 @@ const PomodoroEditPage = (props: any) => {
   };
 
   if (isAuthenticated == false) {
-    return <div>loading</div>;
+    return <Loading/>
   }
 
   if(loading){
-    return <div>loading</div>
+    return <Loading/>
   }
 
   return (
