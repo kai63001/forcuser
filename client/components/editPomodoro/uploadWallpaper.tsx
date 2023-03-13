@@ -92,7 +92,7 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
         },
       });
     };
-    console.log("props.template",props.template);
+    console.log("props.template", props.template);
   };
 
   const validateImageType = (file: any) => {
@@ -129,7 +129,10 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
         GIF format, please subscribe to our service.
       </span>
 
-      <h3 className="my-3">Recommended Wallpaper</h3>
+      <div className="flex space-x-4">
+        <h3 className="my-3 cursor-pointer border-b-2">Recommended</h3>
+        <h3 className="my-3 cursor-pointer">GIFs</h3>
+      </div>
       {/* image grid 2 */}
       <div className="flex flex-col space-y-5">
         {wallpaperData.map((wallpaper, index) => (
