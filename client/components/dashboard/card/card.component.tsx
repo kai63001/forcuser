@@ -17,6 +17,7 @@ const CardComponent = (props: CardComponentProps) => {
         quality={100}
         width={500}
         height={100}
+        unoptimized={true}
         className={`rounded-md z-10 ${props.templateId === props.selectTemplateId ? "ring-2 ring-purple-500 ring-offset-1" : ""}`}
       />
       {/* top left name */}

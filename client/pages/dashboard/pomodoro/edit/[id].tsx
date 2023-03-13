@@ -48,6 +48,7 @@ const PomodoroEditPage = (props: any) => {
 
   useEffect(() => {
     getDataFromId();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataFromId = async () => {
