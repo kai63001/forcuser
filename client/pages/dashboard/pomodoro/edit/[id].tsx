@@ -24,6 +24,8 @@ const PomodoroEditPage = (props: any) => {
     },
   });
 
+  const [loading,setLoading] = useState(true)
+
   //function check owner
   const checkOwner = async (data: any) => {
     // console.log(data)
@@ -36,7 +38,6 @@ const PomodoroEditPage = (props: any) => {
     const base64Url = token.split(".")[1];
     const base64 = base64Url.replace("-", "+").replace("_", "/");
     const decodedData = JSON.parse(window.atob(base64));
-    // console.log(decodedData._id,data.userId);
     if (data.userId != decodedData._id) {
       router.push("/dashboard");
     }
@@ -49,9 +50,15 @@ const PomodoroEditPage = (props: any) => {
   }, []);
 
   const getDataFromId = async () => {
-    const data = await axios.get(`/pomodoro/get/${props.id}`);
-    console.log("getData", data);
-    checkOwner(data.data.data);
+    try {
+      const {data} = await axios.get(`/pomodoro/get/${props.id}`);
+      console.log("getData", data);
+      checkOwner(data.data);
+      setTemplate(data.data.template);
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+    }
   };
 
   const openToggle = (id: number) => {
@@ -64,6 +71,10 @@ const PomodoroEditPage = (props: any) => {
 
   if (isAuthenticated == false) {
     return <div>loading</div>;
+  }
+
+  if(loading){
+    return <div>loading</div>
   }
 
   return (
@@ -135,7 +146,6 @@ const PomodoroEditPage = (props: any) => {
 //get parame id
 export async function getServerSideProps(context: any) {
   const { id } = context.query;
-  console.log("id", id);
   return {
     props: {
       id: id,

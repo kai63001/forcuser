@@ -43,7 +43,7 @@ func EditPomodoro(c *fiber.Ctx) error {
 		if err != nil {
 			return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 		}
-		editPomodoro.Wallpaper.URL = path
+		editPomodoro.Wallpaper.URL = "https://focuserimage.s3.us-east-2.amazonaws.com/" + path
 		editPomodoro.Wallpaper.Type = 1 //change type to 1 dont upload image again
 	}
 
