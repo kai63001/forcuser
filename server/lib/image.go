@@ -17,7 +17,7 @@ import (
 	"github.com/h2non/bimg"
 )
 
-func GetImage(site string) (string, error) {
+func GetImage(id string) (string, error) {
 	//http://localhost:7171/api/screenshot
 
 	// use gowitness api to screenshot website
@@ -27,7 +27,7 @@ func GetImage(site string) (string, error) {
 	// if oneshot is true, then it will take screenshot of the site and return the image data
 	// if oneshot is false, then it will take screenshot of the site and save it to the database
 
-	requestBody := []byte(`{"url": "http://client:3000", "oneshot": "true"}`)
+	requestBody := []byte(`{"url": "http://client:3000/focus/` + id + `", "oneshot": "true"}`)
 
 	// Create a new HTTP POST request
 	req, err := http.NewRequest("POST", "http://gowitness:7171/api/screenshot", bytes.NewBuffer(requestBody))
@@ -63,7 +63,7 @@ func GetImage(site string) (string, error) {
 		fmt.Println("Error converting image:", err)
 		return "", err
 	}
-	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 75, Compression: 6, Width: 640, Height: 321})
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1600, Height: 800})
 	if err != nil {
 		fmt.Println("Error processed image:", err)
 		return "", err
@@ -76,6 +76,7 @@ func GetImage(site string) (string, error) {
 		fmt.Println("Error uploading image:", err)
 		return "", err
 	}
+	fmt.Println("refilename:", refilename)
 	return refilename, nil
 
 }
@@ -110,6 +111,7 @@ func UploadImage(base64String string) (string, error) {
 		fmt.Println("Error uploading image:", err)
 		return "", err
 	}
+
 	return refilename, nil
 }
 

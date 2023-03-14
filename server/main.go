@@ -29,9 +29,9 @@ func main() {
 	app.Post("/auth/login", router.AuthRouteLogin)
 	app.Post("/auth/refreshToken", router.AuthRouterRefreshToken)
 	app.Get("/", router.IndexRouter)
+	app.Get("/pomodoro/get/:id", router.GetPomodoroData)
 	app.Use(middleware.AuthMiddleware)
 	app.Post("/pomodoro/create", router.CreatePomodoro)
-	app.Get("/pomodoro/get/:id", router.GetPomodoroData)
 	app.Post("/pomodoro/edit/:id", router.EditPomodoro)
 
 	app.Listen(":4000")

@@ -13,8 +13,6 @@ services:
     #       memory: 256M
     #   restart_policy:
     #     condition: on-failure
-    expose:
-      - 3000
     ports:
       - "3000:3000"
     networks:
@@ -25,8 +23,6 @@ services:
       - /app/.next
   server:
     build: ./server
-    expose:
-      - 4000
     ports:
       - "4000:4000"
     networks:
@@ -49,7 +45,8 @@ services:
   gowitness:
     image: "leonjza/gowitness:latest"
     # restart: unless-stopped
-    command: gowitness server --address 0.0.0.0:7171
+    # fix image not show with delay
+    command: gowitness server --address 0.0.0.0:7171 --delay 1000 --allow-insecure-uri
     expose:
       - 7171
     ports:

@@ -60,7 +60,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
 
         <Image
           src={`${props.template.wallpaper.url || "/demo/demo.jpg"}`}
-          alt="Focuser Background"
+          alt="Focusify Background"
           unoptimized={true}
           fill
           style={{ objectFit: "cover" }}
@@ -71,3 +71,6 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
 };
 
 export default PomodoroV1;
+// {
+  // "AWS": "arn:aws:iam::483708185902:user/focuserUser"
+// },

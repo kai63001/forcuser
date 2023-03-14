@@ -55,7 +55,7 @@ func EditPomodoro(c *fiber.Ctx) error {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
-	urlImage, err := lib.GetImage("http://client:3000")
+	urlImage, err := lib.GetImage(id)
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
