@@ -13,7 +13,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     e.preventDefault();
   };
   return (
-    <div className="h-screen w-full">
+    <div className="h-screen w-full overflow-hidden">
       <div className="relative h-full block" onDragStart={preventDragHandler}>
         {/* setting */}
         <div
