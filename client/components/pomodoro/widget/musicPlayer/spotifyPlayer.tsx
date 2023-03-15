@@ -184,27 +184,32 @@ const SpotifyPlayer = () => {
     console.log("musicProcress", musicProcress);
   }, []);
 
+  const handleStart = () => {
+    setIsDragging(true);
+  };
+
   const handleStop = (e: any, data: any) => {
-    console.log("handleStop", data.x, data.y);
     setPosition({ x: data.x, y: data.y });
+    setIsDragging(false);
   };
 
   const [position, setPosition] = useState({ x: -12, y: 820 });
 
-  const thisWidget:any = useRef(null);
+  const thisWidget: any = useRef(null);
 
   //function get max height and width
   const [maxHeight, setMaxHeight] = useState(0);
   const [maxWidth, setMaxWidth] = useState(0);
   useEffect(() => {
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth((window.innerWidth - thisWidget.current.clientWidth) - 80);
-    console.log("thisWidget", thisWidget.current.clientHeight,thisWidget.current.clientWidth);
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth - 80);
   }, []);
 
+  const [isDragging, setIsDragging] = useState(false);
 
   return (
     <Draggable
+      onStart={handleStart}
       onStop={handleStop}
       defaultPosition={position}
       bounds={{
@@ -217,7 +222,9 @@ const SpotifyPlayer = () => {
       <div
         ref={thisWidget}
         id="leftBottom"
-        className="absolute z-20 text-white ml-10 mb-10 cursor-grab"
+        className={`absolute z-20 text-white ml-10 mb-10 ${
+          isDragging ? "cursor-grabbing opacity-80" : "cursor-grab opacity-100"
+        }`}
       >
         {/* move hand */}
         <div className="w-full h-full z-50 absolute"></div>
