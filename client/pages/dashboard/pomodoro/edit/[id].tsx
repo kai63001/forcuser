@@ -23,6 +23,14 @@ const PomodoroEditPage = (props: any) => {
       type: 0,
       url: "",
     },
+    music: {
+      type: "",
+      url: "",
+      position: {
+        x: 0,
+        y: 0,
+      }
+    }
   });
 
   const [loading, setLoading] = useState(true);
@@ -150,7 +158,7 @@ const PomodoroEditPage = (props: any) => {
         </div>
       </div>
       <div className="w-full">
-        <PomodoroV1 template={template} />
+        <PomodoroV1 setTemplate={setTemplate} template={template} />
       </div>
       <div id="toggle">
         {toggleId == 5 && (

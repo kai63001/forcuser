@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import spotifyMusic from "./mock/spotify.json";
 import Draggable from "react-draggable";
+import { PomodoroV1Props } from "../../type/pomodoroV1";
 
 interface MusicPlayerInfoInterface {
   title: string;
@@ -11,7 +12,7 @@ interface MusicPlayerInfoInterface {
   thumbnail_url: string;
 }
 
-const SpotifyPlayer = () => {
+const SpotifyPlayer = (props: PomodoroV1Props) => {
   const musicUrl = "https://open.spotify.com/playlist/4Zjli1P13J5mmSCD5iKAXK";
 
   const [listMusic, setListMusic]: any = useState(spotifyMusic);
@@ -36,6 +37,7 @@ const SpotifyPlayer = () => {
   };
 
   useEffect(() => {
+    console.log("props", props);
     getDataSpotify();
   }, []);
 
@@ -191,6 +193,14 @@ const SpotifyPlayer = () => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
+    props.setTemplate?.({
+      ...props.template,
+      music: { ...props.template.music, position: { x: data.x, y: data.y } },
+    });
+    // props.setTemplate({
+    //   ...props.template,
+    //   music: { ...props.template.music, position: { x: data.x, y: data.y } },
+    // });
   };
 
   const [position, setPosition] = useState({ x: -12, y: 820 });

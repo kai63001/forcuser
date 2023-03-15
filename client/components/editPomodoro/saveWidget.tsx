@@ -10,16 +10,17 @@ const SaveWidget = (props: PomodoroV1Props) => {
     if (saving) return;
     setSaving(true);
     try {
-      const { data } = await axios.post(
-        `/pomodoro/edit/${props.id}`,
-        props.template
-      );
-      console.log(data);
-      setSaving(false);
-      Toast.fire({
-        icon: "success",
-        title: data.message,
-      });
+      console.log(props.template)
+      // const { data } = await axios.post(
+      //   `/pomodoro/edit/${props.id}`,
+      //   props.template
+      // );
+      // console.log(data);
+      // setSaving(false);
+      // Toast.fire({
+      //   icon: "success",
+      //   title: data.message,
+      // });
     } catch (error) {
       setSaving(false);
     }

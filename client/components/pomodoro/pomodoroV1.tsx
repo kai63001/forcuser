@@ -52,7 +52,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
           </svg>
         </div>
         {/* left bottom */}
-        <SpotifyPlayer />
+        <SpotifyPlayer template={props.template} setTemplate={props.setTemplate} />
         {/* position absolute middle of center */}
         <PomodoroWidget />
         {/* make image transition black */}
