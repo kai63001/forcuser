@@ -2,7 +2,6 @@ package router
 
 import (
 	"context"
-	"fmt"
 
 	"focuser.com/server/db"
 	"focuser.com/server/middleware"
@@ -54,8 +53,6 @@ func GetPomodoroData(c *fiber.Ctx) error {
 	pomodoro.PomodoroId = c.Params("id")
 	var newId primitive.ObjectID
 	newId, _ = primitive.ObjectIDFromHex(pomodoro.PomodoroId)
-
-	fmt.Println("SomeOne Get Pomodoro Data")
 
 	//get data from db pomodoro
 	var pomodoroData bson.M

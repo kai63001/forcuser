@@ -68,6 +68,7 @@ const SpotifyPlayer = () => {
             );
             //To listen to music more than 30 seconds please login spotify.
             if (parseInt((e.data.duration / 1000).toString(), 10) <= 35) {
+              console.log("preview",e.data.duration);
               setPreviewOrNot(true);
             }
             let nexting = false;
