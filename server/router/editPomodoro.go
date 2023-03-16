@@ -21,6 +21,14 @@ type EditPomodoroDataType struct {
 		URL  string `json:"url"`
 		Type int    `json:"type"`
 	} `json:"wallpaper"`
+	Music struct {
+		URL      string `json:"url"`
+		Type     int    `json:"type"`
+		Position struct {
+			X int `json:"x"`
+			Y int `json:"y"`
+		} `json:"position"`
+	} `json:"music"`
 }
 
 func EditPomodoro(c *fiber.Ctx) error {

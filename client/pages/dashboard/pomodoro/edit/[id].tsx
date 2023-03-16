@@ -88,8 +88,8 @@ const PomodoroEditPage = (props: any) => {
   }
 
   return (
-    <div className="flex">
-      <div className="h-screen bg-black w-12 flex flex-col items-center space-y-10 pt-5">
+    <div className="flex h-screen">
+      <div className="bg-black bg-opacity-90 w-12 flex flex-col items-center space-y-10 py-5 fixed left-2 z-50 top-1/2 -translate-y-1/2 rounded-md">
         <div
           className="text-white cursor-pointer px-3"
           id="music player"

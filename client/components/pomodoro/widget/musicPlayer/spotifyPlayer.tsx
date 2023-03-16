@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import spotifyMusic from "./mock/spotify.json";
 import Draggable from "react-draggable";
 import { PomodoroV1Props } from "../../type/pomodoroV1";
+import { useRouter } from "next/router";
 
 interface MusicPlayerInfoInterface {
   title: string;
@@ -13,6 +14,9 @@ interface MusicPlayerInfoInterface {
 }
 
 const SpotifyPlayer = (props: PomodoroV1Props) => {
+  //get route path
+  const router = useRouter();
+
   const musicUrl = "https://open.spotify.com/playlist/4Zjli1P13J5mmSCD5iKAXK";
 
   const [listMusic, setListMusic]: any = useState(spotifyMusic);
@@ -29,6 +33,8 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
 
   const [musicProcress, setMusicProcress] = useState(0);
 
+  const [isEdit, setIsEdit] = useState(false);
+
   const getDataSpotify = async () => {
     const data = await axios.get(
       `https://open.spotify.com/oembed?url=${musicUrl}`
@@ -37,9 +43,19 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   };
 
   useEffect(() => {
-    console.log("props", props);
     getDataSpotify();
+    checkIsEdit();
   }, []);
+
+  const checkIsEdit = () => {
+    if (router.pathname.includes("edit")) {
+      setIsEdit(true);
+      return true;
+    }
+
+    setIsEdit(false);
+    return false;
+  };
 
   useEffect(() => {
     const script = document.createElement("script");
@@ -186,6 +202,8 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     console.log("musicProcress", musicProcress);
   }, []);
 
+  const [position, setPosition] = useState({ x: -12, y: 820 });
+
   const handleStart = () => {
     setIsDragging(true);
   };
@@ -203,8 +221,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     // });
   };
 
-  const [position, setPosition] = useState({ x: -12, y: 820 });
-
   const thisWidget: any = useRef(null);
 
   //function get max height and width
@@ -213,6 +229,14 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   useEffect(() => {
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth - 80);
+
+    //init
+    if (props.template.music.position.x && props.template.music.position.y) {
+      setPosition({
+        x: props.template.music.position.x,
+        y: props.template.music.position.y,
+      });
+    }
   }, []);
 
   const [isDragging, setIsDragging] = useState(false);
@@ -221,7 +245,8 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     <Draggable
       onStart={handleStart}
       onStop={handleStop}
-      defaultPosition={position}
+      position={position}
+      disabled={!isEdit}
       bounds={{
         top: 0,
         left: -40,
@@ -237,7 +262,8 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
         }`}
       >
         {/* move hand */}
-        <div className="w-full h-full z-50 absolute"></div>
+        {isEdit && <div className="w-full h-full z-50 absolute"></div>}
+
         {/* {musicPlayerInfo.title} */}
         <div id="" className="opacity-0">
           <div id="embed-iframe" className="border-none"></div>
