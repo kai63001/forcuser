@@ -99,12 +99,12 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
   };
 
   return (
-    <div className="absolute z-50 text-white left-[65px] bg-black bg-opacity-90 w-[450px] h-[70vh] px-5 py-4 top-1/2 -translate-y-1/2 rounded-md overflow-hidden">
+    <div className="absolute z-50 text-white left-[65px] bg-black opacity-60 hover:opacity-100 bg-opacity-90 w-[450px] h-[70vh] px-5 py-4 top-1/2 -translate-y-1/2 rounded-md overflow-hidden">
       <h2 className="text-2xl">Background</h2>
       <hr className="bg-gray-500 border-gray-500 my-2" />
       <h3>Custom Image</h3>
       <label htmlFor="uploadCustomImage" className="cursor-pointer">
-        <div className="bg-purple-500 text-white w-full py-3 flex mt-4 items-center text-center rounded-md">
+        <div className="bg-purple-500 text-white w-full py-3 flex mt-2 items-center text-center rounded-md">
           <div className="m-auto">Upload Image</div>
         </div>
       </label>
@@ -128,38 +128,9 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
         <h3 className="my-3 cursor-pointer border-b-2">Recommended</h3>
         <h3 className="my-3 cursor-pointer">GIFs</h3>
       </div>
+      <div className="flex"></div>
       {/* image grid 2 */}
-      <div className="grid grid-cols-2 gap-4 h-[65%] overflow-y-scroll no-scrollbar">
-        {wallpaperData.map((wallpaper, index) => (
-          <div
-            key={index}
-            className="rounded-md cursor-pointer "
-            onClick={() => selectWallpaper(wallpaper.id, wallpaper.url)}
-          >
-            <Image
-              alt="wallpaper"
-              src={wallpaper.url}
-              width={1000}
-              height={1000}
-              className="rounded-md"
-            />
-          </div>
-        ))}
-        {wallpaperData.map((wallpaper, index) => (
-          <div
-            key={index}
-            className="rounded-md cursor-pointer "
-            onClick={() => selectWallpaper(wallpaper.id, wallpaper.url)}
-          >
-            <Image
-              alt="wallpaper"
-              src={wallpaper.url}
-              width={1000}
-              height={1000}
-              className="rounded-md"
-            />
-          </div>
-        ))}
+      <div className="grid grid-cols-2 gap-4 h-full overflow-y-scroll no-scrollbar">
         {wallpaperData.map((wallpaper, index) => (
           <div
             key={index}
