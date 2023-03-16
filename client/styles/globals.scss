@@ -2,6 +2,19 @@
 @import '@sweetalert2/theme-dark/dark.scss';
 @tailwind base;
 @tailwind components;
+@layer utilities {
+  @variants responsive {
+    /* Chrome, Safari and Opera */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+
+    .no-scrollbar {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
+  }
+}
 @tailwind utilities;
 
 

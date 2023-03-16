@@ -231,7 +231,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth - 80);
 
     //init
-    if (props.template.music.position.x && props.template.music.position.y) {
+    if (props.template?.music?.position.x && props.template?.music?.position.y) {
       setPosition({
         x: props.template.music.position.x,
         y: props.template.music.position.y,
@@ -269,7 +269,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
           <div id="embed-iframe" className="border-none"></div>
         </div>
         {/* <div id="playMusic"> play</div> */}
-        <div className="bg-[#282828] text-white rounded-md w-[370px]">
+        <div className="bg-black bg-opacity-90 text-white rounded-md w-[370px]">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 px-3 py-3">
               <div
