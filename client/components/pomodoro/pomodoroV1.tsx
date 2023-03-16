@@ -52,9 +52,15 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
           </svg>
         </div>
         {/* left bottom */}
-        <SpotifyPlayer template={props.template} setTemplate={props.setTemplate} />
+        <SpotifyPlayer
+          template={props.template}
+          setTemplate={props.setTemplate}
+        />
         {/* position absolute middle of center */}
-        <PomodoroWidget />
+        <PomodoroWidget
+          template={props.template}
+          setTemplate={props.setTemplate}
+        />
         {/* make image transition black */}
         <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
@@ -72,5 +78,5 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
 
 export default PomodoroV1;
 // {
-  // "AWS": "arn:aws:iam::483708185902:user/focuserUser"
+// "AWS": "arn:aws:iam::483708185902:user/focuserUser"
 // },

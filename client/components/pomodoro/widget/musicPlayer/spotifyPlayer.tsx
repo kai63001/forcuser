@@ -202,7 +202,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     console.log("musicProcress", musicProcress);
   }, []);
 
-  const [position, setPosition] = useState({ x: -12, y: 820 });
+  const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleStart = () => {
     setIsDragging(true);
@@ -228,13 +228,22 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const [maxWidth, setMaxWidth] = useState(0);
   useEffect(() => {
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth - 80);
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
 
     //init
-    if (props.template?.music?.position.x && props.template?.music?.position.y) {
+    if (
+      props.template?.music?.position.x &&
+      props.template?.music?.position.y
+    ) {
       setPosition({
         x: props.template.music.position.x,
         y: props.template.music.position.y,
+      });
+    } else {
+      //left bottom
+      setPosition({
+        x: 0 + 15,
+        y: (window.innerHeight - thisWidget.current.clientHeight) - 15,
       });
     }
   }, []);
@@ -249,7 +258,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       disabled={!isEdit}
       bounds={{
         top: 0,
-        left: -40,
+        left: 0,
         right: maxWidth,
         bottom: maxHeight,
       }}
@@ -257,7 +266,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       <div
         ref={thisWidget}
         id="leftBottom"
-        className={`absolute z-20 text-white ml-10 mb-10 ${
+        className={`absolute z-20 text-white ${
           isDragging ? "cursor-grabbing opacity-80" : "cursor-grab opacity-100"
         }`}
       >

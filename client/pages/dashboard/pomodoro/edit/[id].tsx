@@ -29,8 +29,15 @@ const PomodoroEditPage = (props: any) => {
       position: {
         x: 0,
         y: 0,
-      }
-    }
+      },
+    },
+    pomodoro: {
+      position: {
+        x: 0,
+        y: 0,
+      },
+      widget: 0,
+    },
   });
 
   const [loading, setLoading] = useState(true);
@@ -56,7 +63,7 @@ const PomodoroEditPage = (props: any) => {
 
   useEffect(() => {
     getDataFromId();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getDataFromId = async () => {

@@ -63,7 +63,7 @@ func GetImage(id string) (string, error) {
 		fmt.Println("Error converting image:", err)
 		return "", err
 	}
-	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1600, Height: 800})
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1920, Height: 1080})
 	if err != nil {
 		fmt.Println("Error processed image:", err)
 		return "", err

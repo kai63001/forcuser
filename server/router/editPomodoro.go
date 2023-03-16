@@ -25,10 +25,16 @@ type EditPomodoroDataType struct {
 		URL      string `json:"url"`
 		Type     int    `json:"type"`
 		Position struct {
-			X int `json:"x"`
-			Y int `json:"y"`
+			X float64 `json:"x"`
+			Y float64 `json:"y"`
 		} `json:"position"`
 	} `json:"music"`
+	Pomodoro struct {
+		Position struct {
+			X float64 `json:"x"`
+			Y float64 `json:"y"`
+		} `json:"position"`
+	} `json:"pomodoro"`
 }
 
 func EditPomodoro(c *fiber.Ctx) error {
