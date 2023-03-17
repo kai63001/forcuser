@@ -245,10 +245,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
 
     //init
-    if (
-      template?.music?.position.x &&
-      template?.music?.position.y
-    ) {
+    if (template?.music?.position.x && template?.music?.position.y) {
       setPosition({
         x:
           (template?.music.position.x /
@@ -263,7 +260,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       //left bottom
       setPosition({
         x: 0 + 15,
-        y: (window.innerHeight - thisWidget.current.clientHeight) - 15,
+        y: window.innerHeight - thisWidget.current.clientHeight - 15,
       });
     }
   }, []);
@@ -288,7 +285,10 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
         ref={thisWidget}
         id="leftBottom"
         className={`absolute z-20 text-white ${
-          isDragging ? "cursor-grabbing opacity-80" : "cursor-grab opacity-100"
+          isEdit &&
+          (isDragging
+            ? "cursor-grabbing opacity-80"
+            : "cursor-grab opacity-100")
         }`}
       >
         {/* move hand */}

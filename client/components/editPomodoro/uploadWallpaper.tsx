@@ -89,7 +89,7 @@ const UploadWallpaper = () => {
         setTemplate({
           ...template,
           wallpaper: {
-            type: 1,
+            type: 0,
             url: reader.result,
           },
         })
