@@ -5,8 +5,12 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import spotifyMusic from "./mock/spotify.json";
 import Draggable from "react-draggable";
-import { PomodoroV1Props } from "../../type/pomodoroV1";
+import { PomodoroV1Props, PomodoroV1State } from "../../type/pomodoroV1";
 import { useRouter } from "next/router";
+
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store/store";
+import { setTemplate } from "@/store/templateSlice";
 
 interface MusicPlayerInfoInterface {
   title: string;
@@ -15,6 +19,10 @@ interface MusicPlayerInfoInterface {
 }
 
 const SpotifyPlayer = (props: PomodoroV1Props) => {
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
+  const dispatch = useDispatch();
   //get route path
   const router = useRouter();
 
@@ -212,10 +220,19 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
-    props.setTemplate?.({
-      ...props.template,
-      music: { ...props.template.music, position: { x: data.x, y: data.y } },
-    });
+    // props.setTemplate?.({
+    //   ...props.template,
+    //   music: { ...props.template.music, position: { x: data.x, y: data.y } },
+    // });
+    dispatch(
+      setTemplate({
+        ...template,
+        music: {
+          ...template.music,
+          position: { x: data.x, y: data.y },
+        },
+      })
+    );
   };
 
   const thisWidget: any = useRef(null);
@@ -229,17 +246,17 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
 
     //init
     if (
-      props.template?.music?.position.x &&
-      props.template?.music?.position.y
+      template?.music?.position.x &&
+      template?.music?.position.y
     ) {
       setPosition({
         x:
-          (props.template?.music.position.x /
-            (props.template?.global.position.x - thisWidget.current.clientWidth)) *
+          (template?.music.position.x /
+            (template?.global.position.x - thisWidget.current.clientWidth)) *
           (window.innerWidth - thisWidget.current.clientWidth),
         y:
-          (props.template?.music.position.y /
-            (props.template?.global.position.y - thisWidget.current.clientHeight)) *
+          (template?.music.position.y /
+            (template?.global.position.y - thisWidget.current.clientHeight)) *
           (window.innerHeight - thisWidget.current.clientHeight),
       });
     } else {

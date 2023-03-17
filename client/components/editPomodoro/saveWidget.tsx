@@ -1,19 +1,26 @@
-import { PomodoroV1Props } from "@/components/pomodoro/type/pomodoroV1";
+import { PomodoroV1Props, PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import axios from "@/lib/axios";
 import Toast from "@/lib/toast";
 import { useState } from "react";
-import Swal from "sweetalert2";
+
+//redux
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
 
 const SaveWidget = (props: PomodoroV1Props) => {
   const [saving, setSaving] = useState(false);
+
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
 
   const save = async () => {
     if (saving) return;
     setSaving(true);
     try {
       //set global position
-      let template = {
-        ...props.template,
+      let templater = {
+        ...template,
         ["global"]: {
           position: {
             x: window.innerWidth,
@@ -22,7 +29,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
         },
       };
 
-      const { data } = await axios.post(`/pomodoro/edit/${props.id}`, template);
+      const { data } = await axios.post(`/pomodoro/edit/${props.id}`, templater);
       console.log(data);
       setSaving(false);
       Toast.fire({

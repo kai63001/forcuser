@@ -9,42 +9,24 @@ import { useSession } from "next-auth/react";
 import SaveWidget from "@/components/editPomodoro/saveWidget";
 import UseAuth from "@/components/libs/useAuth";
 import Loading from "@/components/libs/Loading";
+
+//redux
+import { setTemplate } from "@/store/templateSlice";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store/store";
+
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
 
+  const dispatch = useDispatch();
   const router = useRouter();
   //check auth
   const isAuthenticated = UseAuth(true);
 
   const [toggleId, setToggleId] = useState(0);
-
-  const [template, setTemplate] = useState<PomodoroV1State>({
-    wallpaper: {
-      type: 0,
-      url: "",
-    },
-    music: {
-      type: "",
-      url: "",
-      position: {
-        x: 0,
-        y: 0,
-      },
-    },
-    pomodoro: {
-      position: {
-        x: 0,
-        y: 0,
-      },
-      widget: 0,
-    },
-    global: {
-      position: {
-        x: 0,
-        y: 0,
-      },
-    },
-  });
 
   const [loading, setLoading] = useState(true);
 
@@ -77,7 +59,8 @@ const PomodoroEditPage = (props: any) => {
       const { data } = await axios.get(`/pomodoro/get/${props.id}`);
       console.log("getData", data);
       checkOwner(data.data);
-      setTemplate(data.data.template);
+      // setTemplate(data.data.template);
+      dispatch(setTemplate(data.data.template));
       setLoading(false);
     } catch (error) {
       setLoading(false);
@@ -171,11 +154,11 @@ const PomodoroEditPage = (props: any) => {
         </div>
       </div>
       <div className="w-full">
-        <PomodoroV1 setTemplate={setTemplate} template={template} />
+        <PomodoroV1 />
       </div>
       <div id="toggle">
         {toggleId == 5 && (
-          <UploadWallpaper setTemplate={setTemplate} template={template} />
+          <UploadWallpaper />
         )}
         {toggleId == 4 && (
           <MusicPlayer setTemplate={setTemplate} template={template} />
@@ -184,7 +167,7 @@ const PomodoroEditPage = (props: any) => {
           <MusicPlayer setTemplate={setTemplate} template={template} />
         )}
       </div>
-      <SaveWidget template={template} id={props.id} />
+      <SaveWidget id={props.id} />
     </div>
   );
 };

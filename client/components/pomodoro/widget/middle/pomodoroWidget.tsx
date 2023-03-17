@@ -2,19 +2,20 @@
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
-import { PomodoroV1Props } from "../../type/pomodoroV1";
+import { PomodoroV1Props, PomodoroV1State } from "../../type/pomodoroV1";
 
 //redux
 import { setTemplate } from "@/store/templateSlice";
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from '@/store/store'
+import type { RootState } from "@/store/store";
 
-const PomodoroWidget = (props: PomodoroV1Props) => {
+const PomodoroWidget = () => {
   //get route path
   const router = useRouter();
-  const template = useSelector((state: RootState) => state.templateSlice);
-  const dispatch = useDispatch()
-
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
+  const dispatch = useDispatch();
 
   const [listPomodoroTab, setListPomodoroTab] = useState([
     { name: "POMODORO", time: 25 * 60 },
@@ -80,17 +81,25 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
-    props.setTemplate?.({
-      ...props.template,
-      pomodoro: {
-        ...props.template.pomodoro,
-        position: { x: data.x, y: data.y },
-      },
-    });
+    // props.setTemplate?.({
+    //   ...props.template,
+    //   pomodoro: {
+    //     ...props.template.pomodoro,
+    //     position: { x: data.x, y: data.y },
+    //   },
+    // });
 
     //get template from redux
+    dispatch(
+      setTemplate({
+        ...template,
+        pomodoro: {
+          ...template.pomodoro,
+          position: { x: data.x, y: data.y },
+        },
+      })
+    );
     console.log("template redux", template);
-    dispatch(setTemplate(position))
   };
   const [isEdit, setIsEdit] = useState(false);
 
@@ -114,23 +123,24 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
 
+    console.log(template);
+
     //init
-    if (props.template?.pomodoro.position) {
-      // console.log("init",innerHeight, window.innerHeight - thisWidget.current.clientHeight);
-      //set position calculate with max height and width default 16:9 and this widget height and width
+    if (
+      template.pomodoro.position.x !== -1 &&
+      template.pomodoro.position.y !== -1
+    ) {
       setPosition({
         x:
-          (props.template?.pomodoro.position.x /
-            (props.template?.global.position.x -
-              thisWidget.current.clientWidth)) *
+          (template?.pomodoro.position.x /
+            (template?.global.position.x - thisWidget.current.clientWidth)) *
           (window.innerWidth - thisWidget.current.clientWidth),
         y:
-          (props.template?.pomodoro.position.y /
-            (props.template?.global.position.y -
-              thisWidget.current.clientHeight)) *
+          (template?.pomodoro.position.y /
+            (template?.global.position.y - thisWidget.current.clientHeight)) *
           (window.innerHeight - thisWidget.current.clientHeight),
       });
-
+      ``;
       // I GOT IT
       // (positionWidget /
       //       (oldScreenWidth - widgetWidth)) *

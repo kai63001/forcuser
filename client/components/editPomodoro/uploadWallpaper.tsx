@@ -1,12 +1,16 @@
 import Toast from "@/lib/toast";
 import Image from "next/image";
 
-interface UploadWallpaperProps {
-  setTemplate: Function;
-  template: Object;
-}
-
-const UploadWallpaper = (props: UploadWallpaperProps) => {
+//redux
+import { setTemplate } from "@/store/templateSlice";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from "@/store/store";
+import { PomodoroV1State } from "../pomodoro/type/pomodoroV1";
+const UploadWallpaper = () => {
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
+  const dispatch = useDispatch();
   //mock wallpaper data
   const wallpaperData = [
     {
@@ -57,13 +61,15 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
   ];
 
   const selectWallpaper = (id: number, url: string) => {
-    props.setTemplate({
-      ...props.template,
-      wallpaper: {
-        type: 1,
-        url: url,
-      },
-    });
+    dispatch(
+      setTemplate({
+        ...template,
+        wallpaper: {
+          type: 1,
+          url: url,
+        },
+      })
+    );
   };
 
   const uploadImage = (e: any) => {
@@ -79,15 +85,18 @@ const UploadWallpaper = (props: UploadWallpaperProps) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      props.setTemplate({
-        ...props.template,
-        wallpaper: {
-          type: 0,
-          url: reader.result,
-        },
-      });
+      dispatch(
+        setTemplate({
+          ...template,
+          wallpaper: {
+            type: 1,
+            url: reader.result,
+          },
+        })
+      );
+     
     };
-    console.log("props.template", props.template);
+    console.log("props.template", template);
   };
 
   const validateImageType = (file: any) => {
