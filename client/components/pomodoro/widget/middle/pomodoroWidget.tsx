@@ -106,31 +106,18 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
 
     //init
     if (props.template?.pomodoro.position) {
-      console.log("init",innerHeight, window.innerHeight - thisWidget.current.clientHeight);
+      // console.log("init",innerHeight, window.innerHeight - thisWidget.current.clientHeight);
       //set position calculate with max height and width default 16:9 and this widget height and width
       setPosition({
         x:
           (props.template?.pomodoro.position.x /
-            (1920 - thisWidget.current.clientWidth)) *
+            (props.template?.global.position.x - thisWidget.current.clientWidth)) *
           (window.innerWidth - thisWidget.current.clientWidth),
         y:
           (props.template?.pomodoro.position.y /
-            (961 - thisWidget.current.clientHeight)) *
+            (props.template?.global.position.y - thisWidget.current.clientHeight)) *
           (window.innerHeight - thisWidget.current.clientHeight),
       });
-
-      // console.log(
-      //   "new position",
-      //   (props.template?.pomodoro.position.x /
-      //     (1920 - thisWidget.current.clientWidth)) *
-      //     (window.innerWidth - thisWidget.current.clientWidth)
-      // );
-      console.log(
-        "new position",
-        (props.template?.pomodoro.position.y /
-          (1080 - thisWidget.current.clientHeight)) *
-          (window.innerWidth - thisWidget.current.clientHeight)
-      );
 
       // I GOT IT
       // (positionWidget /

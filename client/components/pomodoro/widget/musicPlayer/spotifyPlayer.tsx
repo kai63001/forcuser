@@ -236,8 +236,14 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       props.template?.music?.position.y
     ) {
       setPosition({
-        x: props.template.music.position.x,
-        y: props.template.music.position.y,
+        x:
+          (props.template?.music.position.x /
+            (props.template?.global.position.x - thisWidget.current.clientWidth)) *
+          (window.innerWidth - thisWidget.current.clientWidth),
+        y:
+          (props.template?.music.position.y /
+            (props.template?.global.position.y - thisWidget.current.clientHeight)) *
+          (window.innerHeight - thisWidget.current.clientHeight),
       });
     } else {
       //left bottom

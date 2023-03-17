@@ -11,11 +11,18 @@ const SaveWidget = (props: PomodoroV1Props) => {
     if (saving) return;
     setSaving(true);
     try {
-      console.log(props.template);
-      const { data } = await axios.post(
-        `/pomodoro/edit/${props.id}`,
-        props.template
-      );
+      //set global position
+      let template = {
+        ...props.template,
+        ["global"]: {
+          position: {
+            x: window.innerWidth,
+            y: window.innerHeight,
+          },
+        },
+      };
+
+      const { data } = await axios.post(`/pomodoro/edit/${props.id}`, template);
       console.log(data);
       setSaving(false);
       Toast.fire({

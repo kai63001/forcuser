@@ -21,6 +21,12 @@ export interface PomodoroV1Props {
         y: number;
       };
     };
+    global: {
+      position: {
+        x: number;
+        y: number;
+      };
+    };
   };
 }
 
@@ -39,6 +45,12 @@ export interface PomodoroV1State {
   };
   pomodoro: {
     widget: number;
+    position: {
+      x: number;
+      y: number;
+    };
+  };
+  global: {
     position: {
       x: number;
       y: number;

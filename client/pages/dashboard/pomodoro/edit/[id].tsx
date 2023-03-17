@@ -38,6 +38,12 @@ const PomodoroEditPage = (props: any) => {
       },
       widget: 0,
     },
+    global: {
+      position: {
+        x: 0,
+        y: 0,
+      },
+    },
   });
 
   const [loading, setLoading] = useState(true);
