@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
@@ -215,10 +216,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       ...props.template,
       music: { ...props.template.music, position: { x: data.x, y: data.y } },
     });
-    // props.setTemplate({
-    //   ...props.template,
-    //   music: { ...props.template.music, position: { x: data.x, y: data.y } },
-    // });
   };
 
   const thisWidget: any = useRef(null);
@@ -262,6 +259,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       onStop={handleStop}
       position={position}
       disabled={!isEdit}
+      nodeRef={thisWidget}
       bounds={{
         top: 0,
         left: 0,

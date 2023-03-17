@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
 import { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
@@ -71,7 +72,6 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
-    console.log("stop", data.x, data.y)
     props.setTemplate?.({
       ...props.template,
       pomodoro: {
@@ -101,8 +101,6 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
     checkIsEdit();
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
-
-    console.log(props.template?.pomodoro);
 
     //init
     if (props.template?.pomodoro.position) {
@@ -140,6 +138,7 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
       onStart={handleStart}
       onStop={handleStop}
       position={position}
+      nodeRef={thisWidget}
       disabled={!isEdit}
       bounds={{
         top: 0,
