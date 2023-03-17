@@ -4,9 +4,17 @@ import { useEffect, useRef, useState } from "react";
 import Draggable from "react-draggable";
 import { PomodoroV1Props } from "../../type/pomodoroV1";
 
+//redux
+import { setTemplate } from "@/store/templateSlice";
+import { useSelector, useDispatch } from "react-redux";
+import type { RootState } from '@/store/store'
+
 const PomodoroWidget = (props: PomodoroV1Props) => {
   //get route path
   const router = useRouter();
+  const template = useSelector((state: RootState) => state.templateSlice);
+  const dispatch = useDispatch()
+
 
   const [listPomodoroTab, setListPomodoroTab] = useState([
     { name: "POMODORO", time: 25 * 60 },
@@ -79,6 +87,10 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
         position: { x: data.x, y: data.y },
       },
     });
+
+    //get template from redux
+    console.log("template redux", template);
+    dispatch(setTemplate(position))
   };
   const [isEdit, setIsEdit] = useState(false);
 
@@ -109,11 +121,13 @@ const PomodoroWidget = (props: PomodoroV1Props) => {
       setPosition({
         x:
           (props.template?.pomodoro.position.x /
-            (props.template?.global.position.x - thisWidget.current.clientWidth)) *
+            (props.template?.global.position.x -
+              thisWidget.current.clientWidth)) *
           (window.innerWidth - thisWidget.current.clientWidth),
         y:
           (props.template?.pomodoro.position.y /
-            (props.template?.global.position.y - thisWidget.current.clientHeight)) *
+            (props.template?.global.position.y -
+              thisWidget.current.clientHeight)) *
           (window.innerHeight - thisWidget.current.clientHeight),
       });
 
