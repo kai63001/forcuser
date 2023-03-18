@@ -125,32 +125,41 @@ const PomodoroWidget = () => {
 
     console.log(template);
 
-    //init
-    if (
-      template.pomodoro.position.x !== -1 &&
-      template.pomodoro.position.y !== -1
-    ) {
-      setPosition({
-        x:
-          (template?.pomodoro.position.x /
-            (template?.global.position.x - thisWidget.current.clientWidth)) *
-          (window.innerWidth - thisWidget.current.clientWidth),
-        y:
-          (template?.pomodoro.position.y /
-            (template?.global.position.y - thisWidget.current.clientHeight)) *
-          (window.innerHeight - thisWidget.current.clientHeight),
-      });
-      ``;
-      // I GOT IT
-      // (positionWidget /
-      //       (oldScreenWidth - widgetWidth)) *
-      //     (newScreenWidth - widgetWidth)
-    } else {
+    try {
+      if (
+        template.pomodoro &&
+        template.pomodoro.position.x !== -1 &&
+        template.pomodoro.position.y !== -1
+      ) {
+        setPosition({
+          x:
+            (template?.pomodoro.position.x /
+              (template?.global.position.x - thisWidget.current.clientWidth)) *
+            (window.innerWidth - thisWidget.current.clientWidth),
+          y:
+            (template?.pomodoro.position.y /
+              (template?.global.position.y - thisWidget.current.clientHeight)) *
+            (window.innerHeight - thisWidget.current.clientHeight),
+        });
+        ``;
+        // I GOT IT
+        // (positionWidget /
+        //       (oldScreenWidth - widgetWidth)) *
+        //     (newScreenWidth - widgetWidth)
+      } else {
+        setPosition({
+          x: window.innerWidth / 2 - thisWidget.current.clientWidth / 2,
+          y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2,
+        });
+      }
+    } catch (error) {
+      console.error(error);
       setPosition({
         x: window.innerWidth / 2 - thisWidget.current.clientWidth / 2,
         y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2,
       });
     }
+    //init
 
     //get center position
   }, []);

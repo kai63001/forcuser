@@ -8,6 +8,7 @@ export interface PomodoroV1State {
     type: number;
   };
   music: {
+    widget: number;
     type: string;
     url: string;
     position: {

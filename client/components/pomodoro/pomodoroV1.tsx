@@ -7,8 +7,15 @@ const SpotifyPlayer = dynamic(
 
 import { PomodoroV1Props } from "@/components/pomodoro/type/pomodoroV1";
 import BackgroundWidget from "./widget/background/backgroundWidget";
+//redux
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
+import { PomodoroV1State } from "../pomodoro/type/pomodoroV1";
 
 const PomodoroV1 = (props: PomodoroV1Props) => {
+  const template: PomodoroV1State = useSelector(
+    (state: RootState) => state.templateSlice
+  );
   const preventDragHandler = (e: any) => {
     e.preventDefault();
   };
@@ -52,7 +59,8 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
           </svg>
         </div>
         {/* left bottom */}
-        <SpotifyPlayer />
+        {template.music.widget == 0 && <SpotifyPlayer />}
+
         {/* position absolute middle of center */}
         <PomodoroWidget />
         {/* make image transition black */}

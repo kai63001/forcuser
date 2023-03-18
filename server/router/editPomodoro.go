@@ -22,6 +22,7 @@ type EditPomodoroDataType struct {
 		Type int    `json:"type"`
 	} `json:"wallpaper"`
 	Music struct {
+		Widget   int    `json:"widget"`
 		URL      string `json:"url"`
 		Type     int    `json:"type"`
 		Position struct {

@@ -161,10 +161,10 @@ const PomodoroEditPage = (props: any) => {
           <UploadWallpaper />
         )}
         {toggleId == 4 && (
-          <MusicPlayer setTemplate={setTemplate} template={template} />
+          <MusicPlayer />
         )}
         {toggleId == 6 && (
-          <MusicPlayer setTemplate={setTemplate} template={template} />
+          <MusicPlayer />
         )}
       </div>
       <SaveWidget id={props.id} />

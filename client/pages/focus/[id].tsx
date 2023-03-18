@@ -1,14 +1,14 @@
-import Loading from "@/components/libs/Loading";
-import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
-import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { setTemplate } from "@/store/templateSlice";
 import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "@/store/store";
+import dynamic from "next/dynamic";
+
+const PomodoroV1 = dynamic(() => import("@/components/pomodoro/pomodoroV1"), {
+  ssr: false,
+});
 
 const FocusMain = (props: any) => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {

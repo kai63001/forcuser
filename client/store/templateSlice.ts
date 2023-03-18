@@ -8,6 +8,7 @@ const initialState: PomodoroV1State = {
     type: 0,
   },
   music: {
+    widget: -1,
     type: "",
     url: "",
     position: {
