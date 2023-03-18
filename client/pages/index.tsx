@@ -37,31 +37,58 @@ export default function Home() {
           {/* make image transition black */}
 
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-50"></div>
-          <Image
+          {/* <Image
             src="https://wallpaperaccess.com/full/2825725.gif"
             unoptimized={true}
             alt="Focuser Background"
             fill
             style={{ objectFit: "cover" }}
-          />
+          /> */}
+          <video className="absolute  top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
+            <source src={`https://static.wallpaperwaifu.com/videos/preview/2022/howl-and-sophie-howls-moving-castle-preview.mp4`} type="video/mp4" />
+          </video>
         </div>
         {/* <p className="text-red-500">5000</p> */}
 
         {/* <button onClick={() => signOut()}>Sign out</button> */}
         <div className="max-w-screen-xl mx-auto mt-10 px-2 xs:px-0">
-          <h2 className="text-3xl franger">Pomodoro Timer boost your productivity</h2>
-          <p className="indent-12 my-5">Focuser is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it&apos;s time for a break or to switch tasks.</p>
+          <h2 className="text-3xl franger">
+            Pomodoro Timer boost your productivity
+          </h2>
+          <p className="indent-12 my-5">
+            Focuser is a customizable Pomodoro timer to help you stay focused in
+            small chunks of your work, like studying, coding and writing. With
+            an interactive user interface using the principles of the Pomodoro
+            Technique, this app will enable you to personalize your workflow and
+            break down tasks into smaller segments with breaks in between to
+            maximize focus levels throughout your workday. Features include
+            customizing task length and break intervals as well as providing
+            notifications when it&apos;s time for a break or to switch tasks.
+          </p>
           <p className="text-lg franger">Features:</p>
           <ul className="">
-            <li>- Customize the timing of your work (pomodoro) and break intervals</li>
+            <li>
+              - Customize the timing of your work (pomodoro) and break intervals
+            </li>
             <li>- Pause button during work mode</li>
-            <li>- Built-in alarm setting to remind when you should take a break or start working</li>
+            <li>
+              - Built-in alarm setting to remind when you should take a break or
+              start working
+            </li>
           </ul>
           <p className="text-lg franger">Benefits:</p>
           <ul className="">
-            <li>- Increase your productivity by breaking down large tasks into manageable chunks</li>
-            <li>- Know exactly how long you have been working/ taking a break for at any given moment</li>
-            <li>- Help with increasing focus and productivity while doing any task</li>
+            <li>
+              - Increase your productivity by breaking down large tasks into
+              manageable chunks
+            </li>
+            <li>
+              - Know exactly how long you have been working/ taking a break for
+              at any given moment
+            </li>
+            <li>
+              - Help with increasing focus and productivity while doing any task
+            </li>
           </ul>
           <h2 className="text-3xl franger mt-5">Featured</h2>
         </div>
@@ -74,15 +101,15 @@ export default function Home() {
 // Features:
 // - Customize the timing of your work (pomodoro) and break intervals
 // - Pause button during work mode
-// - Built-in alarm setting to remind when you should take a break or start working      
-// Benefits: 
-// -Help with increasing focus and productivity while doing any task 
-// - Set specific intervals for work time vs. break time according to your needs 
+// - Built-in alarm setting to remind when you should take a break or start working
+// Benefits:
+// -Help with increasing focus and productivity while doing any task
+// - Set specific intervals for work time vs. break time according to your needs
 // - Know exactly how long you have been working/ taking a break for at any given moment
 
-// Product Description: Pomofocus is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it's time for a break or to switch tasks. 
-// Benefits: 
-// - Increase your productivity by breaking down large tasks into manageable chunks 
-// - Optimize focus levels during a long day of work 
-// - Customizable timer settings to suit your needs 
+// Product Description: Pomofocus is a customizable Pomodoro timer to help you stay focused in small chunks of your work, like studying, coding and writing. With an interactive user interface using the principles of the Pomodoro Technique, this app will enable you to personalize your workflow and break down tasks into smaller segments with breaks in between to maximize focus levels throughout your workday. Features include customizing task length and break intervals as well as providing notifications when it's time for a break or to switch tasks.
+// Benefits:
+// - Increase your productivity by breaking down large tasks into manageable chunks
+// - Optimize focus levels during a long day of work
+// - Customizable timer settings to suit your needs
 // - Easily monitor progress with countdown timer
