@@ -11,6 +11,7 @@ import BackgroundWidget from "./widget/background/backgroundWidget";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { PomodoroV1State } from "../pomodoro/type/pomodoroV1";
+import ToDoListV1 from "./widget/todo/TodoListV1";
 
 const PomodoroV1 = (props: PomodoroV1Props) => {
   const template: PomodoroV1State = useSelector(
@@ -58,7 +59,9 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
             />
           </svg>
         </div>
-        {/* left bottom */}
+        {/* TodoList */}
+        <ToDoListV1 />
+        {/* Music Player */}
         {template.music.widget == 0 && <SpotifyPlayer />}
 
         {/* position absolute middle of center */}

@@ -1,4 +1,4 @@
-# docker next js
+# docker next js prod
 
 FROM node:16-alpine
 
@@ -7,12 +7,15 @@ WORKDIR /app
 COPY package.json .
 
 RUN npm install -g pnpm
+
 RUN pnpm install
+
+RUN pnpm add sharp
 
 COPY . .
 
-RUN pnpm run build
+RUN npm run build
 
 EXPOSE 3000
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]

@@ -139,7 +139,7 @@ const UploadWallpaper = () => {
       </div>
       <div className="flex"></div>
       {/* image grid 2 */}
-      <div className="grid grid-cols-2 gap-4 h-full overflow-y-scroll no-scrollbar">
+      <div className="grid grid-cols-2 gap-4 h-[45vh] overflow-y-scroll">
         {wallpaperData.map((wallpaper, index) => (
           <div
             key={index}

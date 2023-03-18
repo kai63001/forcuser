@@ -1,0 +1,63 @@
+version: "3.2"
+services:
+  client:
+    build: 
+      context: ./client
+      dockerfile: Dockerfile.prod
+    deploy:
+      replicas: 1
+      resources:
+        limits:
+          cpus: "0.50"
+          memory: 1024M
+        reservations:
+          cpus: "0.25"
+          memory: 256M
+      restart_policy:
+        condition: on-failure
+    ports:
+      - "3000:3000"
+    networks:
+      - my-network
+    volumes:
+      - /app/node_modules
+      - ./client:/app
+      - /app/.next
+  server:
+    build: 
+      context: ./server
+      dockerfile: Dockerfile.prod
+    ports:
+      - "4000:4000"
+    networks:
+      - my-network
+    volumes:
+      - ./server:/app
+  redis:
+    image: redis
+    expose:
+      - 6379
+    ports:
+      - "6379:6379"
+    networks:
+      - my-network
+    environment:
+      - REDIS_PASSWORD=password123
+    volumes:
+      - ./redis:/data
+  # gowissness
+  gowitness:
+    image: "leonjza/gowitness:latest"
+    # restart: unless-stopped
+    # fix image not show with delay
+    command: gowitness server --address 0.0.0.0:7171 --delay 1000 --allow-insecure-uri
+    expose:
+      - 7171
+    ports:
+      - "7171:7171"
+    networks:
+      - my-network
+volumes:
+  data:
+networks:
+  my-network:

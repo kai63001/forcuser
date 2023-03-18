@@ -2,7 +2,7 @@
 
 # Pull base image.
 
-FROM golang:1.19.2-alpine
+FROM golang:1.19.2
 
 # Set the Current Working Directory inside the container
 
@@ -13,8 +13,10 @@ WORKDIR /app
 COPY go.mod go.sum ./
 
 # Download all dependencies. Dependencies will be cached if the go.mod and the go.sum files are not changed
-
+RUN apt-get update
+RUN apt-get install -y libvips libvips-dev
 RUN go mod download
+
 
 # Copy the source from the current directory to the Working Directory inside the container
 
