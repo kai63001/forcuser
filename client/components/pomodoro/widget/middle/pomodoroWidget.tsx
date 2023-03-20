@@ -99,7 +99,7 @@ const PomodoroWidget = () => {
         },
       })
     );
-    console.log("template redux", template);
+    // console.log("template redux", template);
   };
   const [isEdit, setIsEdit] = useState(false);
 
@@ -122,8 +122,6 @@ const PomodoroWidget = () => {
     checkIsEdit();
     setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
     setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
-
-    console.log(template);
 
     try {
       if (

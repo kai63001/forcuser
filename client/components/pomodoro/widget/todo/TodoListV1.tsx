@@ -84,24 +84,15 @@ const ToDoListV1 = () => {
     return result;
   };
 
-  const getItemStyle = (isDragging: any, draggableStyle: any) => {
-    const x = draggableStyle["transform"]
-      ?.split(")")[0]
-      .split(",")[0]
-      .replace("translate(", "")
-      .replace("px", "");
-    const y = draggableStyle["transform"]
-      ?.split(")")[0]
-      .split(",")[1]
-      .replace("px", "");
-
-    console.log(x, y);
+  const getItemStyle = (isDragging: any, draggableStyle: any,transform:any) => {
 
     return {
       // change background colour if dragging
-      background: isDragging ? "red" : "black",
+      // background: isDragging ? "red" : "black",
       //style follow mouse
       ...draggableStyle,
+      transform
+
     };
   };
 
@@ -151,7 +142,7 @@ const ToDoListV1 = () => {
         onMouseUpCapture={resizer}
         className={`absolute z-40 text-white rounded-md ${
           isDragging ? "bg-black bg-opacity-50" : "bg-black bg-opacity-90"
-        } resize overflow-hidden min-w-[370px] min-h-[200px]`}
+        } resize min-w-[370px] min-h-[200px]`}
       >
         <div
           id="head"
@@ -211,12 +202,13 @@ const ToDoListV1 = () => {
                                 ref={provided.innerRef}
                                 {...provided.draggableProps}
                                 {...provided.dragHandleProps}
-                                style={{
-                                  ...provided.draggableProps.style,
-                                  transform,
-                                }}
+                                style={getItemStyle(
+                                  snapshot.isDragging,
+                                  provided.draggableProps.style,
+                                  transform
+                                )}
                               >
-                                <TodoWidget todo={task.content}/>
+                                <TodoWidget todo={task.content} />
                               </div>
                             );
                           }}

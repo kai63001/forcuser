@@ -36,7 +36,7 @@ export const templateSlice = createSlice({
   initialState,
   reducers: {
     setTemplate: (state, action: PayloadAction<PomodoroV1State>) => {
-      console.log("playload", action.payload);
+      // console.log("playload", action.payload);
       return action.payload;
     },
   },
