@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false, // true is cant use react-beautiful-dnd
   poweredByHeader: false,
   // hot reloading for docker
   // webpackDevMiddleware: config => {
