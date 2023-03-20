@@ -42,6 +42,12 @@ type EditPomodoroDataType struct {
 			Y float64 `json:"y"`
 		} `json:"position"`
 	} `json:"global"`
+	TodoList struct {
+		Position struct {
+			X float64 `json:"x"`
+			Y float64 `json:"y"`
+		} `json:"position"`
+	} `json:"todoList"`
 }
 
 func EditPomodoro(c *fiber.Ctx) error {

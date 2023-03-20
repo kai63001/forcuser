@@ -29,6 +29,13 @@ const initialState: PomodoroV1State = {
       y: 0,
     },
   },
+  todolist: {
+    position: {
+      x: -1,
+      y: -1,
+    },
+  },
+
 };
 
 export const templateSlice = createSlice({

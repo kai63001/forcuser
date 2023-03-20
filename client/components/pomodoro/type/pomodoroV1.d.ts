@@ -29,6 +29,12 @@ export interface PomodoroV1State {
       y: number;
     };
   };
+  todolist: {
+    position: {
+      x: number;
+      y: number;
+    };
+  };
 }
 
 export interface PomodoroState {

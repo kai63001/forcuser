@@ -11,6 +11,7 @@ import {
 } from "react-beautiful-dnd";
 
 import TodoWidget from "./Todo";
+import { useRouter } from "next/router";
 
 const hashString = (str: any) => {
   let hash = 0,
@@ -26,6 +27,8 @@ const hashString = (str: any) => {
 };
 
 const ToDoListV1 = () => {
+  const router = useRouter();
+
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   );
@@ -84,15 +87,17 @@ const ToDoListV1 = () => {
     return result;
   };
 
-  const getItemStyle = (isDragging: any, draggableStyle: any,transform:any) => {
-
+  const getItemStyle = (
+    isDragging: any,
+    draggableStyle: any,
+    transform: any
+  ) => {
     return {
       // change background colour if dragging
       // background: isDragging ? "red" : "black",
       //style follow mouse
       ...draggableStyle,
-      transform
-
+      transform,
     };
   };
 
@@ -119,7 +124,71 @@ const ToDoListV1 = () => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
+    dispatch(
+      setTemplate({
+        ...template,
+        todolist: {
+          ...template.todolist,
+          position: { x: data.x, y: data.y },
+        },
+      })
+    );
   };
+
+  const checkIsEdit = () => {
+    if (router.pathname.includes("edit")) {
+      setIsEdit(true);
+      return true;
+    }
+
+    setIsEdit(false);
+    return false;
+  };
+
+  useEffect(() => {
+    checkIsEdit();
+    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
+
+    try {
+      if (
+        template.todolist &&
+        template.todolist.position.x !== -1 &&
+        template.todolist.position.y !== -1
+      ) {
+        setPosition({
+          x:
+            (template?.todolist.position.x /
+              (template?.global.position.x - thisWidget.current.clientWidth)) *
+            (window.innerWidth - thisWidget.current.clientWidth),
+          y:
+            (template?.todolist.position.y /
+              (template?.global.position.y - thisWidget.current.clientHeight)) *
+            (window.innerHeight - thisWidget.current.clientHeight),
+        });
+        ``;
+        // I GOT IT
+        // (positionWidget /
+        //       (oldScreenWidth - widgetWidth)) *
+        //     (newScreenWidth - widgetWidth)
+      } else {
+        console.log("no position")
+        setPosition({
+          x: 15,
+          y: 15,
+        });
+      }
+    } catch (error) {
+      console.error(error);
+      setPosition({
+        x: 15,
+          y: 15,
+      });
+    }
+    //init
+
+    //get center position
+  }, []);
 
   return (
     // todotList
@@ -142,7 +211,7 @@ const ToDoListV1 = () => {
         onMouseUpCapture={resizer}
         className={`absolute z-40 text-white rounded-md ${
           isDragging ? "bg-black bg-opacity-50" : "bg-black bg-opacity-90"
-        } resize min-w-[370px] min-h-[200px]`}
+        } resize overflow-hidden min-w-[370px] min-h-[200px]`}
       >
         <div
           id="head"
@@ -166,10 +235,10 @@ const ToDoListV1 = () => {
                       ref={provided.innerRef}
                       className="w-full"
                     >
-                      {todoList.map((task, index) => (
+                      {tasks.map((task, index) => (
                         <DraggableTodo
-                          key={task.id}
-                          draggableId={task.id}
+                          key={task.content.id}
+                          draggableId={task.content.id}
                           index={index}
                         >
                           {(provided: any, snapshot: any) => {
@@ -208,7 +277,7 @@ const ToDoListV1 = () => {
                                   transform
                                 )}
                               >
-                                <TodoWidget todo={task.content} />
+                                <TodoWidget todo={task.content.content} />
                               </div>
                             );
                           }}
