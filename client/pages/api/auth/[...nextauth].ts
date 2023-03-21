@@ -73,11 +73,11 @@ const providers = [
 const callbacks = {
   jwt: async ({ token, user, account }: any) => {
     if (account) {
-        user.token = account.token;
-        user.refreshToken = account.refresh;
-        user.expires = account.exp;
-        
-        return Promise.resolve(user);
+      user.token = account.token;
+      user.refreshToken = account.refresh;
+      user.expires = account.exp;
+
+      return Promise.resolve(user);
     }
     // console.log("jwt", token);
     if (user) {
@@ -115,12 +115,14 @@ const callbacks = {
   //login
   signIn: async ({ account, profile }: any) => {
     if (account.provider === "google") {
-      //   console.log("google profile", profile);
+        console.log("google profile", profile);
       const response = await axios.post(`${API_URL}/auth/google`, {
         email: profile.email,
+        name: profile.name,
+        image: profile.picture,
       });
 
-    //   console.log(response.data);
+      //   console.log(response.data);
 
       account.token = await response.data.token;
       account.refresh = await response.data.refreshToken;

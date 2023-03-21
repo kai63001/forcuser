@@ -10,12 +10,16 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/golang-jwt/jwt/v4"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"golang.org/x/crypto/bcrypt"
 )
 
 // User is a struct for user
 type User struct {
 	Email           string `json:"email"`
+	Name            string `json:"name"`
+	Image           string `json:"image"`
+	Id              string `bson:"_id,omitempty"`
 	Password        string `json:"password"`
 	ConfirmPassword string `json:"confirmPassword"`
 }
@@ -43,7 +47,26 @@ func LoginByGoogle(c *fiber.Ctx) error {
 	}
 
 	if finder == (User{}) {
-		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email not found"})
+		fmt.Println("not found")
+		//create and get id last login and create date
+		result, err := db.ClientDB.Collection("users").InsertOne(context.Background(), bson.M{"email": user.Email, "image": user.Image, "name": user.Name, "lastLogin": time.Now(), "createDate": time.Now()})
+		if err != nil {
+			fmt.Println(err)
+		}
+		//create token
+
+		tokenString, tokenStringRefresh, err := createToken(&User{Email: user.Email, Id: result.InsertedID.(primitive.ObjectID).Hex()})
+		if err != nil {
+			return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+		}
+
+		return c.Status(200).JSON(bson.M{"status": "success", "token": tokenString, "refreshToken": tokenStringRefresh, "exp": time.Now().Add(time.Hour*24).Unix() * 1000})
+	}
+
+	//update last login
+	if _, err := db.ClientDB.Collection("users").UpdateOne(context.Background(), bson.M{"email": user.Email}, bson.M{"$set": bson.M{"lastLogin": time.Now()}}); err != nil {
+		fmt.Println(err)
+		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}
 
 	//create token
