@@ -1,7 +1,6 @@
 package middleware
 
 import (
-	"fmt"
 	"os"
 	"strings"
 
@@ -32,7 +31,6 @@ func AuthMiddleware(c *fiber.Ctx) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fiber.ErrUnauthorized
 		}
-		fmt.Println(os.Getenv("ACCESS_TOKEN_SECRET"))
 		return []byte(os.Getenv("ACCESS_TOKEN_SECRET")), nil
 	})
 	if err != nil {

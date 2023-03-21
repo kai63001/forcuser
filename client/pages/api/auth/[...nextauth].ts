@@ -72,12 +72,12 @@ const providers = [
 
 const callbacks = {
   jwt: async ({ token, user, account }: any) => {
-    console.log("account", account);
     if (account) {
-      console.log("in accont");
         user.token = account.token;
         user.refreshToken = account.refresh;
+        user.expires = account.exp;
         
+        return Promise.resolve(user);
     }
     // console.log("jwt", token);
     if (user) {
@@ -120,10 +120,11 @@ const callbacks = {
         email: profile.email,
       });
 
-      console.log(response.data);
+    //   console.log(response.data);
 
       account.token = await response.data.token;
       account.refresh = await response.data.refreshToken;
+      account.exp = await response.data.exp;
 
       return true;
 
