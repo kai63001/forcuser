@@ -31,9 +31,6 @@ type TokenData struct {
 	jwt.StandardClaims
 }
 
-var accestTokenSecret = []byte(os.Getenv("ACCESS_TOKEN_SECRET"))
-var refreshTokenSecret = []byte(os.Getenv("REFRESH_TOKEN_SECRET"))
-
 func LoginByGoogle(c *fiber.Ctx) error {
 	//get email from body
 	var user User
@@ -43,25 +40,20 @@ func LoginByGoogle(c *fiber.Ctx) error {
 	finder := User{}
 	if err := db.ClientDB.Collection("users").FindOne(context.Background(), bson.M{"email": user.Email}).Decode(&finder); err != nil {
 		fmt.Println("error", err)
-		if err.Error() == "mongo: no documents in result" {
-			//update db create and login date
-			_, err := db.ClientDB.Collection("users").InsertOne(context.Background(), bson.M{"email": user.Email, "createDate": time.Now(), "lastLoginDate": time.Now()})
-			if err != nil {
-				return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
-			}
-			return c.Status(200).JSON(bson.M{"status": "success", "data": "login by google", "exists": false})
-		}
-		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
 	}
-	if finder != (User{}) {
-		//update db last login date
-		_, err := db.ClientDB.Collection("users").UpdateOne(context.Background(), bson.M{"email": user.Email}, bson.M{"$set": bson.M{"lastLoginDate": time.Now()}})
-		if err != nil {
-			return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
-		}
-		return c.Status(200).JSON(bson.M{"status": "error", "error": "Email already exists", "exists": true})
+
+	if finder == (User{}) {
+		return c.Status(409).JSON(bson.M{"status": "error", "error": "Email not found"})
 	}
-	return c.Status(200).JSON(bson.M{"status": "success", "data": "login by google", "exists": false})
+
+	//create token
+	tokenString, tokenStringRefresh, err := createToken(&finder)
+	if err != nil {
+		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
+	}
+
+	return c.Status(200).JSON(bson.M{"status": "success", "token": tokenString, "refreshToken": tokenStringRefresh, "exp": time.Now().Add(time.Hour*24).Unix() * 1000})
+
 }
 
 // AuthRouterRegister takes a pointer to a fiber.Ctx object and returns an error
@@ -160,7 +152,7 @@ func AuthRouterRefreshToken(c *fiber.Ctx) error {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 		}
-		return refreshTokenSecret, nil
+		return []byte(os.Getenv("REFRESH_TOKEN_SECRET")), nil
 	})
 	if err != nil {
 		return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
@@ -179,7 +171,7 @@ func AuthRouterRefreshToken(c *fiber.Ctx) error {
 				if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 					return nil, fmt.Errorf("Unexpected signing method: %v", token.Header["alg"])
 				}
-				return accestTokenSecret, nil
+				return []byte(os.Getenv("REFRESH_TOKEN_SECRET")), nil
 			})
 			if err != nil {
 				return c.Status(503).JSON(bson.M{"status": "error", "error": err.Error()})
@@ -227,7 +219,7 @@ func createToken(user *User) (string, string, error) {
 		"exp":   time.Now().Add(time.Hour*24).Unix() * 1000,
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	tokenString, err := token.SignedString(accestTokenSecret)
+	tokenString, err := token.SignedString([]byte(os.Getenv("ACCESS_TOKEN_SECRET")))
 	if err != nil {
 		return "", "", err
 	}
@@ -237,7 +229,7 @@ func createToken(user *User) (string, string, error) {
 		"exp": time.Now().Add(time.Hour*24*7).Unix() * 1000,
 	}
 	tokenRefresh := jwt.NewWithClaims(jwt.SigningMethodHS256, claimsRefresh)
-	tokenStringRefresh, err := tokenRefresh.SignedString(refreshTokenSecret)
+	tokenStringRefresh, err := tokenRefresh.SignedString([]byte(os.Getenv("REFRESH_TOKEN_SECRET")))
 	if err != nil {
 		return "", "", err
 	}

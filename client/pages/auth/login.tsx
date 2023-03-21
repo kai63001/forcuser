@@ -61,7 +61,7 @@ const Login = () => {
   const googleLogin = (e: any) => {
     e.preventDefault();
     signIn("google",{
-      callbackUrl: `${window.location.origin}/`,
+      callbackUrl: `${window.location.origin}/dashboard`,
     }).then((res) => {
       console.log("res", res);
     });
@@ -168,7 +168,7 @@ const Login = () => {
                     height={25}
                     className="inline-block -translate-y-0.5 mr-1"
                   />
-                  Sign in with Google
+                  Continue with Google
                 </button>
               </div>
             </form>

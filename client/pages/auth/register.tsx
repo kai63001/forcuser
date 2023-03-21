@@ -5,6 +5,7 @@ import Input from "@/components/libs/Input";
 import axios from "@/lib/axios";
 import { useRouter } from "next/router";
 import Layout from "@/components/Layout";
+import { signIn } from "next-auth/react";
 
 interface RegisterInterface {
   email: string;
@@ -59,6 +60,15 @@ const Register = () => {
           });
         }
       });
+  };
+
+  const googleLogin = (e: any) => {
+    e.preventDefault();
+    signIn("google", {
+      callbackUrl: `${window.location.origin}/dashboard`,
+    }).then((res) => {
+      console.log("res", res);
+    });
   };
 
   return (
@@ -139,7 +149,10 @@ const Register = () => {
                 Create account
               </button>
               <div>
-                <button className="w-full border text-black text-center py-2 rounded-md -mt-10 relative">
+                <button
+                  className="w-full border text-black text-center py-2 rounded-md -mt-10 relative"
+                  onClick={googleLogin}
+                >
                   <Image
                     src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
                     alt="Google Logo"
@@ -147,7 +160,7 @@ const Register = () => {
                     height={25}
                     className="inline-block -translate-y-0.5 mr-1"
                   />
-                  Create account with Google
+                  Continue with Google
                 </button>
               </div>
             </form>

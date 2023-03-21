@@ -5,6 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import GoogleProvider from "next-auth/providers/google";
 
 import jwt from "jsonwebtoken";
+import { SignToken } from "@/lib/jwtToken";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL_DOCKER;
 
@@ -70,8 +71,15 @@ const providers = [
 ];
 
 const callbacks = {
-  jwt: async ({ token, user }: any) => {
-    // console.log("jwt",token)
+  jwt: async ({ token, user, account }: any) => {
+    console.log("account", account);
+    if (account) {
+      console.log("in accont");
+        user.token = account.token;
+        user.refreshToken = account.refresh;
+        
+    }
+    // console.log("jwt", token);
     if (user) {
       token.token = user.token;
       token.expires = user.exp;
@@ -107,11 +115,17 @@ const callbacks = {
   //login
   signIn: async ({ account, profile }: any) => {
     if (account.provider === "google") {
-    //   console.log("google profile", profile);
+      //   console.log("google profile", profile);
       const response = await axios.post(`${API_URL}/auth/google`, {
         email: profile.email,
       });
-      return true
+
+      console.log(response.data);
+
+      account.token = await response.data.token;
+      account.refresh = await response.data.refreshToken;
+
+      return true;
 
       //   const user = await axios.post(`${API_URL}/auth/google`, {
       //     email: profile.email,
