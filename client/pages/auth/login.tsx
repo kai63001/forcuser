@@ -54,12 +54,21 @@ const Login = () => {
           email: "Email or password is incorrect",
           password: "Email or password is incorrect",
         });
-        console.log("error",err);
+        console.log("error", err);
       });
   };
 
+  const googleLogin = (e: any) => {
+    e.preventDefault();
+    signIn("google",{
+      callbackUrl: `${window.location.origin}/`,
+    }).then((res) => {
+      console.log("res", res);
+    });
+  };
+
   if (isAuthenticated == true) {
-    return <Loading/>;
+    return <Loading />;
   }
 
   return (
@@ -148,7 +157,10 @@ const Login = () => {
                 Sign in
               </button>
               <div>
-                <button className="w-full border text-black text-center py-2 rounded-md -mt-10 relative">
+                <button
+                  className="w-full border text-black text-center py-2 rounded-md -mt-10 relative"
+                  onClick={googleLogin}
+                >
                   <Image
                     src="https://cdn1.iconfinder.com/data/icons/google-s-logo/150/Google_Icons-09-512.png"
                     alt="Google Logo"
