@@ -32,6 +32,8 @@ type Token struct {
 type TokenData struct {
 	Email string `json:"email"`
 	Id    string `bson:"_id,omitempty"`
+	Name  string `json:"name"`
+	Image string `json:"image"`
 	jwt.StandardClaims
 }
 
@@ -55,7 +57,7 @@ func LoginByGoogle(c *fiber.Ctx) error {
 		}
 		//create token
 
-		tokenString, tokenStringRefresh, err := createToken(&User{Email: user.Email, Id: result.InsertedID.(primitive.ObjectID).Hex()})
+		tokenString, tokenStringRefresh, err := createToken(&User{Email: user.Email, Id: result.InsertedID.(primitive.ObjectID).Hex(), Name: user.Name, Image: user.Image})
 		if err != nil {
 			return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 		}
@@ -237,6 +239,8 @@ func createToken(user *User) (string, string, error) {
 	//jwt create access token
 	claims := jwt.MapClaims{
 		"email": user.Email,
+		"name":  user.Name,
+		"image": user.Image,
 		"_id":   userDB.Id,
 		"iat":   time.Now().Unix(),
 		"exp":   time.Now().Add(time.Hour*24).Unix() * 1000,

@@ -7,7 +7,7 @@ type LayoutInterface = {
   children?: any | undefined;
 };
 import { useRouter } from "next/router";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
@@ -15,6 +15,11 @@ import dynamic from "next/dynamic";
 const ModalCreatePomodoro = dynamic(() => import("./modal/createPomodoro"));
 
 const DashboardLayout = (props: LayoutInterface) => {
+  //session from next
+  const { data: session }: any = useSession();
+
+  console.log(session);
+
   const [openModalCreate, setOpenModalCreate] = useState(false);
 
   const [openDropdown, setOpenDropdown] = useState(false);
@@ -151,15 +156,16 @@ const DashboardLayout = (props: LayoutInterface) => {
                 </button>
                 {/* avatar */}
                 <div
-                  className="flex items-center cursor-pointer"
+                  className="flex items-center cursor-pointer bg-purple-500 rounded-full"
                   ref={userImageDropdown}
                   onClick={() => setOpenDropdown((b) => !b)}
                 >
                   <Image
-                    src="/icon/man.png"
+                    src={session?.user?.image || "/icon/man.png"}
                     alt="Picture of the author"
                     width={40}
                     height={40}
+                    className="object-cover"
                   />
                 </div>
                 {/* dropdown */}

@@ -102,6 +102,8 @@ const callbacks = {
 
     session.user = {
       email: user.email,
+      name: user.name,
+      image: user.image,
     };
     session.token = token.token;
     session.refreshToken = token.refreshToken;
@@ -115,7 +117,7 @@ const callbacks = {
   //login
   signIn: async ({ account, profile }: any) => {
     if (account.provider === "google") {
-        console.log("google profile", profile);
+      // console.log("google profile", profile);
       const response = await axios.post(`${API_URL}/auth/google`, {
         email: profile.email,
         name: profile.name,
