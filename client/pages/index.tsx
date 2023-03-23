@@ -25,9 +25,9 @@ export default function Home() {
           {/* position absolute middle of center */}
           <div className="absolute z-20 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="flex flex-col items-center">
-              <h1 className="text-8xl franger text-white">Focuser</h1>
-              <p className="text-white">
-                flexible and easy to boost your productivity free2
+              <h1 className="text-8xl franger text-white">Focusify</h1>
+              <p className="text-white mt-5">
+                flexible and easy to boost your productivity free
               </p>
               <button className="bg-white px-7 py-2 mt-2 rounded-full hover:bg-transparent hover:text-white border-2 border-white duration-200 text-xl">
                 Create

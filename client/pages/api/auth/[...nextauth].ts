@@ -72,7 +72,8 @@ const providers = [
 
 const callbacks = {
   jwt: async ({ token, user, account }: any) => {
-    if (account) {
+    console.log("account", account)
+    if (account && account.provider === "google") {
       user.token = account.token;
       user.refreshToken = account.refresh;
       user.expires = account.exp;
@@ -81,6 +82,7 @@ const callbacks = {
     }
     // console.log("jwt", token);
     if (user) {
+      console.log("user", user)
       token.token = user.token;
       token.expires = user.exp;
       token.refreshToken = user.refreshToken;

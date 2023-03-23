@@ -36,6 +36,7 @@ func main() {
 	app.Use(middleware.AuthMiddleware)
 	app.Post("/pomodoro/create", router.CreatePomodoro)
 	app.Post("/pomodoro/edit/:id", router.EditPomodoro)
+	app.Get("/pomodoro/my", router.GetMyPomodoroList)
 
 	app.Listen(":4000")
 }
