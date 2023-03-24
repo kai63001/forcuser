@@ -159,11 +159,11 @@ const ToDoListV1 = () => {
         setPosition({
           x:
             (template?.todolist.position.x /
-              (template?.global.position.x - thisWidget.current.clientWidth)) *
+              (template?.global?.position.x - thisWidget.current.clientWidth)) *
             (window.innerWidth - thisWidget.current.clientWidth),
           y:
             (template?.todolist.position.y /
-              (template?.global.position.y - thisWidget.current.clientHeight)) *
+              (template?.global?.position.y - thisWidget.current.clientHeight)) *
             (window.innerHeight - thisWidget.current.clientHeight),
         });
         ``;

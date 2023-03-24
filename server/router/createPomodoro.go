@@ -34,7 +34,7 @@ func CreatePomodoro(c *fiber.Ctx) error {
 
 	//insert db
 
-	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag, "templateId": pomodoro.TemplateId, "userId": newId})
+	result, err := db.ClientDB.Collection("pomodoro").InsertOne(context.Background(), bson.M{"name": pomodoro.PomodoroName, "tag": pomodoro.Tag, "templateId": pomodoro.TemplateId, "userId": newId, "template": bson.M{}})
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}

@@ -32,7 +32,7 @@ export async function getServerSideProps(context: any) {
   return {
     props: {
       id: id,
-      template: data.data.data.template,
+      template: data?.data?.data?.template,
     },
   };
 }

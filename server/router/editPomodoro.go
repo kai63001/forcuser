@@ -3,6 +3,7 @@ package router
 import (
 	"focuser.com/server/db"
 	"focuser.com/server/lib"
+	"focuser.com/server/structer"
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -16,47 +17,13 @@ import (
 //   };
 // to type struct
 
-type EditPomodoroDataType struct {
-	Wallpaper struct {
-		URL  string `json:"url"`
-		Type int    `json:"type"`
-	} `json:"wallpaper"`
-	Music struct {
-		Widget   int    `json:"widget"`
-		URL      string `json:"url"`
-		Type     int    `json:"type"`
-		Position struct {
-			X float64 `json:"x"`
-			Y float64 `json:"y"`
-		} `json:"position"`
-	} `json:"music"`
-	Pomodoro struct {
-		Position struct {
-			X float64 `json:"x"`
-			Y float64 `json:"y"`
-		} `json:"position"`
-	} `json:"pomodoro"`
-	Global struct {
-		Position struct {
-			X float64 `json:"x"`
-			Y float64 `json:"y"`
-		} `json:"position"`
-	} `json:"global"`
-	TodoList struct {
-		Position struct {
-			X float64 `json:"x"`
-			Y float64 `json:"y"`
-		} `json:"position"`
-	} `json:"todoList"`
-}
-
 func EditPomodoro(c *fiber.Ctx) error {
 
 	var id = c.Params("id")
 	var newId primitive.ObjectID
 	newId, _ = primitive.ObjectIDFromHex(id)
 
-	var editPomodoro EditPomodoroDataType
+	var editPomodoro structer.EditPomodoroDataType
 	if err := c.BodyParser(&editPomodoro); err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
@@ -76,13 +43,13 @@ func EditPomodoro(c *fiber.Ctx) error {
 
 	//print data
 	// fmt.Println(editPomodoro)
+	urlImage, err := lib.GetImage(id)
 
 	//update data
-	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro}}).Err(); err != nil {
+	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro, "image": urlImage}}).Err(); err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
-	urlImage, err := lib.GetImage(id)
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}

@@ -14,6 +14,12 @@ type GetPomodoroDataType struct {
 	PomodoroId string `json:"pomodoroId"`
 }
 
+type MyFocusDataType struct {
+	Name  string   `json:"name"`
+	Image string   `json:"image"`
+	Tag   []string `json:"tag"`
+}
+
 func GetPomodoroData(c *fiber.Ctx) error {
 	//get params id
 	var pomodoro GetPomodoroDataType
@@ -41,7 +47,7 @@ func GetMyPomodoroList(c *fiber.Ctx) error {
 	newId, _ = primitive.ObjectIDFromHex(user.Id)
 
 	//get data from db pomodoro
-	var pomodoroData []bson.M
+	var pomodoroData []MyFocusDataType
 	cursor, err := db.ClientDB.Collection("pomodoro").Find(context.Background(), bson.M{"userId": newId})
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})

@@ -62,7 +62,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         {/* TodoList */}
         <ToDoListV1 />
         {/* Music Player */}
-        {template.music.widget == 0 && <SpotifyPlayer />}
+        {template?.music?.widget == 0 && <SpotifyPlayer />}
 
         {/* position absolute middle of center */}
         <PomodoroWidget />

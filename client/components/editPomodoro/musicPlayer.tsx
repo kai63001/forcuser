@@ -13,7 +13,7 @@ const MusicPlayer = () => {
   const dispatch = useDispatch();
 
   const selectMusicPlayer = (id: number) => {
-    if (template.music.widget == id) {
+    if (template?.music?.widget == id) {
       dispatch(
         setTemplate({
           ...template,
@@ -46,7 +46,7 @@ const MusicPlayer = () => {
           <div
             onClick={() => selectMusicPlayer(0)}
             className={`group cursor-pointer border-2 rounded-md ${
-              template.music.widget == 0
+              template?.music?.widget == 0
                 ? "bg-orange-400 border-orange-200"
                 : "bg-purple-400 border-purple-200"
             } `}

@@ -72,7 +72,6 @@ const providers = [
 
 const callbacks = {
   jwt: async ({ token, user, account }: any) => {
-    console.log("account", account)
     if (account && account.provider === "google") {
       user.token = account.token;
       user.refreshToken = account.refresh;
