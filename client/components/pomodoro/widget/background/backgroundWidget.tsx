@@ -8,7 +8,7 @@ const BackgroundWidget = () => {
   );
   return (
     <Image
-      src={`${template.wallpaper?.url || "/demo/demo.jpg"}`}
+      src={`${template?.wallpaper?.url || "/demo/demo.jpg"}`}
       alt="Focusify Background"
       unoptimized={true}
       fill

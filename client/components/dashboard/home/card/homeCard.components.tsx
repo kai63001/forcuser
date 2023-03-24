@@ -2,7 +2,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
-const HomeCard = () => {
+interface HomeCardInterface {
+  image: string;
+  id: string;
+}
+
+const HomeCard = (props: HomeCardInterface) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const openDropdown = (e: any) => {
@@ -14,10 +19,7 @@ const HomeCard = () => {
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
-      if (
-        dropdown.current &&
-        !dropdown.current.contains(event.target)
-      ) {
+      if (dropdown.current && !dropdown.current.contains(event.target)) {
         setIsOpen(false);
       }
     };
@@ -31,14 +33,25 @@ const HomeCard = () => {
       <div className="bg-white rounded-md group cursor-pointer">
         <div className="relative w-full h-[170px] shadow-md">
           <Image
-            src="/screenshot/demo.png"
+            src={`${
+              props.image
+                ? "https://focuserimage.s3.us-east-2.amazonaws.com/" +
+                  props.image
+                : "/screenshot/demo.png"
+            }`}
             alt="Picture of the author"
             fill
             className="rounded-md"
           />
-          <div className={`absolute right-1 top-1 z-30 opacity-0 group-hover:opacity-100 duration-200 ${isOpen && 'opacity-100'}`}>
+          <div
+            className={`absolute right-1 top-1 z-30 opacity-0 group-hover:opacity-100 duration-200 ${
+              isOpen && "opacity-100"
+            }`}
+          >
             <div
-              className={`${isOpen ? 'bg-purple-600 text-white' : 'bg-white'} hover:bg-purple-600 hover:text-white px-2 py-1 shadow-md rounded-md`}
+              className={`${
+                isOpen ? "bg-purple-600 text-white" : "bg-white"
+              } hover:bg-purple-600 hover:text-white px-2 py-1 shadow-md rounded-md`}
               onClick={openDropdown}
             >
               <svg
@@ -60,11 +73,18 @@ const HomeCard = () => {
             </div>
           </div>
           {isOpen && (
-            <div ref={dropdown} onClick={(e)=>e.preventDefault()} className="absolute right-1 top-8 bg-white py-1 rounded-md shadow-md">
+            <div
+              ref={dropdown}
+              onClick={(e) => e.preventDefault()}
+              className="absolute right-1 top-8 bg-white py-1 rounded-md shadow-md"
+            >
               <div className="flex flex-col space-y-2 w-52">
-                <div className="cursor-pointer hover:bg-gray-200 px-2 py-1 text-sm">
+                <Link
+                  href={`/dashboard/pomodoro/edit/${props.id}`}
+                  className="cursor-pointer hover:bg-gray-200 px-2 py-1 text-sm"
+                >
                   Edit
-                </div>
+                </Link>
               </div>
             </div>
           )}

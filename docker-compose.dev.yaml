@@ -46,7 +46,7 @@ services:
     image: "leonjza/gowitness:latest"
     # restart: unless-stopped
     # fix image not show with delay
-    command: gowitness server --address 0.0.0.0:7171 --delay 1000 --allow-insecure-uri
+    command: gowitness server --address 0.0.0.0:7171 --delay 1000 --allow-insecure-uri -X 1920 -Y 1080
     expose:
       - 7171
     ports:

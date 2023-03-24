@@ -17,7 +17,7 @@ async function RefreshAccessToken(tokenObject: any) {
       refreshToken: tokenObject.refreshToken,
     });
 
-    console.log("tokenResponse", tokenResponse);
+    // console.log("tokenResponse", tokenResponse);
 
     return {
       ...tokenObject,
@@ -53,7 +53,7 @@ const providers = [
 
         return null;
       } catch (e: any) {
-        console.log(e);
+        // console.log(e);
         throw new Error(e.response.data.error);
       }
     },
@@ -81,7 +81,7 @@ const callbacks = {
     }
     // console.log("jwt", token);
     if (user) {
-      console.log("user", user)
+      // console.log("user", user)
       token.token = user.token;
       token.expires = user.exp;
       token.refreshToken = user.refreshToken;

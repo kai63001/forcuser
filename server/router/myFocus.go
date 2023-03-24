@@ -8,6 +8,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type GetPomodoroDataType struct {
@@ -15,9 +16,10 @@ type GetPomodoroDataType struct {
 }
 
 type MyFocusDataType struct {
-	Name  string   `json:"name"`
-	Image string   `json:"image"`
-	Tag   []string `json:"tag"`
+	Name  string             `json:"name"`
+	Image string             `json:"image"`
+	Tag   []string           `json:"tag"`
+	Id    primitive.ObjectID `bson:"_id" json:"_id"`
 }
 
 func GetPomodoroData(c *fiber.Ctx) error {
@@ -48,7 +50,8 @@ func GetMyPomodoroList(c *fiber.Ctx) error {
 
 	//get data from db pomodoro
 	var pomodoroData []MyFocusDataType
-	cursor, err := db.ClientDB.Collection("pomodoro").Find(context.Background(), bson.M{"userId": newId})
+	//order by id Desc
+	cursor, err := db.ClientDB.Collection("pomodoro").Find(context.Background(), bson.M{"userId": newId}, options.Find().SetSort(bson.D{{Key: "_id", Value: -1}}))
 	if err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "error": err})
 	}

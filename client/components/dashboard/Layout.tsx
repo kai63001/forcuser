@@ -18,8 +18,6 @@ const DashboardLayout = (props: LayoutInterface) => {
   //session from next
   const { data: session }: any = useSession();
 
-  console.log(session);
-
   const [openModalCreate, setOpenModalCreate] = useState(false);
 
   const [openDropdown, setOpenDropdown] = useState(false);
