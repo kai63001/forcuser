@@ -4,7 +4,6 @@ ENV PROJECT_DIR=/app \
     GO111MODULE=on
     # CGO_ENABLED=0
 
-
 WORKDIR /app
 COPY . .
 RUN apt-get update

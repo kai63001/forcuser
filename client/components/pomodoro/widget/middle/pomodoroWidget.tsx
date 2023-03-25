@@ -81,14 +81,6 @@ const PomodoroWidget = () => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
-    // props.setTemplate?.({
-    //   ...props.template,
-    //   pomodoro: {
-    //     ...props.template.pomodoro,
-    //     position: { x: data.x, y: data.y },
-    //   },
-    // });
-
     //get template from redux
     dispatch(
       setTemplate({
@@ -99,7 +91,6 @@ const PomodoroWidget = () => {
         },
       })
     );
-    // console.log("template redux", template);
   };
   const [isEdit, setIsEdit] = useState(false);
 

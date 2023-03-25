@@ -63,7 +63,7 @@ func GetImage(id string) (string, error) {
 		fmt.Println("Error converting image:", err)
 		return "", err
 	}
-	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1920, Height: 1080})
+	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 960, Height: 540})
 	if err != nil {
 		fmt.Println("Error processed image:", err)
 		return "", err
@@ -149,4 +149,30 @@ func UploadToS3(processed []byte, filename string, path string) (string, error) 
 	}
 
 	return path + "/" + filename, nil
+}
+
+func DeleteToS3(filename string) error {
+	s3Config := &aws.Config{
+		Credentials: credentials.NewStaticCredentials(
+			os.Getenv("S3_BUCKET_KEY"),
+			os.Getenv("S3_SECRET_KEY"),
+			""),
+		Region: aws.String("us-east-2"),
+	}
+
+	newSession := session.New(s3Config)
+	s3Client := s3.New(newSession)
+
+	object := s3.DeleteObjectInput{
+		Bucket: aws.String("focuserimage"),
+		Key:    aws.String(filename),
+	}
+
+	_, err := s3Client.DeleteObject(&object)
+	if err != nil {
+		fmt.Println(err.Error())
+		return err
+	}
+
+	return nil
 }

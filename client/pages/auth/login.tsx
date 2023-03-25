@@ -60,7 +60,7 @@ const Login = () => {
 
   const googleLogin = (e: any) => {
     e.preventDefault();
-    signIn("google",{
+    signIn("google", {
       callbackUrl: `${window.location.origin}/dashboard`,
     }).then((res) => {
       console.log("res", res);
@@ -76,6 +76,9 @@ const Login = () => {
       <div className="h-screen">
         <div className="grid grid-cols-3 w-full h-full">
           <div className="max-w-lg w-full m-auto p-10 md:p-3 col-span-3 md:col-span-1">
+          <Link href={"/"}>
+              <div className="absolute top-10 underline">Back to Home</div>
+            </Link>
             <h1 className="franger text-3xl">Login</h1>
             <p className="text-gray-600">
               Please enter your login details below
@@ -204,7 +207,7 @@ const Login = () => {
               </div>
             </div>
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
-
+            {/* 
             <Image
               src="https://storage.googleapis.com/wallpaper-focuser/wallpaper/1297352.jpg"
               alt="Login Image"
@@ -212,7 +215,18 @@ const Login = () => {
               unoptimized={true}
               fill
               style={{ objectFit: "cover" }}
-            />
+            /> */}
+            <video
+              className="absolute  top-0 left-0 w-full h-full object-cover"
+              autoPlay
+              loop
+              muted
+            >
+              <source
+                src={`https://static.wallpaperwaifu.com/videos/preview/2021/future-house-in-the-sky-preview.mp4`}
+                type="video/mp4"
+              />
+            </video>
           </div>
         </div>
       </div>

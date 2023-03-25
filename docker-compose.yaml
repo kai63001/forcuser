@@ -4,17 +4,17 @@ services:
     build: 
       context: ./client
       dockerfile: Dockerfile.prod
-    deploy:
-      replicas: 1
-      resources:
-        limits:
-          cpus: "0.50"
-          memory: 1024M
-        reservations:
-          cpus: "0.25"
-          memory: 256M
-      restart_policy:
-        condition: on-failure
+    # deploy:
+    #   replicas: 1
+    #   resources:
+    #     limits:
+    #       cpus: "0.50"
+    #       memory: 1024M
+    #     reservations:
+    #       cpus: "0.25"
+    #       memory: 256M
+    #   restart_policy:
+    #     condition: on-failure
     ports:
       - "3000:3000"
     networks:

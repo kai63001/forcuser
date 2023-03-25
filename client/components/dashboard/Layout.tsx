@@ -163,7 +163,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                     alt="Picture of the author"
                     width={40}
                     height={40}
-                    className="object-cover"
+                    className="object-cover rounded-full"
                   />
                 </div>
                 {/* dropdown */}

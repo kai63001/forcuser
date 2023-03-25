@@ -29,18 +29,18 @@ const HomeCard = (props: HomeCardInterface) => {
     };
   }, [dropdown]);
   return (
-    <Link href="/dashboard/myfocus">
+    <Link href={`/focus/${props.id}`}>
       <div className="bg-white rounded-md group cursor-pointer">
         <div className="relative w-full h-[170px] shadow-md">
           <Image
             src={`${
               props.image
-                ? "https://focuserimage.s3.us-east-2.amazonaws.com/" +
-                  props.image
+                ? `${process.env.NEXT_PUBLIC_S3_ENDPOINT}${props.image}`
                 : "/screenshot/demo.png"
             }`}
             alt="Picture of the author"
             fill
+            unoptimized={true}
             className="rounded-md"
           />
           <div
