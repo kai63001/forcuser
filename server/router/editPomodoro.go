@@ -43,10 +43,15 @@ func EditPomodoro(c *fiber.Ctx) error {
 
 	//print data
 	// fmt.Println(editPomodoro)
-	urlImage, err := lib.GetImage(id)
 
 	//update data
-	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro, "image": urlImage}}).Err(); err != nil {
+	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"template": editPomodoro}}).Err(); err != nil {
+		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
+	}
+
+	urlImage, err := lib.GetImage(id)
+	//update image to db
+	if err := db.ClientDB.Collection("pomodoro").FindOneAndUpdate(c.Context(), bson.M{"_id": newId}, bson.M{"$set": bson.M{"image": urlImage}}).Err(); err != nil {
 		return c.Status(409).JSON(bson.M{"status": "error", "message": err})
 	}
 
