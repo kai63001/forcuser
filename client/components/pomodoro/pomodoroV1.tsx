@@ -21,7 +21,10 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     e.preventDefault();
   };
   return (
-    <div className="h-screen w-full overflow-hidden">
+    <div className="h-screen w-full overflow-hidden" onDragOver={(e)=>{
+      e.preventDefault();
+      e.dataTransfer.dropEffect = "move";
+    }}>
       <div className="relative h-full block" onDragStart={preventDragHandler}>
         {/* setting */}
         <div

@@ -188,6 +188,7 @@ const ToDoListV1 = () => {
     //init
 
     //get center position
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

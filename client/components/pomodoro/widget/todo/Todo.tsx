@@ -23,7 +23,7 @@ const TodoWidget = (props: any) => {
       <div className="w-full flex items-start">
         <input
           type="checkbox"
-          className="w-4 h-4 ease-soft rounded-sm mt-1 bg-transparent text-base rounded-1.4 checked:bg-gradient-to-tl checked:bg-purple-600 after:text-xxs after:font-awesome after:duration-250 after:ease-soft-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-slate-150 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all checked:border-0 checked:border-transparent checked:bg-transparent checked:after:opacity-100"
+          className="w-4 h-4 ease-soft rounded-sm mt-1 bg-transparent text-base rounded-1.4 checked:bg-purple-600 after:text-xxs after:font-awesome after:duration-250 after:ease-soft-in-out duration-250 relative float-left cursor-pointer appearance-none border border-solid border-slate-150 bg-contain bg-center bg-no-repeat align-top transition-all after:absolute after:flex after:h-full after:w-full after:items-center after:justify-center after:text-white after:opacity-0 after:transition-all checked:border-0 checked:border-transparent checked:after:opacity-100"
         />
         <textarea
           className="w-full pt-0 bg-transparent text-white placeholder-gray-400 focus:outline-none resize-none pl-2 overflow-hidden no-scrollbar h-[20px]"

@@ -215,7 +215,8 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
 
   const handleStart = () => {
     console.log("start", position);
-    if (Number.isNaN(position.x) || Number.isNaN(position.y)) setPosition({ x: 0, y: 0 });
+    if (Number.isNaN(position.x) || Number.isNaN(position.y))
+      setPosition({ x: 0, y: 0 });
 
     setIsDragging(true);
   };
@@ -272,6 +273,27 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
       });
     }
   }, []);
+
+  //useEffect check template.music.position change
+  useEffect(() => {
+    console.log("change");
+    if (
+      template?.music.position &&
+      template?.music?.position.x &&
+      template?.music?.position.y
+    ) {
+      setPosition({
+        x:
+          (template?.music.position.x /
+            (template?.global?.position.x - thisWidget.current.clientWidth)) *
+          (window.innerWidth - thisWidget.current.clientWidth),
+        y:
+          (template?.music.position.y /
+            (template?.global?.position.y - thisWidget.current.clientHeight)) *
+          (window.innerHeight - thisWidget.current.clientHeight),
+      });
+    }
+  }, [template?.music.type]);
 
   const [isDragging, setIsDragging] = useState(false);
 

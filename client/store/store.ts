@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
 import templateSlice from './templateSlice'
+import dragableEditWidgetSlice from './dragableEditWidgetSlice'
 
 export const store = configureStore({
   reducer: {
-    templateSlice
+    templateSlice,
+    dragableEditWidgetSlice
   },
 })
 
