@@ -15,6 +15,7 @@ export interface PomodoroV1State {
       x: number;
       y: number;
     };
+    draging: string;
   };
   pomodoro: {
     widget: number;

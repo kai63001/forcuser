@@ -15,6 +15,7 @@ const initialState: PomodoroV1State = {
       x: 0,
       y: 0,
     },
+    draging: "",
   },
   pomodoro: {
     widget: 0,

@@ -41,7 +41,7 @@ const MusicPlayer = () => {
 
   const thisWidget = useRef(null);
 
-  const onDragagleEnd = (e: any,id:any) => {
+  const onDragagleEnd = (e: any, id: any) => {
     e.preventDefault();
     if (thisWidget.current) {
       const { top, left, right, bottom } =
@@ -59,12 +59,12 @@ const MusicPlayer = () => {
             music: {
               ...template.music,
               widget: id,
-              position:{
+              position: {
                 x: e.clientX,
-                y: e.clientY
+                y: e.clientY,
               },
               //random int
-              type: Math.floor(Math.random() * 1000).toString(),
+              draging: Math.floor(Math.random() * 1000).toString(),
             },
           })
         );
@@ -92,8 +92,10 @@ const MusicPlayer = () => {
               console.log("start");
               setDragging(true);
             }}
-            onDragEnd={event => onDragagleEnd(event,0)}
-            className={`group cursor-pointer border-2 rounded-md ${dragging ? 'opacity-0': 'opacity-100'} ${
+            onDragEnd={(event) => onDragagleEnd(event, 0)}
+            className={`group cursor-pointer border-2 rounded-md ${
+              dragging ? "opacity-0" : "opacity-100"
+            } ${
               template.music.widget == 0
                 ? "bg-orange-400 border-orange-200"
                 : "bg-purple-400 border-purple-200"
@@ -101,7 +103,6 @@ const MusicPlayer = () => {
           >
             <div className="rounded-md">
               <Image
-                
                 className="rounded-md"
                 src="/widget/music/musicPlayer1.png"
                 width={400}

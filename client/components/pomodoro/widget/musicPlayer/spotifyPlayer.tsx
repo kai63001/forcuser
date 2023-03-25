@@ -293,7 +293,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
           (window.innerHeight - thisWidget.current.clientHeight),
       });
     }
-  }, [template?.music.type]);
+  }, [template?.music.draging]);
 
   const [isDragging, setIsDragging] = useState(false);
 
