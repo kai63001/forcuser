@@ -104,7 +104,7 @@ const MusicPlayer = () => {
             <div className="rounded-md">
               <Image
                 className="rounded-md"
-                src="/widget/music/musicPlayer1.png"
+                src="/widget/music/musicPlayer.png"
                 width={400}
                 height={200}
                 alt="music player 1"

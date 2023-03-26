@@ -7,7 +7,7 @@ import spotifyMusic from "./mock/spotify.json";
 import Draggable from "react-draggable";
 import { PomodoroV1Props, PomodoroV1State } from "../../type/pomodoroV1";
 import { useRouter } from "next/router";
-
+import { setDragableEditWidget } from "@/store/dragableEditWidgetSlice";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store/store";
 import { setTemplate } from "@/store/templateSlice";
@@ -21,6 +21,9 @@ interface MusicPlayerInfoInterface {
 const SpotifyPlayer = (props: PomodoroV1Props) => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
+  );
+  const dragableEditWidget = useSelector(
+    (state: RootState) => state.dragableEditWidgetSlice
   );
   const dispatch = useDispatch();
   //get route path
@@ -214,7 +217,11 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
   const handleStart = () => {
-    console.log("start", position);
+    dispatch(
+      setDragableEditWidget({
+        selectedWidget: "music",
+      })
+    );
     if (Number.isNaN(position.x) || Number.isNaN(position.y))
       setPosition({ x: 0, y: 0 });
 
@@ -224,10 +231,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const handleStop = (e: any, data: any) => {
     setPosition({ x: data.x, y: data.y });
     setIsDragging(false);
-    // props.setTemplate?.({
-    //   ...props.template,
-    //   music: { ...props.template.music, position: { x: data.x, y: data.y } },
-    // });
     dispatch(
       setTemplate({
         ...template,
