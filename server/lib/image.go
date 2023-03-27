@@ -95,17 +95,23 @@ func UploadImage(base64String string) (string, error) {
 	//decode to buffer
 	buf := bytes.NewBuffer(decoded)
 
-	filename := strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
-	converted, err := bimg.NewImage([]byte(buf.String())).Convert(bimg.WEBP)
-	if err != nil {
-		fmt.Println("Error converting image:", err)
-	}
-	// fmt.Println("converted:", []byte(base64))
-	processed, err := bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1960, Height: 1080})
-	if err != nil {
-		fmt.Println("Error processed image:", err)
+	filename := ""
+	processed := []byte{}
+
+	//check if image type is gif
+	if buf.Bytes()[0] == 0x47 && buf.Bytes()[1] == 0x49 && buf.Bytes()[2] == 0x46 {
+		filename = strings.Replace(uuid.New().String(), "-", "", -1) + ".gif"
+		processed = buf.Bytes()
+	} else {
+		filename = strings.Replace(uuid.New().String(), "-", "", -1) + ".webp"
+		converted, err := bimg.NewImage([]byte(buf.String())).Convert(bimg.WEBP)
+		if err != nil {
+			fmt.Println("Error converting image:", err)
+		}
+		processed, err = bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 960, Height: 540})
 	}
 
+	// fmt.Println("converted:", []byte(base64))
 	refilename, reerr := UploadToS3(processed, filename, "wallpapers")
 	if reerr != nil {
 		fmt.Println("Error uploading image:", err)

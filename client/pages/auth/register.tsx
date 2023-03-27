@@ -188,7 +188,7 @@ const Register = () => {
               </div>
             </div>
             {/* bottom right */}
-            <div className="z-20 absolute bottom-0 right-0 mb-4 mr-4">
+            {/* <div className="z-20 absolute bottom-0 right-0 mb-4 mr-4">
               <div className="text-white text-center text-sm">
                 <span>Wallpaper by </span>
                 <Link
@@ -200,7 +200,7 @@ const Register = () => {
                   vsales
                 </Link>
               </div>
-            </div>
+            </div> */}
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
             <Image

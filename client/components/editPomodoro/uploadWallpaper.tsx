@@ -100,7 +100,7 @@ const UploadWallpaper = () => {
   };
 
   const validateImageType = (file: any) => {
-    const validTypes = ["image/png", "image/jpeg"];
+    const validTypes = ["image/png", "image/jpeg", "image/gif", "image/webp"];
     if (validTypes.indexOf(file.type) === -1) {
       return false;
     }
@@ -122,7 +122,7 @@ const UploadWallpaper = () => {
         type="file"
         className="hidden"
         id="uploadCustomImage"
-        accept="image/png, image/jpeg"
+        accept="image/png, image/jpeg, image/gif, image/webp"
         onChange={uploadImage}
       />
       <span className="text-xs block mt-2 text-gray-400">

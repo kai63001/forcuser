@@ -38,7 +38,7 @@ export default function Home() {
 
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-50"></div>
           <Image
-            src="https://i.pinimg.com/originals/13/36/30/13363078117bc4f5bb65437f8bbcb47f.gif"
+            src="https://i.pinimg.com/originals/cb/80/50/cb8050ca365c64ad71c3e0fe030499e0.gif"
             unoptimized={true}
             alt="Focuser Background"
             fill
