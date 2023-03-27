@@ -15,6 +15,7 @@ import { setTemplate } from "@/store/templateSlice";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store/store";
 import SettingWidget from "@/components/editPomodoro/widget/settingWidget";
+import { setDragableEditWidget } from "@/store/dragableEditWidgetSlice";
 
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
@@ -26,8 +27,6 @@ const PomodoroEditPage = (props: any) => {
   const router = useRouter();
   //check auth
   const isAuthenticated = UseAuth(true);
-
-  const [toggleId, setToggleId] = useState(0);
 
   const [loading, setLoading] = useState(true);
 
@@ -69,11 +68,34 @@ const PomodoroEditPage = (props: any) => {
   };
 
   const openToggle = (id: number) => {
-    if (id == toggleId) {
-      setToggleId(0);
+    if (id == dragableEditWidget.toggleId) {
+      dispatch(
+        setDragableEditWidget({
+          ...dragableEditWidget,
+          toggleId: 0,
+        })
+      );
       return;
     }
-    setToggleId(id);
+    dispatch(
+      setDragableEditWidget({
+        ...dragableEditWidget,
+        toggleId: id,
+      })
+    );
+  };
+
+  const renderEditWidget = () => {
+    switch (dragableEditWidget.toggleId) {
+      case 4:
+        return <MusicPlayer />;
+      case 5:
+        return <UploadWallpaper />;
+      case 6:
+        return <MusicPlayer />;
+      default:
+        return null;
+    }
   };
 
   if (isAuthenticated == false) {
@@ -161,11 +183,7 @@ const PomodoroEditPage = (props: any) => {
       <div className="w-full">
         <PomodoroV1 />
       </div>
-      <div id="toggle">
-        {toggleId == 5 && <UploadWallpaper />}
-        {toggleId == 4 && <MusicPlayer />}
-        {toggleId == 6 && <MusicPlayer />}
-      </div>
+      <div id="toggle">{renderEditWidget()}</div>
 
       <SaveWidget id={props.id} />
     </div>

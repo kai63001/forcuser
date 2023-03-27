@@ -3,7 +3,8 @@ import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 const initialState = {
-  selectedWidget: ""
+  selectedWidget: "",
+  toggleId: 0,
 };
 
 export const dragableEditWidgetSlice = createSlice({

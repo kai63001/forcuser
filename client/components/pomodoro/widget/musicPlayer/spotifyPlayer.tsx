@@ -219,6 +219,7 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const handleStart = () => {
     dispatch(
       setDragableEditWidget({
+        ...dragableEditWidget,
         selectedWidget: "music",
       })
     );

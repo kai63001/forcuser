@@ -1,6 +1,4 @@
 import Image from "next/image";
-
-//redux
 import { setTemplate } from "@/store/templateSlice";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store/store";
@@ -68,9 +66,6 @@ const MusicPlayer = () => {
             },
           })
         );
-        console.log("out");
-      } else {
-        console.log("in");
       }
       setDragging(false);
     }
