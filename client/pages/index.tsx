@@ -37,16 +37,16 @@ export default function Home() {
           {/* make image transition black */}
 
           <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-50"></div>
-          {/* <Image
-            src="https://wallpaperaccess.com/full/2825725.gif"
+          <Image
+            src="https://i.pinimg.com/originals/13/36/30/13363078117bc4f5bb65437f8bbcb47f.gif"
             unoptimized={true}
             alt="Focuser Background"
             fill
             style={{ objectFit: "cover" }}
-          /> */}
-          <video className="absolute  top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
+          />
+          {/* <video className="absolute  top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
             <source src={`https://static.wallpaperwaifu.com/videos/preview/2022/howl-and-sophie-howls-moving-castle-preview.mp4`} type="video/mp4" />
-          </video>
+          </video> */}
         </div>
         {/* <p className="text-red-500">5000</p> */}
 

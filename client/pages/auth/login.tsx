@@ -207,16 +207,16 @@ const Login = () => {
               </div>
             </div>
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
-            {/* 
+            
             <Image
-              src="https://storage.googleapis.com/wallpaper-focuser/wallpaper/1297352.jpg"
+              src="/background/sea.gif"
               alt="Login Image"
               priority={true}
               unoptimized={true}
               fill
               style={{ objectFit: "cover" }}
-            /> */}
-            <video
+            />
+            {/* <video
               className="absolute  top-0 left-0 w-full h-full object-cover"
               autoPlay
               loop
@@ -226,7 +226,7 @@ const Login = () => {
                 src={`https://static.wallpaperwaifu.com/videos/preview/2021/future-house-in-the-sky-preview.mp4`}
                 type="video/mp4"
               />
-            </video>
+            </video> */}
           </div>
         </div>
       </div>

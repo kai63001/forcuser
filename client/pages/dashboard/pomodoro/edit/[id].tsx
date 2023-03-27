@@ -14,6 +14,7 @@ import Loading from "@/components/libs/Loading";
 import { setTemplate } from "@/store/templateSlice";
 import { useSelector, useDispatch } from "react-redux";
 import type { RootState } from "@/store/store";
+import SettingWidget from "@/components/editPomodoro/widget/settingWidget";
 
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession();
@@ -155,14 +156,7 @@ const PomodoroEditPage = (props: any) => {
           </div>
         </div>
         {/* end menu */}
-        {dragableEditWidget.selectedWidget == "music" && (
-          <div
-            className="bg-black bg-opacity-90 flex flex-col items-center space-y-10 py-5 rounded-md mt-5"
-            id="edit"
-          >
-            a
-          </div>
-        )}
+        {dragableEditWidget.selectedWidget == "music" && <SettingWidget />}
       </div>
       <div className="w-full">
         <PomodoroV1 />

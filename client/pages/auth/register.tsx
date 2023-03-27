@@ -77,7 +77,9 @@ const Register = () => {
         <div className="grid grid-cols-3 w-full h-full">
           <div className="max-w-lg w-full m-auto order-2 p-10 md:p-3 col-span-3 md:col-span-1">
             <Link href={"/"}>
-              <div className="absolute top-10 underline text-gray-400">Back to Home</div>
+              <div className="absolute top-10 underline text-gray-400">
+                Back to Home
+              </div>
             </Link>
             <h1 className="franger text-3xl">Register</h1>
             <p className="text-gray-600">
@@ -201,15 +203,15 @@ const Register = () => {
             </div>
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
-            {/* <Image
-              src="https://storage.googleapis.com/wallpaper-focuser/wallpaper/1300189.jpg"
+            <Image
+              src="/background/sea.gif"
               alt="Register Image"
               priority={true}
               unoptimized={true}
               fill
               style={{ objectFit: "cover" }}
-            /> */}
-            <video
+            />
+            {/* <video
               className="absolute  top-0 left-0 w-full h-full object-cover"
               autoPlay
               loop
@@ -219,7 +221,7 @@ const Register = () => {
                 src={`https://static.wallpaperwaifu.com/videos/preview/2021/starry-night-clouds-preview.mp4`}
                 type="video/mp4"
               />
-            </video>
+            </video> */}
           </div>
         </div>
       </div>
