@@ -18,7 +18,7 @@ const CardComponent = (props: CardComponentProps) => {
         width={500}
         height={100}
         unoptimized={true}
-        className={`rounded-md z-10 ${props.templateId === props.selectTemplateId ? "ring-2 ring-purple-500 ring-offset-1" : ""}`}
+        className={`rounded-md z-10 ${props.templateId === props.selectTemplateId ? "ring-2 ring-main ring-offset-1" : ""}`}
       />
       {/* top left name */}
         <div className="absolute top-1 left-2 z-30 group-hover:opacity-100 opacity-0 duration-150">

@@ -49,7 +49,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
         <div className="bg-black bg-opacity-80 rounded-md px-2 py-2 text-white flex items-center space-x-2">
           <button className="bg-gray-500 px-2 py-1 rounded-md">Share</button>
           <button
-            className="bg-purple-500 px-5 py-1 rounded-md flex items-center"
+            className="bg-main px-5 py-1 rounded-md flex items-center"
             disabled={saving}
             onClick={save}
           >

@@ -82,13 +82,13 @@ const DashboardLayout = (props: LayoutInterface) => {
   return (
     <>
       <Header title={props.title} des={props.des} image={props.image} />
-      <div className="flex flex-item-fluid flex-nowrap">
+      <div className="flex flex-item-fluid flex-nowrap bg-background">
         {openModalCreate && (
           <ModalCreatePomodoro setOpenModalCreate={setOpenModalCreate} />
         )}
 
         <aside className="" aria-label="Sidebar">
-          <div className="py-4 overflow-y-auto w-64 h-full bg-white fixed z-10 border-r-2">
+          <div className="py-4 overflow-y-auto w-64 h-full bg-background fixed z-10 border-r-2">
             <div className="ml-5 text-2xl franger mb-4">Focusify</div>
             <ul className="space-y-2 px-5 mt-10">
               {listNavbar.map((item, index) => {
@@ -98,7 +98,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                       href="#"
                       className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${
                         router.asPath == item.link
-                          ? "text-white bg-purple-600"
+                          ? "text-white bg-main"
                           : "text-gray-500"
                       }`}
                     >
@@ -112,7 +112,7 @@ const DashboardLayout = (props: LayoutInterface) => {
           </div>
         </aside>
         <main className="w-full">
-          <div className="bg-white h-16 w-full fixed border-b-2 z-20">
+          <div className="bg-background h-16 w-full fixed border-b-2 z-20">
             <div className="flex justify-between items-center h-full">
               <div className="ml-5 text-2xl franger">Focusify</div>
               <div className="mr-5 flex space-x-7">
@@ -147,14 +147,14 @@ const DashboardLayout = (props: LayoutInterface) => {
                   </svg>
                 </div>
                 <button
-                  className="bg-purple-600 text-white px-5 py-2 rounded-md"
+                  className="bg-main text-white px-5 py-2 rounded-md"
                   onClick={() => setOpenModalCreate(true)}
                 >
                   Create a Focus
                 </button>
                 {/* avatar */}
                 <div
-                  className="flex items-center cursor-pointer bg-purple-500 rounded-full"
+                  className="flex items-center cursor-pointer bg-main rounded-full"
                   ref={userImageDropdown}
                   onClick={() => setOpenDropdown((b) => !b)}
                 >
@@ -170,20 +170,20 @@ const DashboardLayout = (props: LayoutInterface) => {
                 {openDropdown && (
                   <div
                     ref={dropdown}
-                    className="absolute top-14 right-2 bg-white px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
+                    className="absolute top-14 right-2 bg-background px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
                   >
-                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
                       Profile
                     </div>
-                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
                       Settings
                     </div>
-                    <div className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
                       Subscription
                     </div>
                     <hr />
                     <div
-                      className="cursor-pointer py-1 hover:bg-purple-300 hover:text-purple-600 px-3 rounded-md"
+                      className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md"
                       onClick={() =>
                         signOut({
                           callbackUrl: "/auth/login",

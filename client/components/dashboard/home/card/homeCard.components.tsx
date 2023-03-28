@@ -50,8 +50,8 @@ const HomeCard = (props: HomeCardInterface) => {
           >
             <div
               className={`${
-                isOpen ? "bg-purple-600 text-white" : "bg-white"
-              } hover:bg-purple-600 hover:text-white px-2 py-1 shadow-md rounded-md`}
+                isOpen ? "bg-main text-white" : "bg-white"
+              } hover:bg-main hover:text-white px-2 py-1 shadow-md rounded-md`}
               onClick={openDropdown}
             >
               <svg

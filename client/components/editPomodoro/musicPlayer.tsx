@@ -93,7 +93,7 @@ const MusicPlayer = () => {
             } ${
               template.music.widget == 0
                 ? "bg-orange-400 border-orange-200"
-                : "bg-purple-400 border-purple-200"
+                : "bg-main border-purple-200"
             } `}
           >
             <div className="rounded-md">

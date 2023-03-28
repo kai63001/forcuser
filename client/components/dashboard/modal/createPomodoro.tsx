@@ -158,7 +158,7 @@ const CreatePomodoros = (props: Props) => {
             <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
               <button
                 type="button"
-                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+                className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-main text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main sm:ml-3 sm:w-auto sm:text-sm"
                 onClick={createPomodoro}
               >
                 Create
@@ -222,10 +222,10 @@ const CreatePomodoros = (props: Props) => {
                     name="pomodoroName"
                     id="pomodoroName"
                     onChange={(e) => setPomodoroName(e.target.value)}
-                    className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-purple-500 block w-full sm:text-sm ${
+                    className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-main block w-full sm:text-sm ${
                       error["pomodoroName"]
                         ? "border-red-600"
-                        : "border-purple-600"
+                        : "border-main"
                     } border rounded-md px-5 py-2 mb-2`}
                     placeholder="Pomodoro"
                   />
@@ -245,7 +245,7 @@ const CreatePomodoros = (props: Props) => {
                         type="text"
                         name="tags"
                         id="tags"
-                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-purple-500 block w-full sm:text-sm border-purple-600 border rounded-md px-5 py-2"
+                        className="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-main block w-full sm:text-sm border-main border rounded-md px-5 py-2"
                         placeholder="Add tag , ex: study, work, lofi [Optional]"
                       />
                     </div>
@@ -253,7 +253,7 @@ const CreatePomodoros = (props: Props) => {
                       {/* btn add */}
                       <button
                         type="submit"
-                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-8 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm h-full"
+                        className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-8 py-2 bg-main text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main sm:ml-3 sm:w-auto sm:text-sm h-full"
                       >
                         Add
                       </button>
@@ -265,7 +265,7 @@ const CreatePomodoros = (props: Props) => {
                   {tagList.map((tag, index) => (
                     <div
                       key={index}
-                      className="flex items-center justify-between text-xs px-3 mb-2 bg-purple-500 text-white py-1 rounded-md mr-2 cursor-pointer"
+                      className="flex items-center justify-between text-xs px-3 mb-2 bg-main text-white py-1 rounded-md mr-2 cursor-pointer"
                       onClick={() => removeTag(index)}
                     >
                       <p>{tag}</p>
@@ -278,7 +278,7 @@ const CreatePomodoros = (props: Props) => {
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
               type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-purple-600 text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-purple-500 sm:ml-3 sm:w-auto sm:text-sm"
+              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-main text-base font-medium text-white hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-main sm:ml-3 sm:w-auto sm:text-sm"
               onClick={btnContinue}
             >
               Continue

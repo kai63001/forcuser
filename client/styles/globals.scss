@@ -18,7 +18,18 @@
 html,body {
   font-family: 'Mitr', sans-serif;
   font-display: swap;
+  height: 100%;
+  width: 100%;
 }
+
+html,
+body,
+body > div:first-child,
+div#__next,
+div#__next > div {
+  height: 100% !important;
+}
+
 
 .franger {
   font-family: 'Fredoka One', cursive;

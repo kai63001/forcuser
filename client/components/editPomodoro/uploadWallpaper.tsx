@@ -113,7 +113,7 @@ const UploadWallpaper = () => {
       <hr className="bg-gray-500 border-gray-500 my-2" />
       <h3>Custom Image</h3>
       <label htmlFor="uploadCustomImage" className="cursor-pointer">
-        <div className="bg-purple-500 text-white w-full py-3 flex mt-2 items-center text-center rounded-md">
+        <div className="bg-main text-white w-full py-3 flex mt-2 items-center text-center rounded-md">
           <div className="m-auto">Upload Image</div>
         </div>
       </label>
