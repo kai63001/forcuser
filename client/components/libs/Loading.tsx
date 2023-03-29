@@ -1,13 +1,13 @@
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 const Loading = () => {
-  const [image, setImage] = useState(1);
+  const [image, setImage] = useState(1)
   useEffect(() => {
-    //random image 1-5
-    const random = Math.floor(Math.random() * 5) + 1;
-    setImage(random);
-  }, []);
+    // random image 1-5
+    const random = Math.floor(Math.random() * 5) + 1
+    setImage(random)
+  }, [])
 
   return (
     <div className="w-screen h-screen bg-black">
@@ -24,7 +24,7 @@ const Loading = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default Loading;
+export default Loading

@@ -1,109 +1,108 @@
-import UploadWallpaper from "@/components/editPomodoro/uploadWallpaper";
-import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
-import axios from "@/lib/axios";
-import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
-import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
-import MusicPlayer from "@/components/editPomodoro/musicPlayer";
-import { useSession } from "next-auth/react";
-import SaveWidget from "@/components/editPomodoro/saveWidget";
-import UseAuth from "@/components/libs/useAuth";
-import Loading from "@/components/libs/Loading";
+import UploadWallpaper from '@/components/editPomodoro/uploadWallpaper'
+import PomodoroV1 from '@/components/pomodoro/pomodoroV1'
+import axios from '@/lib/axios'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
+import MusicPlayer from '@/components/editPomodoro/musicPlayer'
+import { useSession } from 'next-auth/react'
+import SaveWidget from '@/components/editPomodoro/saveWidget'
+import UseAuth from '@/components/libs/useAuth'
+import Loading from '@/components/libs/Loading'
 
-//redux
-import { setTemplate } from "@/store/templateSlice";
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "@/store/store";
-import SettingWidget from "@/components/editPomodoro/widget/settingWidget";
-import { setDragableEditWidget } from "@/store/dragableEditWidgetSlice";
+// redux
+import { setTemplate } from '@/store/templateSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '@/store/store'
+import SettingWidget from '@/components/editPomodoro/widget/settingWidget'
+import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
 
 const PomodoroEditPage = (props: any) => {
-  const { data: session }: any = useSession();
+  const { data: session }: any = useSession()
   const dragableEditWidget = useSelector(
     (state: RootState) => state.dragableEditWidgetSlice
-  );
+  )
 
-  const dispatch = useDispatch();
-  const router = useRouter();
-  //check auth
-  const isAuthenticated = UseAuth(true);
+  const dispatch = useDispatch()
+  const router = useRouter()
+  // check auth
+  const isAuthenticated = UseAuth(true)
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true)
 
-  //function check owner
+  // function check owner
   const checkOwner = async (data: any) => {
     // console.log(data)
     // console.log(session)
     if (!session) {
-      return;
+      return
     }
-    //decode jwt
-    const token = await session.token;
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace("-", "+").replace("_", "/");
-    const decodedData = JSON.parse(window.atob(base64));
-    if (data.userId != decodedData._id) {
-      router.push("/dashboard");
+    // decode jwt
+    const token = await session.token
+    const base64Url = token.split('.')[1]
+    const base64 = base64Url.replace('-', '+').replace('_', '/')
+    const decodedData = JSON.parse(window.atob(base64))
+    if (data.userId !== decodedData._id) {
+      await router.push('/dashboard')
     }
-  };
+  }
 
   // 5 = image
 
   useEffect(() => {
-    getDataFromId();
+    getDataFromId().catch((err) => { console.log(err) })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   const getDataFromId = async () => {
     try {
-      const { data } = await axios.get(`/pomodoro/get/${props.id}`);
-      console.log("getData", data);
-      checkOwner(data.data);
+      const { data } = await axios.get(`/pomodoro/get/${props.id}`)
+      console.log('getData', data)
+      await checkOwner(data.data)
       // setTemplate(data.data.template);
-      dispatch(setTemplate(data.data.template));
-      setLoading(false);
+      dispatch(setTemplate(data.data.template))
+      setLoading(false)
     } catch (error) {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   const openToggle = (id: number) => {
-    if (id == dragableEditWidget.toggleId) {
+    if (id === dragableEditWidget.toggleId) {
       dispatch(
         setDragableEditWidget({
           ...dragableEditWidget,
-          toggleId: 0,
+          toggleId: 0
         })
-      );
-      return;
+      )
+      return
     }
     dispatch(
       setDragableEditWidget({
         ...dragableEditWidget,
-        toggleId: id,
+        toggleId: id
       })
-    );
-  };
+    )
+  }
 
   const renderEditWidget = () => {
     switch (dragableEditWidget.toggleId) {
       case 4:
-        return <MusicPlayer />;
+        return <MusicPlayer />
       case 5:
-        return <UploadWallpaper />;
+        return <UploadWallpaper />
       case 6:
-        return <MusicPlayer />;
+        return <MusicPlayer />
       default:
-        return null;
+        return null
     }
-  };
+  }
 
-  if (isAuthenticated == false) {
-    return <Loading />;
+  if (!isAuthenticated) {
+    return <Loading />
   }
 
   if (loading) {
-    return <Loading />;
+    return <Loading />
   }
 
   return (
@@ -113,7 +112,7 @@ const PomodoroEditPage = (props: any) => {
           <div
             className="text-white cursor-pointer px-3"
             id="music player"
-            onClick={() => openToggle(4)}
+            onClick={() => { openToggle(4) }}
           >
             <svg
               width="18"
@@ -139,7 +138,7 @@ const PomodoroEditPage = (props: any) => {
           <div
             className="text-white cursor-pointer px-3"
             id="upload image"
-            onClick={() => openToggle(5)}
+            onClick={() => { openToggle(5) }}
           >
             <svg
               width="16"
@@ -159,7 +158,7 @@ const PomodoroEditPage = (props: any) => {
           <div
             className="text-white cursor-pointer px-3"
             id="setting"
-            onClick={() => openToggle(6)}
+            onClick={() => { openToggle(6) }}
           >
             <svg
               width="16"
@@ -178,7 +177,7 @@ const PomodoroEditPage = (props: any) => {
           </div>
         </div>
         {/* end menu */}
-        {dragableEditWidget.selectedWidget == "music" && <SettingWidget />}
+        {dragableEditWidget.selectedWidget === 'music' && <SettingWidget />}
       </div>
       <div className="w-full">
         <PomodoroV1 />
@@ -187,17 +186,17 @@ const PomodoroEditPage = (props: any) => {
 
       <SaveWidget id={props.id} />
     </div>
-  );
-};
-
-//get parame id
-export async function getServerSideProps(context: any) {
-  const { id } = context.query;
-  return {
-    props: {
-      id: id,
-    },
-  };
+  )
 }
 
-export default PomodoroEditPage;
+// get parame id
+export async function getServerSideProps (context: any) {
+  const { id } = context.query
+  return {
+    props: {
+      id
+    }
+  }
+}
+
+export default PomodoroEditPage

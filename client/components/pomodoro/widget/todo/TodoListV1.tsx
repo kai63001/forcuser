@@ -1,91 +1,91 @@
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "@/store/store";
-import { setTemplate } from "@/store/templateSlice";
-import { PomodoroV1State } from "../../type/pomodoroV1";
-import Draggable from "react-draggable";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '@/store/store'
+import { setTemplate } from '@/store/templateSlice'
+import { type PomodoroV1State } from '../../type/pomodoroV1'
+import Draggable from 'react-draggable'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   DragDropContext,
   Droppable,
-  Draggable as DraggableTodo,
-} from "react-beautiful-dnd";
+  Draggable as DraggableTodo
+} from 'react-beautiful-dnd'
 
-import TodoWidget from "./Todo";
-import { useRouter } from "next/router";
+import TodoWidget from './Todo'
+import { useRouter } from 'next/router'
 
 const hashString = (str: any) => {
-  let hash = 0,
-    i,
-    chr;
-  if (str.length === 0) return hash;
+  let hash = 0
+  let i
+  let chr
+  if (str.length === 0) return hash
   for (i = 0; i < str.length; i++) {
-    chr = str.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0; // Convert to 32bit integer
+    chr = str.charCodeAt(i)
+    hash = (hash << 5) - ~~hash + ~~chr
+    hash |= 0 // Convert to 32bit integer
   }
-  return hash;
-};
+  return hash
+}
 
 const ToDoListV1 = () => {
-  const router = useRouter();
+  const router = useRouter()
 
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
-  );
-  const dispatch = useDispatch();
+  )
+  const dispatch = useDispatch()
 
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false)
 
-  const [isEdit, setIsEdit] = useState(true);
+  const [isEdit, setIsEdit] = useState(true)
 
-  const thisWidget: any = useRef(null);
+  const thisWidget: any = useRef(null)
 
-  //function get max height and width
-  const [maxHeight, setMaxHeight] = useState(0);
-  const [maxWidth, setMaxWidth] = useState(0);
+  // function get max height and width
+  const [maxHeight, setMaxHeight] = useState(0)
+  const [maxWidth, setMaxWidth] = useState(0)
   useEffect(() => {
-    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
-  }, []);
+    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight)
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth)
+  }, [])
 
-  //resizer
+  // resizer
   const resizer = useCallback(() => {
-    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
-  }, []);
+    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight)
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth)
+  }, [])
 
   const [todoList, setTodoList] = useState([
     {
-      id: "task-1",
-      content: "Take out the garbage",
+      id: 'task-1',
+      content: 'Take out the garbage'
     },
     {
-      id: "task-2",
-      content: "Watch my favorite show",
+      id: 'task-2',
+      content: 'Watch my favorite show'
     },
 
     {
-      id: "task-3",
-      content: "Charge my phone",
-    },
-  ]);
+      id: 'task-3',
+      content: 'Charge my phone'
+    }
+  ])
 
   const tasks = useMemo(() => {
     return todoList.map((task) => {
       return {
         id: hashString(task),
-        content: task,
-      };
-    });
-  }, [todoList]);
+        content: task
+      }
+    })
+  }, [todoList])
 
   const reorderTasks = (tasks: any, startIndex: any, endIndex: any) => {
-    const result = [...tasks];
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
+    const result = [...tasks]
+    const [removed] = result.splice(startIndex, 1)
+    result.splice(endIndex, 0, removed)
 
-    return result;
-  };
+    return result
+  }
 
   const getItemStyle = (
     isDragging: any,
@@ -95,60 +95,60 @@ const ToDoListV1 = () => {
     return {
       // change background colour if dragging
       // background: isDragging ? "red" : "black",
-      //style follow mouse
+      // style follow mouse
       ...draggableStyle,
-      transform,
-    };
-  };
+      transform
+    }
+  }
 
   const onDragEnd = (result: any) => {
     // dropped outside the list
     if (!result.destination) {
-      return;
+      return
     }
 
     const items = reorderTasks(
       todoList,
       result.source.index,
       result.destination.index
-    );
+    )
 
-    setTodoList(items);
-  };
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+    setTodoList(items)
+  }
+  const [position, setPosition] = useState({ x: 0, y: 0 })
 
   const handleStart = () => {
-    setIsDragging(true);
-  };
+    setIsDragging(true)
+  }
 
   const handleStop = (e: any, data: any) => {
-    setPosition({ x: data.x, y: data.y });
-    setIsDragging(false);
+    setPosition({ x: data.x, y: data.y })
+    setIsDragging(false)
     dispatch(
       setTemplate({
         ...template,
         todolist: {
           ...template.todolist,
-          position: { x: data.x, y: data.y },
-        },
+          position: { x: data.x, y: data.y }
+        }
       })
-    );
-  };
+    )
+  }
 
   const checkIsEdit = () => {
-    if (router.pathname.includes("edit")) {
-      setIsEdit(true);
-      return true;
+    if (router.pathname.includes('edit')) {
+      setIsEdit(true)
+      return true
     }
 
-    setIsEdit(false);
-    return false;
-  };
+    setIsEdit(false)
+    return false
+  }
 
   useEffect(() => {
-    checkIsEdit();
-    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
+    checkIsEdit()
+    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight)
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth)
 
     try {
       if (
@@ -164,32 +164,31 @@ const ToDoListV1 = () => {
           y:
             (template?.todolist.position.y /
               (template?.global?.position.y - thisWidget.current.clientHeight)) *
-            (window.innerHeight - thisWidget.current.clientHeight),
-        });
-        ``;
+            (window.innerHeight - thisWidget.current.clientHeight)
+        })
         // I GOT IT
         // (positionWidget /
         //       (oldScreenWidth - widgetWidth)) *
         //     (newScreenWidth - widgetWidth)
       } else {
-        console.log("no position")
+        console.log('no position')
         setPosition({
           x: 15,
-          y: 15,
-        });
+          y: 15
+        })
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       setPosition({
         x: 15,
-          y: 15,
-      });
+        y: 15
+      })
     }
-    //init
+    // init
 
-    //get center position
+    // get center position
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [])
 
   return (
     // todotList
@@ -204,14 +203,14 @@ const ToDoListV1 = () => {
         top: 0,
         left: 0,
         right: maxWidth,
-        bottom: maxHeight,
+        bottom: maxHeight
       }}
     >
       <div
         ref={thisWidget}
         onMouseUpCapture={resizer}
         className={`absolute z-40 text-white rounded-md ${
-          isDragging ? "bg-black bg-opacity-50" : "bg-black bg-opacity-90"
+          isDragging ? 'bg-black bg-opacity-50' : 'bg-black bg-opacity-90'
         } resize overflow-hidden min-w-[370px] min-h-[200px]`}
       >
         <div
@@ -219,8 +218,8 @@ const ToDoListV1 = () => {
           className={`px-6 py-3  border-b border-gray-500 ${
             isEdit &&
             (isDragging
-              ? "cursor-grabbing opacity-80"
-              : "cursor-grab opacity-100")
+              ? 'cursor-grabbing opacity-80'
+              : 'cursor-grab opacity-100')
           } `}
         >
           My Tasks
@@ -244,26 +243,24 @@ const ToDoListV1 = () => {
                         >
                           {(provided: any, snapshot: any) => {
                             let transform =
-                              provided.draggableProps.style.transform;
+                              provided.draggableProps.style.transform
                             if (snapshot.isDragging) {
-                              let regex = new RegExp(
-                                "translate\\((.*?)px, (.*?)px\\)"
-                              );
-                              let parentValues = regex.exec(
-                                thisWidget.current.style.transform || ""
-                              );
-                              let childValues = regex.exec(
-                                provided.draggableProps.style.transform || ""
-                              );
-                              //fix bug when drag out of parent
+                              const regex = /translate\((.*?)px, (.*?)px\)/
+                              const parentValues = regex.exec(
+                                thisWidget.current.style.transform || ''
+                              )
+                              const childValues = regex.exec(
+                                provided.draggableProps.style.transform || ''
+                              )
+                              // fix bug when drag out of parent
                               if (childValues != null && parentValues != null) {
-                                let x =
+                                const x =
                                   parseInt(childValues[1]) -
-                                  parseInt(parentValues[1]);
-                                let y =
+                                  parseInt(parentValues[1])
+                                const y =
                                   parseInt(childValues[2]) -
-                                  parseInt(parentValues[2]);
-                                transform = `translate(${x}px, ${y}px)`;
+                                  parseInt(parentValues[2])
+                                transform = `translate(${x}px, ${y}px)`
                               }
                             }
                             return (
@@ -280,7 +277,7 @@ const ToDoListV1 = () => {
                               >
                                 <TodoWidget todo={task.content.content} />
                               </div>
-                            );
+                            )
                           }}
                         </DraggableTodo>
                       ))}
@@ -294,7 +291,7 @@ const ToDoListV1 = () => {
         </div>
       </div>
     </Draggable>
-  );
-};
+  )
+}
 
-export default ToDoListV1;
+export default ToDoListV1

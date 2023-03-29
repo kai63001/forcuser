@@ -6,7 +6,7 @@ export const store = configureStore({
   reducer: {
     templateSlice,
     dragableEditWidgetSlice
-  },
+  }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

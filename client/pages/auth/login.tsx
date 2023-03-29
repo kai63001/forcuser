@@ -1,74 +1,71 @@
-import Image from "next/image";
-import Link from "next/link";
-import Input from "@/components/libs/Input";
-import React, { useEffect, useState } from "react";
-import { signIn } from "next-auth/react";
-import { useRouter } from "next/router";
-import UseAuth from "@/components/libs/useAuth";
-import Layout from "@/components/Layout";
-import Loading from "@/components/libs/Loading";
+import Image from 'next/image'
+import Link from 'next/link'
+import Input from '@/components/libs/Input'
+import React, { useState } from 'react'
+import { signIn } from 'next-auth/react'
+import UseAuth from '@/components/libs/useAuth'
+import Layout from '@/components/LayoutIndex'
+import Loading from '@/components/libs/Loading'
 
 const Login = () => {
-  const isAuthenticated = UseAuth(true);
-  const router = useRouter();
+  const isAuthenticated = UseAuth(true)
 
-  const [error, setError]: any = useState({});
+  const [error, setError]: any = useState({})
 
-  const [loading, setLoading]: any = useState(false);
+  const [loading, setLoading]: any = useState(false)
 
   const login = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError({});
+    e.preventDefault()
+    setLoading(true)
+    setError({})
     const data = {
       email: e.currentTarget.email.value,
-      password: e.currentTarget.password.value,
-    };
-    console.log(data);
+      password: e.currentTarget.password.value
+    }
+    console.log(data)
     signIn(
-      "username-login",
+      'username-login',
       {
         redirect: false,
         email: data.email,
-        password: data.password,
+        password: data.password
       },
       {
-        callbackUrl: `${window.location.origin}/`,
+        callbackUrl: `${window.location.origin}/`
       }
     )
       .then((res) => {
-        console.log("res", res);
-        setLoading(false);
-        if (res?.error == "Email not exists or Password not match") {
+        console.log('res', res)
+        setLoading(false)
+        if (res?.error === 'Email not exists or Password not match') {
           setError({
-            email: "Email or password is incorrect",
-            password: "Email or password is incorrect",
-          });
-          return;
+            email: 'Email or password is incorrect',
+            password: 'Email or password is incorrect'
+          })
         }
         // router.replace("/dashboard");
       })
       .catch((err) => {
-        setLoading(false);
+        setLoading(false)
         setError({
-          email: "Email or password is incorrect",
-          password: "Email or password is incorrect",
-        });
-        console.log("error", err);
-      });
-  };
+          email: 'Email or password is incorrect',
+          password: 'Email or password is incorrect'
+        })
+        console.log('error', err)
+      })
+  }
 
   const googleLogin = (e: any) => {
-    e.preventDefault();
-    signIn("google", {
-      callbackUrl: `${window.location.origin}/dashboard`,
-    }).then((res) => {
-      console.log("res", res);
-    });
-  };
+    e.preventDefault()
+    signIn('google', {
+      callbackUrl: `${window.location.origin}/dashboard`
+    }).catch((err) => {
+      console.error('err', err)
+    })
+  }
 
-  if (isAuthenticated == true) {
-    return <Loading />;
+  if (isAuthenticated) {
+    return <Loading />
   }
 
   return (
@@ -76,7 +73,7 @@ const Login = () => {
       <div className="h-screen">
         <div className="grid grid-cols-3 w-full h-full">
           <div className="max-w-lg w-full m-auto p-10 md:p-3 col-span-3 md:col-span-1">
-          <Link href={"/"}>
+          <Link href={'/'}>
               <div className="absolute top-10 underline">Back to Home</div>
             </Link>
             <h1 className="franger text-3xl">Login</h1>
@@ -131,7 +128,7 @@ const Login = () => {
               <button
                 type="submit"
                 className={`w-full ${
-                  loading ? "bg-gray-500 cursor-not-allowed" : "bg-main"
+                  loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-main'
                 } text-white text-center py-2 rounded-md`}
                 disabled={loading}
               >
@@ -207,14 +204,14 @@ const Login = () => {
               </div>
             </div> */}
             <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
-            
+
             <Image
               src="/background/sea.gif"
               alt="Login Image"
               priority={true}
               unoptimized={true}
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: 'cover' }}
             />
             {/* <video
               className="absolute  top-0 left-0 w-full h-full object-cover"
@@ -231,7 +228,7 @@ const Login = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Login;
+export default Login

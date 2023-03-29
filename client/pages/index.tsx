@@ -1,14 +1,13 @@
-import Layout from "@/components/Layout";
-import { signOut } from "next-auth/react";
-import Image from "next/image";
-import Link from "next/link";
+import LayoutIndex from '@/components/LayoutIndex'
+import Image from 'next/image'
+import Link from 'next/link'
 
-export default function Home() {
+export default function Home () {
   const preventDragHandler = (e: any) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
   return (
-    <Layout>
+    <LayoutIndex>
       <div className="h-screen">
         <div className="relative h-5/6 block" onDragStart={preventDragHandler}>
           <div id="cover" className="absolute z-10">
@@ -42,7 +41,7 @@ export default function Home() {
             unoptimized={true}
             alt="Focuser Background"
             fill
-            style={{ objectFit: "cover" }}
+            style={{ objectFit: 'cover' }}
           />
           {/* <video className="absolute  top-0 left-0 w-full h-full object-cover" autoPlay loop muted>
             <source src={`https://static.wallpaperwaifu.com/videos/preview/2022/howl-and-sophie-howls-moving-castle-preview.mp4`} type="video/mp4" />
@@ -93,8 +92,8 @@ export default function Home() {
           <h2 className="text-3xl franger mt-5">Featured</h2>
         </div>
       </div>
-    </Layout>
-  );
+    </LayoutIndex>
+  )
 }
 
 // Description:  Pomofocus is an easy-to-use, customizable pomodoro timer that works on desktop & mobile browser. With its unique features such as customization of working and break time interval, ability to pause the timer during work mode, and built-in alarm to notify when you should take a break or start working, Pomofocus helps you be more productive and focus on any task you are working on - whether it's studying for school, writing a book or coding. Inspired by Pomodoro Technique, which is a time management method developed by Francesco Cirillo, Pomofocus helps increase concentration levels and encourages the users to take frequent breaks thus allowing them to stay productive throughout their tasks.

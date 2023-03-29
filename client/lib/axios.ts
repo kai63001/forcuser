@@ -1,29 +1,29 @@
-import axios from "axios";
-import { getSession } from "next-auth/react";
+import axios from 'axios'
+import { getSession } from 'next-auth/react'
 
 const ApiClient = () => {
   const instance = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL,
-  });
+    baseURL: process.env.NEXT_PUBLIC_API_URL
+  })
   instance.interceptors.request.use(async (request: any) => {
-    const session: any = await getSession();
+    const session: any = await getSession()
 
     if (session) {
-      request.headers.Authorization = `Bearer ${session.token}`;
+      request.headers.Authorization = `Bearer ${session.token}`
     }
-    return request;
-  });
+    return request
+  })
 
   instance.interceptors.response.use(
     (response) => {
-      return response;
+      return response
     },
     (error) => {
-      console.log(`error`, error);
+      console.log('error', error)
     }
-  );
+  )
 
-  return instance;
-};
+  return instance
+}
 
-export default ApiClient();
+export default ApiClient()

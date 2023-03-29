@@ -1,8 +1,8 @@
 
 declare global {
   interface window {
-    onSpotifyIframeApiReady: any;
+    onSpotifyIframeApiReady: any
   }
 }
 
-export {};
+export {}

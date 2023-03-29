@@ -1,47 +1,55 @@
-import { PomodoroV1Props, PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
-import axios from "@/lib/axios";
-import Toast from "@/lib/toast";
-import { useState } from "react";
+import {
+  type PomodoroV1Props,
+  type PomodoroV1State
+} from '@/components/pomodoro/type/pomodoroV1'
+import axios from '@/lib/axios'
+import Toast from '@/lib/toast'
+import { useState } from 'react'
 
-//redux
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
+// redux
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/store/store'
 
 const SaveWidget = (props: PomodoroV1Props) => {
-  const [saving, setSaving] = useState(false);
+  const [saving, setSaving] = useState(false)
 
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
-  );
+  )
 
   const save = async () => {
-    if (saving) return;
-    setSaving(true);
+    if (saving) return
+    setSaving(true)
     try {
-      //set global position
-      let templater = {
+      // set global position
+      const templater = {
         ...template,
-        ["global"]: {
+        global: {
           position: {
             x: window.innerWidth,
-            y: window.innerHeight,
-          },
-        },
-      };
+            y: window.innerHeight
+          }
+        }
+      }
 
-      const { data } = await axios.post(`/pomodoro/edit/${props.id}`, templater);
-      console.log(data);
-      setSaving(false);
+      const { data } = await axios.post(
+        `/pomodoro/edit/${props.id}`,
+        templater
+      )
+      console.log(data)
+      setSaving(false)
       Toast.fire({
-        icon: "success",
-        title: data.message,
-      });
+        icon: 'success',
+        title: data.message
+      }).catch((error) => {
+        console.log(error)
+      })
     } catch (error) {
-      console.log(error);
-      setSaving(false);
+      console.log(error)
+      setSaving(false)
     }
-    setSaving(false);
-  };
+    setSaving(false)
+  }
 
   return (
     <div className="absolute bottom-2 w-full flex">
@@ -80,7 +88,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SaveWidget;
+export default SaveWidget

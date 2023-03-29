@@ -1,12 +1,11 @@
-import Layout from "@/components/Layout";
-import PomodoroV1 from "@/components/pomodoro/pomodoroV1";
+import Layout from '@/components/LayoutIndex'
 
 const DemoLofi = () => {
   return (
     <Layout>
       {/* <PomodoroV1 /> */}
     </Layout>
-  );
-};
+  )
+}
 
-export default DemoLofi;
+export default DemoLofi

@@ -1,95 +1,96 @@
-import { useState } from "react";
-import CardComponent from "../card/card.component";
-import axiosInterCep from "@/lib/axios";
-import { useRouter } from "next/router";
+import { useState } from 'react'
+import CardComponent from '../card/card.component'
+import axiosInterCep from '@/lib/axios'
+import { useRouter } from 'next/router'
 interface Props {
-  setOpenModalCreate: (value: boolean) => void;
+  setOpenModalCreate: (value: boolean) => void
 }
 
 const CreatePomodoros = (props: Props) => {
+  const router = useRouter()
 
-  const router = useRouter();
+  const [pomodoroName, setPomodoroName] = useState<string>('')
 
-  const [pomodoroName, setPomodoroName] = useState<string>("");
+  const [tagList, setTagList] = useState<string[]>([])
 
-  const [tagList, setTagList] = useState<string[]>([]);
+  const [continueToTemplate, setContinueToTemplate] = useState<boolean>(false)
 
-  const [continueToTemplate, setContinueToTemplate] = useState<boolean>(false);
-
-  const [selectTemplate, setSelectTemplate] = useState<string>("");
+  const [selectTemplate, setSelectTemplate] = useState<string>('')
 
   const [error, setError] = useState<any>({
-    pomodoroName: "",
-  });
+    pomodoroName: ''
+  })
 
   const addTag = (e: any) => {
-    e.preventDefault();
-    //get input value
-    if (e.target.tags.value === "") return;
-    const tag = e.target.tags.value;
-    //set to taglist
-    //check if tag is already in taglist
+    e.preventDefault()
+    // get input value
+    if (e.target.tags.value === '') return
+    const tag = e.target.tags.value
+    // set to taglist
+    // check if tag is already in taglist
     if (tagList.includes(tag)) {
-      e.target.tags.value = "";
-      return;
+      e.target.tags.value = ''
+      return
     }
-    setTagList([...tagList, tag]);
-    //clear input
-    e.target.tags.value = "";
-  };
+    setTagList([...tagList, tag])
+    // clear input
+    e.target.tags.value = ''
+  }
 
-  const removeTag = (index: Number) => {
-    //get input value
-    const newTagList = tagList.filter((tag, i) => i !== index);
-    setTagList(newTagList);
-  };
+  const removeTag = (index: number) => {
+    // get input value
+    const newTagList = tagList.filter((tag, i) => i !== index)
+    setTagList(newTagList)
+  }
 
   const clearError = () => {
     setError({
-      ["pomodoroName"]: "",
-    });
-  };
+      pomodoroName: ''
+    })
+  }
 
   const btnContinue = () => {
-    //clear error
-    clearError();
-    //check pomodoro name
-    if (pomodoroName === "") {
+    // clear error
+    clearError()
+    // check pomodoro name
+    if (pomodoroName === '') {
       setError({
-        ["pomodoroName"]: "Pomodoro name is required",
-      });
-      return;
+        pomodoroName: 'Pomodoro name is required'
+      })
+      return
     }
 
-    //check if taglist is empty
+    // check if taglist is empty
     // if (tagList.length === 0) return;
-    //set continue to template to true
-    setContinueToTemplate(true);
-  };
+    // set continue to template to true
+    setContinueToTemplate(true)
+  }
 
-  //function create pomodoro
+  // function create pomodoro
   const createPomodoro = async () => {
-    //check if template is selected
-    if (selectTemplate === "") return;
-    //create pomodoro
-    console.log("create pomodoro");
-    //close modal
+    // check if template is selected
+    if (selectTemplate === '') return
+    // create pomodoro
+    console.log('create pomodoro')
+    // close modal
     try {
       const data = await axiosInterCep
-        .post(`/pomodoro/create`, {
-          pomodoroName: pomodoroName,
+        .post('/pomodoro/create', {
+          pomodoroName,
           templateId: selectTemplate,
-          tag: tagList,
+          tag: tagList
         })
-        .then((res) => res.data);
-      console.log(data);
-      if(data.status === "success"){
-        router.push(`/dashboard/pomodoro/edit/${data.id}`);
+        .then((res) => res.data)
+      console.log(data)
+      if (data.status === 'success') {
+        router.push(`/dashboard/pomodoro/edit/${data.id}`).catch((err) => {
+          console.log(err)
+        })
       }
     } catch (error) {
-      console.log(error);
+      console.log(error)
     }
-  };
+  }
 
   if (continueToTemplate) {
     return (
@@ -166,7 +167,7 @@ const CreatePomodoros = (props: Props) => {
               <button
                 type="button"
                 className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-                onClick={(e) => props.setOpenModalCreate(false)}
+                onClick={(e) => { props.setOpenModalCreate(false) }}
               >
                 Cancel
               </button>
@@ -174,7 +175,7 @@ const CreatePomodoros = (props: Props) => {
           </div>
         </div>
       </div>
-    );
+    )
   }
 
   return (
@@ -221,18 +222,18 @@ const CreatePomodoros = (props: Props) => {
                     type="text"
                     name="pomodoroName"
                     id="pomodoroName"
-                    onChange={(e) => setPomodoroName(e.target.value)}
+                    onChange={(e) => { setPomodoroName(e.target.value) }}
                     className={`shadow-sm focus:ring-indigo-500 focus:border-indigo-500 focus:outline-main block w-full sm:text-sm ${
-                      error["pomodoroName"]
-                        ? "border-red-600"
-                        : "border-main"
+                      error.pomodoroName
+                        ? 'border-red-600'
+                        : 'border-main'
                     } border rounded-md px-5 py-2 mb-2`}
                     placeholder="Pomodoro"
                   />
                   {/* error */}
-                  {error["pomodoroName"] && (
+                  {error.pomodoroName && (
                     <p className="text-red-600 text-xs -mt-2">
-                      {error["pomodoroName"]}
+                      {error.pomodoroName}
                     </p>
                   )}
                   <p>Tag</p>
@@ -266,7 +267,7 @@ const CreatePomodoros = (props: Props) => {
                     <div
                       key={index}
                       className="flex items-center justify-between text-xs px-3 mb-2 bg-main text-white py-1 rounded-md mr-2 cursor-pointer"
-                      onClick={() => removeTag(index)}
+                      onClick={() => { removeTag(index) }}
                     >
                       <p>{tag}</p>
                     </div>
@@ -286,7 +287,7 @@ const CreatePomodoros = (props: Props) => {
             <button
               type="button"
               className="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm"
-              onClick={(e) => props.setOpenModalCreate(false)}
+              onClick={(e) => { props.setOpenModalCreate(false) }}
             >
               Cancel
             </button>
@@ -294,7 +295,7 @@ const CreatePomodoros = (props: Props) => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default CreatePomodoros;
+export default CreatePomodoros

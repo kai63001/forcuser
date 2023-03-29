@@ -1,29 +1,29 @@
-import dynamic from "next/dynamic";
+import dynamic from 'next/dynamic'
 
-const PomodoroWidget = dynamic(() => import("./widget/middle/pomodoroWidget"));
+import { type PomodoroV1Props } from '@/components/pomodoro/type/pomodoroV1'
+import BackgroundWidget from './widget/background/backgroundWidget'
+// redux
+import { useSelector } from 'react-redux'
+import type { RootState } from '@/store/store'
+import { type PomodoroV1State } from '../pomodoro/type/pomodoroV1'
+import ToDoListV1 from './widget/todo/TodoListV1'
+
+const PomodoroWidget = dynamic(async () => await import('./widget/middle/pomodoroWidget'))
 const SpotifyPlayer = dynamic(
-  () => import("./widget/musicPlayer/spotifyPlayer")
-);
-
-import { PomodoroV1Props } from "@/components/pomodoro/type/pomodoroV1";
-import BackgroundWidget from "./widget/background/backgroundWidget";
-//redux
-import { useSelector } from "react-redux";
-import type { RootState } from "@/store/store";
-import { PomodoroV1State } from "../pomodoro/type/pomodoroV1";
-import ToDoListV1 from "./widget/todo/TodoListV1";
+  async () => await import('./widget/musicPlayer/spotifyPlayer')
+)
 
 const PomodoroV1 = (props: PomodoroV1Props) => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
-  );
+  )
   const preventDragHandler = (e: any) => {
-    e.preventDefault();
-  };
+    e.preventDefault()
+  }
   return (
-    <div className="h-screen w-full overflow-hidden" onDragOver={(e)=>{
-      e.preventDefault();
-      e.dataTransfer.dropEffect = "move";
+    <div className="h-screen w-full overflow-hidden" onDragOver={(e) => {
+      e.preventDefault()
+      e.dataTransfer.dropEffect = 'move'
     }}>
       <div className="relative h-full block" onDragStart={preventDragHandler}>
         {/* setting */}
@@ -75,10 +75,10 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         <BackgroundWidget />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PomodoroV1;
+export default PomodoroV1
 // {
 // "AWS": "arn:aws:iam::483708185902:user/focuserUser"
 // },

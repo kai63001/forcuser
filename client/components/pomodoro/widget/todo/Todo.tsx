@@ -1,21 +1,21 @@
 const TodoWidget = (props: any) => {
   const handleHightArea = (e: any) => {
-    e.target.style.height = "inherit";
+    e.target.style.height = 'inherit'
 
     // Get the computed styles for the element
-    const computed = window.getComputedStyle(e.target);
+    const computed = window.getComputedStyle(e.target)
 
     // Calculate the height
     const height =
-      parseInt(computed.getPropertyValue("border-top-width"), 10) +
-      parseInt(computed.getPropertyValue("padding-top"), 10) +
-      e.target.scrollHeight +
-      parseInt(computed.getPropertyValue("padding-bottom"), 10) +
-      parseInt(computed.getPropertyValue("border-bottom-width"), 10);
-    console.log(height);
+      parseInt(computed.getPropertyValue('border-top-width'), 10) +
+      parseInt(computed.getPropertyValue('padding-top'), 10) +
+      ~~e.target.scrollHeight +
+      parseInt(computed.getPropertyValue('padding-bottom'), 10) +
+      parseInt(computed.getPropertyValue('border-bottom-width'), 10)
+    console.log(height)
 
-    e.target.style.height = `${height}px`;
-  };
+    e.target.style.height = `${height}px`
+  }
 
   return (
     <div className="pl-6 py-1.5 w-full flex hover:bg-gray-500 group text-sm pr-2">
@@ -68,6 +68,6 @@ const TodoWidget = (props: any) => {
         </svg>
       </div>
     </div>
-  );
-};
-export default TodoWidget;
+  )
+}
+export default TodoWidget

@@ -1,15 +1,15 @@
-import Layout from "@/components/dashboard/Layout";
-import Loading from "@/components/libs/Loading";
-import UseAuth from "@/components/libs/useAuth";
-import dynamic from "next/dynamic";
-import Image from "next/image";
+import Layout from '@/components/dashboard/Layout'
+import Loading from '@/components/libs/Loading'
+import UseAuth from '@/components/libs/useAuth'
+import dynamic from 'next/dynamic'
+import Image from 'next/image'
 
-const MyFocus = dynamic(() => import("@/components/dashboard/home/myFocus"));
+const MyFocus = dynamic(async () => await import('@/components/dashboard/home/myFocus'))
 
 const Dashboard = () => {
-  const isAuthenticated = UseAuth(true);
-  if (isAuthenticated == false) {
-    return <Loading />;
+  const isAuthenticated = UseAuth(true)
+  if (!isAuthenticated) {
+    return <Loading />
   }
 
   return (
@@ -27,7 +27,7 @@ const Dashboard = () => {
         <Image
           src="https://i.pinimg.com/originals/ef/3b/42/ef3b42ceb18014af07c46182bacf1f0b.gif"
           alt="Picture of the author"
-          onDragStart={(e) => e.preventDefault()}
+          onDragStart={(e) => { e.preventDefault() }}
           fill
           className="rounded-md w-full h-full object-cover"
         />
@@ -38,7 +38,7 @@ const Dashboard = () => {
       {/* grid */}
       <MyFocus />
     </Layout>
-  );
-};
+  )
+}
 
-export default Dashboard;
+export default Dashboard

@@ -1,30 +1,29 @@
-import Layout from "@/components/Layout";
-import Header from "@/components/Header";
-type LayoutInterface = {
-  title?: string | undefined;
-  des?: string | undefined;
-  image?: string | undefined;
-  children?: any | undefined;
-};
-import { useRouter } from "next/router";
-import { signOut, useSession } from "next-auth/react";
-import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
-import dynamic from "next/dynamic";
+import Header from '@/components/HeaderIndex'
+import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
+import { useEffect, useRef, useState } from 'react'
+import dynamic from 'next/dynamic'
+interface LayoutInterface {
+  title?: string | undefined
+  des?: string | undefined
+  image?: string | undefined
+  children?: any | undefined
+}
 
-const ModalCreatePomodoro = dynamic(() => import("./modal/createPomodoro"));
+const ModalCreatePomodoro = dynamic(async () => await import('./modal/createPomodoro'))
 
 const DashboardLayout = (props: LayoutInterface) => {
-  //session from next
-  const { data: session }: any = useSession();
+  // session from next
+  const { data: session }: any = useSession()
 
-  const [openModalCreate, setOpenModalCreate] = useState(false);
+  const [openModalCreate, setOpenModalCreate] = useState(false)
 
-  const [openDropdown, setOpenDropdown] = useState(false);
-  const dropdown: any = useRef(null);
-  const userImageDropdown: any = useRef(null);
+  const [openDropdown, setOpenDropdown] = useState(false)
+  const dropdown: any = useRef(null)
+  const userImageDropdown: any = useRef(null)
 
-  const router = useRouter();
+  const router = useRouter()
 
   useEffect(() => {
     const handleClickOutside = (event: any) => {
@@ -34,24 +33,30 @@ const DashboardLayout = (props: LayoutInterface) => {
         userImageDropdown.current &&
         !userImageDropdown.current.contains(event.target)
       ) {
-        setOpenDropdown(false);
+        setOpenDropdown(false)
       }
-    };
-    document.addEventListener("mousedown", handleClickOutside);
+    }
+    document.addEventListener('mousedown', handleClickOutside)
     return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [dropdown]);
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [dropdown])
+
+  const logout = () => {
+    signOut({ callbackUrl: '/auth/login', redirect: false }).catch((err) => {
+      console.log(err)
+    })
+  }
 
   const listNavbar = [
     {
-      name: "Home",
-      link: "/dashboard",
+      name: 'Home',
+      link: '/dashboard',
       icon: (
         <svg
           aria-hidden="true"
           className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath == "/dashboard" ? "text-white" : "text-gray-500"
+            router.asPath === '/dashboard' ? 'text-white' : 'text-gray-500'
           }  transition duration-75`}
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -59,16 +64,16 @@ const DashboardLayout = (props: LayoutInterface) => {
         >
           <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
         </svg>
-      ),
+      )
     },
     {
-      name: "Users",
-      link: "/dashboard/users",
+      name: 'Users',
+      link: '/dashboard/users',
       icon: (
         <svg
           aria-hidden="true"
           className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath == "/dashboard/users" ? "text-white" : "text-gray-500"
+            router.asPath === '/dashboard/users' ? 'text-white' : 'text-gray-500'
           }  transition duration-75`}
           fill="currentColor"
           viewBox="0 0 20 20"
@@ -76,9 +81,9 @@ const DashboardLayout = (props: LayoutInterface) => {
         >
           <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
         </svg>
-      ),
-    },
-  ];
+      )
+    }
+  ]
   return (
     <>
       <Header title={props.title} des={props.des} image={props.image} />
@@ -97,16 +102,16 @@ const DashboardLayout = (props: LayoutInterface) => {
                     <a
                       href="#"
                       className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${
-                        router.asPath == item.link
-                          ? "text-white bg-main"
-                          : "text-gray-500"
+                        router.asPath === item.link
+                          ? 'text-white bg-main'
+                          : 'text-gray-500'
                       }`}
                     >
                       {item.icon}
                       <span className="ml-3">{item.name}</span>
                     </a>
                   </li>
-                );
+                )
               })}
             </ul>
           </div>
@@ -148,7 +153,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                 </div>
                 <button
                   className="bg-main text-white px-5 py-2 rounded-md"
-                  onClick={() => setOpenModalCreate(true)}
+                  onClick={() => { setOpenModalCreate(true) }}
                 >
                   Create a Focus
                 </button>
@@ -156,10 +161,10 @@ const DashboardLayout = (props: LayoutInterface) => {
                 <div
                   className="flex items-center cursor-pointer bg-main rounded-full"
                   ref={userImageDropdown}
-                  onClick={() => setOpenDropdown((b) => !b)}
+                  onClick={() => { setOpenDropdown((b) => !b) }}
                 >
                   <Image
-                    src={session?.user?.image || "/icon/man.png"}
+                    src={session?.user?.image || '/icon/man.png'}
                     alt="Picture of the author"
                     width={40}
                     height={40}
@@ -185,11 +190,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                     <hr />
                     <div
                       className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md"
-                      onClick={() =>
-                        signOut({
-                          callbackUrl: "/auth/login",
-                        })
-                      }
+                      onClick={logout}
                     >
                       Sign out
                     </div>
@@ -202,7 +203,7 @@ const DashboardLayout = (props: LayoutInterface) => {
         </main>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default DashboardLayout;
+export default DashboardLayout

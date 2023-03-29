@@ -1,118 +1,119 @@
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { useRouter } from "next/router";
-import { useEffect, useRef, useState } from "react";
-import Draggable from "react-draggable";
-import { PomodoroV1Props, PomodoroV1State } from "../../type/pomodoroV1";
+import { useRouter } from 'next/router'
+import { useEffect, useRef, useState } from 'react'
+import Draggable from 'react-draggable'
+import { type PomodoroV1State } from '../../type/pomodoroV1'
 
-//redux
-import { setTemplate } from "@/store/templateSlice";
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "@/store/store";
+// redux
+import { setTemplate } from '@/store/templateSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '@/store/store'
 
 const PomodoroWidget = () => {
-  //get route path
-  const router = useRouter();
+  // get route path
+  const router = useRouter()
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
-  );
-  const dispatch = useDispatch();
+  )
+  const dispatch = useDispatch()
 
   const [listPomodoroTab, setListPomodoroTab] = useState([
-    { name: "POMODORO", time: 25 * 60 },
-    { name: "SHORT BREAK", time: 5 * 60 },
-    { name: "LONG BREAK", time: 15 * 60 },
-  ]);
-  const [tabSelectPomodoro, setTabSelectPomodoro] = useState(0);
-  const [timer, setTimer] = useState(25 * 60);
-  const [intervalId, setIntervalId]: any = useState(null);
+    { name: 'POMODORO', time: 25 * 60 },
+    { name: 'SHORT BREAK', time: 5 * 60 },
+    { name: 'LONG BREAK', time: 15 * 60 }
+  ])
+  const [tabSelectPomodoro, setTabSelectPomodoro] = useState(0)
+  const [timer, setTimer] = useState(25 * 60)
+  const [intervalId, setIntervalId]: any = useState(null)
 
-  const [isStart, setIsStart] = useState(false);
+  const [isStart, setIsStart] = useState(false)
 
   const tabSelect = (index: number) => {
-    setIsStart(false);
-    if (intervalId) clearInterval(intervalId);
-    setTabSelectPomodoro(index);
-    setTimer(listPomodoroTab[index].time);
-  };
+    setIsStart(false)
+    if (intervalId) clearInterval(intervalId)
+    setTabSelectPomodoro(index)
+    setTimer(listPomodoroTab[index].time)
+  }
 
   const startTimer = () => {
-    //create countdown timer using setInterval start and pause
-    setIsStart(true);
+    // create countdown timer using setInterval start and pause
+    setIsStart(true)
     const interval = setInterval(() => {
-      setTimer((prev) => prev - 1);
-    }, 1000);
-    setIntervalId(interval);
-    return () => clearInterval(interval);
-  };
+      setTimer((prev) => prev - 1)
+    }, 1000)
+    setIntervalId(interval)
+    return () => { clearInterval(interval) }
+  }
 
   const pauseTimer = () => {
-    setIsStart(false);
-    clearInterval(intervalId);
-  };
+    setIsStart(false)
+    clearInterval(intervalId)
+  }
 
   const timerShow = () => {
-    const minute = Math.floor(timer / 60);
-    const second = timer % 60;
-    return `${minute < 10 ? "0" + minute : minute}:${
-      second < 10 ? "0" + second : second
-    }`;
-  };
+    const minute = Math.floor(timer / 60)
+    const second = timer % 60
+    return `${minute < 10 ? '0' + minute : minute}:${
+      second < 10 ? '0' + second : second
+    }`
+  }
 
   const resetTimer = () => {
-    setTimer(listPomodoroTab[tabSelectPomodoro].time);
-    setIsStart(false);
-    if (intervalId) clearInterval(intervalId);
-  };
+    setTimer(listPomodoroTab[tabSelectPomodoro].time)
+    setIsStart(false)
+    if (intervalId) clearInterval(intervalId)
+  }
 
   useEffect(() => {
     // stop timer when time is 0
     if (timer <= 0) {
-      clearInterval(intervalId);
-      setIsStart(false);
+      clearInterval(intervalId)
+      setIsStart(false)
     }
-  }, [timer, intervalId]);
+  }, [timer, intervalId])
 
-  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 0, y: 0 })
 
   const handleStart = () => {
-    setIsDragging(true);
-  };
+    setIsDragging(true)
+  }
 
   const handleStop = (e: any, data: any) => {
-    setPosition({ x: data.x, y: data.y });
-    setIsDragging(false);
-    //get template from redux
+    setPosition({ x: data.x, y: data.y })
+    setIsDragging(false)
+    // get template from redux
     dispatch(
       setTemplate({
         ...template,
         pomodoro: {
           ...template.pomodoro,
-          position: { x: data.x, y: data.y },
-        },
+          position: { x: data.x, y: data.y }
+        }
       })
-    );
-  };
-  const [isEdit, setIsEdit] = useState(false);
+    )
+  }
+  const [isEdit, setIsEdit] = useState(false)
 
   const checkIsEdit = () => {
-    if (router.pathname.includes("edit")) {
-      setIsEdit(true);
-      return true;
+    if (router.pathname.includes('edit')) {
+      setIsEdit(true)
+      return true
     }
 
-    setIsEdit(false);
-    return false;
-  };
+    setIsEdit(false)
+    return false
+  }
 
-  const thisWidget: any = useRef(null);
+  const thisWidget: any = useRef(null)
 
-  //function get max height and width
-  const [maxHeight, setMaxHeight] = useState(0);
-  const [maxWidth, setMaxWidth] = useState(0);
+  // function get max height and width
+  const [maxHeight, setMaxHeight] = useState(0)
+  const [maxWidth, setMaxWidth] = useState(0)
   useEffect(() => {
-    checkIsEdit();
-    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight);
-    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth);
+    checkIsEdit()
+    setMaxHeight(window.innerHeight - thisWidget.current.clientHeight)
+    setMaxWidth(window.innerWidth - thisWidget.current.clientWidth)
 
     try {
       if (
@@ -128,9 +129,8 @@ const PomodoroWidget = () => {
           y:
             (template?.pomodoro.position.y /
               (template?.global?.position.y - thisWidget.current.clientHeight)) *
-            (window.innerHeight - thisWidget.current.clientHeight),
-        });
-        ``;
+            (window.innerHeight - thisWidget.current.clientHeight)
+        })
         // I GOT IT
         // (positionWidget /
         //       (oldScreenWidth - widgetWidth)) *
@@ -138,22 +138,22 @@ const PomodoroWidget = () => {
       } else {
         setPosition({
           x: window.innerWidth / 2 - thisWidget.current.clientWidth / 2,
-          y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2,
-        });
+          y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2
+        })
       }
     } catch (error) {
-      console.error(error);
+      console.error(error)
       setPosition({
         x: window.innerWidth / 2 - thisWidget.current.clientWidth / 2,
-        y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2,
-      });
+        y: window.innerHeight / 2 - thisWidget.current.clientHeight / 2
+      })
     }
-    //init
+    // init
 
-    //get center position
-  }, []);
+    // get center position
+  }, [])
 
-  const [isDragging, setIsDragging] = useState(false);
+  const [isDragging, setIsDragging] = useState(false)
 
   return (
     <Draggable
@@ -166,7 +166,7 @@ const PomodoroWidget = () => {
         top: 0,
         left: 0,
         right: maxWidth,
-        bottom: maxHeight,
+        bottom: maxHeight
       }}
     >
       <div
@@ -174,8 +174,8 @@ const PomodoroWidget = () => {
         className={`absolute z-20 text-white ${
           isEdit &&
           (isDragging
-            ? "cursor-grabbing opacity-80"
-            : "cursor-grab opacity-100")
+            ? 'cursor-grabbing opacity-80'
+            : 'cursor-grab opacity-100')
         }`}
       >
         {isEdit && <div className="w-full h-full z-50 absolute"></div>}
@@ -185,16 +185,16 @@ const PomodoroWidget = () => {
               return (
                 <button
                   key={index}
-                  onClick={() => tabSelect(index)}
+                  onClick={() => { tabSelect(index) }}
                   className={` border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150 ${
                     tabSelectPomodoro === index
-                      ? "bg-white text-black "
-                      : "text-white"
+                      ? 'bg-white text-black '
+                      : 'text-white'
                   }`}
                 >
                   {item.name}
                 </button>
-              );
+              )
             })}
           </div>
           <div className="text-9xl franger text-white my-6">{timerShow()}</div>
@@ -202,23 +202,25 @@ const PomodoroWidget = () => {
             &quot; Time management method where you work &quot;
           </p>
           <div className="flex items-center space-x-5 my-4">
-            {isStart ? (
+            {isStart
+              ? (
               <button
-                onClick={() => pauseTimer()}
+                onClick={() => { pauseTimer() }}
                 className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger"
               >
                 PAUSE
               </button>
-            ) : (
+                )
+              : (
               <button
                 onClick={() => startTimer()}
                 className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger"
               >
                 START
               </button>
-            )}
+                )}
 
-            <div onClick={() => resetTimer()} className="cursor-pointer">
+            <div onClick={() => { resetTimer() }} className="cursor-pointer">
               <svg
                 width="43"
                 height="37"
@@ -236,7 +238,7 @@ const PomodoroWidget = () => {
         </div>
       </div>
     </Draggable>
-  );
-};
+  )
+}
 
-export default PomodoroWidget;
+export default PomodoroWidget

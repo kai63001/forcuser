@@ -1,82 +1,82 @@
-import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import Input from "@/components/libs/Input";
-import axios from "@/lib/axios";
-import { useRouter } from "next/router";
-import Layout from "@/components/Layout";
-import { signIn } from "next-auth/react";
+import Image from 'next/image'
+import Link from 'next/link'
+import { useState } from 'react'
+import Input from '@/components/libs/Input'
+import axios from '@/lib/axios'
+import { useRouter } from 'next/router'
+import Layout from '@/components/LayoutIndex'
+import { signIn } from 'next-auth/react'
 
 interface RegisterInterface {
-  email: string;
-  password: string;
-  confirmPassword: string;
+  email: string
+  password: string
+  confirmPassword: string
 }
 
 const Register = () => {
   // env api
-  const API_URL = process.env.NEXT_PUBLIC_API_URL;
+  const API_URL = process.env.NEXT_PUBLIC_API_URL
 
-  const [error, setError]: any = useState({});
+  const [error, setError]: any = useState({})
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const [loading, setLoading]: any = useState(false);
+  const [loading, setLoading]: any = useState(false)
 
-  const register = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
-    setError({});
+  const register = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    setLoading(true)
+    setError({})
     const data: RegisterInterface = {
       email: e.currentTarget.email.value,
       password: e.currentTarget.password.value,
-      confirmPassword: e.currentTarget.confirmPassword.value,
-    };
+      confirmPassword: e.currentTarget.confirmPassword.value
+    }
     if (data.password !== data.confirmPassword) {
       setError({
-        confirmPassword: "blank",
-        password: "Passwords do not match",
-      });
-      setLoading(false);
-      console.log("Passwords do not match");
-      return;
+        confirmPassword: 'blank',
+        password: 'Passwords do not match'
+      })
+      setLoading(false)
+      console.log('Passwords do not match')
+      return
     }
     axios
       .post(`${API_URL}/auth/register`, data)
-      .then((res) => {
-        setLoading(false);
-        console.log(res);
-        //redirect to login
-        router.replace("/auth/login");
+      .then(async (res) => {
+        setLoading(false)
+        console.log(res)
+        // redirect to login
+        await router.replace('/auth/login')
       })
       .catch((err) => {
-        setLoading(false);
-        const nameError = err.response?.data?.error;
-        console.log(err.response);
-        console.log(err);
-        if (nameError == "Email already exists") {
+        setLoading(false)
+        const nameError = err.response?.data?.error
+        console.log(err.response)
+        console.log(err)
+        if (nameError === 'Email already exists') {
           setError({
-            email: "Email already exists",
-          });
+            email: 'Email already exists'
+          })
         }
-      });
-  };
+      })
+  }
 
   const googleLogin = (e: any) => {
-    e.preventDefault();
-    signIn("google", {
-      callbackUrl: `${window.location.origin}/dashboard`,
-    }).then((res) => {
-      console.log("res", res);
-    });
-  };
+    e.preventDefault()
+    signIn('google', {
+      callbackUrl: `${window.location.origin}/dashboard`
+    }).catch((error) => {
+      console.error('error', error)
+    })
+  }
 
   return (
     <Layout>
       <div className="h-screen">
         <div className="grid grid-cols-3 w-full h-full">
           <div className="max-w-lg w-full m-auto order-2 p-10 md:p-3 col-span-3 md:col-span-1">
-            <Link href={"/"}>
+            <Link href={'/'}>
               <div className="absolute top-10 underline text-gray-400">
                 Back to Home
               </div>
@@ -125,7 +125,7 @@ const Register = () => {
               <button
                 type="submit"
                 className={`w-full ${
-                  loading ? "bg-gray-500 cursor-not-allowed" : "bg-main"
+                  loading ? 'bg-gray-500 cursor-not-allowed' : 'bg-main'
                 } text-white text-center py-2 rounded-md`}
                 disabled={loading}
               >
@@ -209,7 +209,7 @@ const Register = () => {
               priority={true}
               unoptimized={true}
               fill
-              style={{ objectFit: "cover" }}
+              style={{ objectFit: 'cover' }}
             />
             {/* <video
               className="absolute  top-0 left-0 w-full h-full object-cover"
@@ -226,7 +226,7 @@ const Register = () => {
         </div>
       </div>
     </Layout>
-  );
-};
+  )
+}
 
-export default Register;
+export default Register

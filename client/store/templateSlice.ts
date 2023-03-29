@@ -1,55 +1,54 @@
-//react toolkit
-import { PomodoroV1State } from "@/components/pomodoro/type/pomodoroV1";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+// react toolkit
+import { type PomodoroV1State } from '@/components/pomodoro/type/pomodoroV1'
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 const initialState: PomodoroV1State = {
   wallpaper: {
-    url: "",
-    type: 0,
+    url: '',
+    type: 0
   },
   music: {
     widget: -1,
-    type: "",
-    url: "",
+    type: '',
+    url: '',
     position: {
       x: 0,
-      y: 0,
+      y: 0
     },
-    draging: "",
+    draging: ''
   },
   pomodoro: {
     widget: 0,
     position: {
       x: -1,
-      y: -1,
-    },
+      y: -1
+    }
   },
   global: {
     position: {
       x: 0,
-      y: 0,
-    },
+      y: 0
+    }
   },
   todolist: {
     position: {
       x: -1,
-      y: -1,
-    },
-  },
-
-};
+      y: -1
+    }
+  }
+}
 
 export const templateSlice = createSlice({
-  name: "template",
+  name: 'template',
   initialState,
   reducers: {
     setTemplate: (state, action: PayloadAction<PomodoroV1State>) => {
       // console.log("playload", action.payload);
-      return action.payload;
-    },
-  },
-});
+      return action.payload
+    }
+  }
+})
 
-export const { setTemplate } = templateSlice.actions;
+export const { setTemplate } = templateSlice.actions
 
-export default templateSlice.reducer;
+export default templateSlice.reducer
