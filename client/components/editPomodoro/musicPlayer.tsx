@@ -92,8 +92,8 @@ const MusicPlayer = () => {
               dragging ? "opacity-0" : "opacity-100"
             } ${
               template.music.widget == 0
-                ? "bg-orange-400 border-orange-200"
-                : "bg-main border-purple-200"
+                ? "bg-main border-main"
+                : "bg-black2 border-black2"
             } `}
           >
             <div className="rounded-md">

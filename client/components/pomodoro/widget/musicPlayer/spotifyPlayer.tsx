@@ -48,10 +48,14 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const [isEdit, setIsEdit] = useState(false);
 
   const getDataSpotify = async () => {
-    const data = await axios.get(
-      `https://open.spotify.com/oembed?url=${musicUrl}`
-    );
-    setMusicPlayerInfo(data.data);
+    try {
+      const data = await axios.get(
+        `https://open.spotify.com/oembed?url=${musicUrl}`
+      );
+      setMusicPlayerInfo(data.data);
+    } catch (error) {
+      throw error;
+    }
   };
 
   useEffect(() => {

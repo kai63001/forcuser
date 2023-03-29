@@ -163,6 +163,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                     alt="Picture of the author"
                     width={40}
                     height={40}
+                    unoptimized={true}
                     className="object-cover rounded-full"
                   />
                 </div>
@@ -172,18 +173,18 @@ const DashboardLayout = (props: LayoutInterface) => {
                     ref={dropdown}
                     className="absolute top-14 right-2 bg-background px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
                   >
-                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
                       Profile
                     </div>
-                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
                       Settings
                     </div>
-                    <div className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md">
+                    <div className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
                       Subscription
                     </div>
                     <hr />
                     <div
-                      className="cursor-pointer py-1 hover:bg-main hover:text-main px-3 rounded-md"
+                      className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md"
                       onClick={() =>
                         signOut({
                           callbackUrl: "/auth/login",

@@ -30,7 +30,7 @@ const HomeCard = (props: HomeCardInterface) => {
   }, [dropdown]);
   return (
     <Link href={`/focus/${props.id}`}>
-      <div className="bg-white rounded-md group cursor-pointer">
+      <div className=" rounded-md group cursor-pointer">
         <div className="relative w-full h-[170px] shadow-md">
           <Image
             src={`${
@@ -44,7 +44,7 @@ const HomeCard = (props: HomeCardInterface) => {
             className="rounded-md"
           />
           <div
-            className={`absolute right-1 top-1 z-30 opacity-0 group-hover:opacity-100 duration-200 ${
+            className={`absolute right-1 top-1 z-20 opacity-0 group-hover:opacity-100 duration-200 ${
               isOpen && "opacity-100"
             }`}
           >
