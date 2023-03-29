@@ -1,28 +1,27 @@
-import { useState } from "react";
-import { setDragableEditWidget } from "@/store/dragableEditWidgetSlice";
-import { RootState } from "@/store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
+import { type RootState } from '@/store/store'
+import { useDispatch, useSelector } from 'react-redux'
 
 const SettingWidget = () => {
   const dragableEditWidget = useSelector(
     (state: RootState) => state.dragableEditWidgetSlice
-  );
-  const dispatch = useDispatch();
+  )
+  const dispatch = useDispatch()
 
   const openToggle = (id: number) => {
     if (id == dragableEditWidget.toggleId) {
       dispatch(setDragableEditWidget({
         ...dragableEditWidget,
         toggleId: 0
-      }));
-      return;
+      }))
+      return
     }
     dispatch(setDragableEditWidget({
       ...dragableEditWidget,
       toggleId: id
-    }));
-  };
-  
+    }))
+  }
+
   return (
     <>
       <div
@@ -30,7 +29,7 @@ const SettingWidget = () => {
         id="edit"
       >
         <div
-          onClick={(e) => openToggle(991)}
+          onClick={(e) => { openToggle(991) }}
           className="text-white cursor-pointer px-3"
           id="settingWidget"
         >
@@ -57,11 +56,11 @@ const SettingWidget = () => {
         >
           <h3 className="text-xl">Setting Music Player</h3>
           <hr className="bg-gray-500 border-gray-500 my-2" />
-          
+
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default SettingWidget;
+export default SettingWidget

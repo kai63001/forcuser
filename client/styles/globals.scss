@@ -1,22 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&family=Mitr:wght@200;300;400;500;600;700&display=swap');
-@import '@sweetalert2/theme-dark/dark.scss';
+@import url("https://fonts.googleapis.com/css2?family=Fredoka+One&family=Mitr:wght@200;300;400;500;600;700&display=swap");
+@import "@sweetalert2/theme-dark/dark.scss";
+@import "@flaticon/flaticon-uicons/css/all/all";
 @tailwind base;
 @tailwind components;
 @layer utilities {
-    .no-scrollbar::-webkit-scrollbar {
-      display: none;
-    }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
 
-    .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-    }
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 @tailwind utilities;
 
-
-html,body {
-  font-family: 'Mitr', sans-serif;
+html,
+body {
+  font-family: "Mitr", sans-serif;
   font-display: swap;
   height: 100%;
   width: 100%;
@@ -30,9 +31,8 @@ div#__next > div {
   height: 100% !important;
 }
 
-
 .franger {
-  font-family: 'Fredoka One', cursive;
+  font-family: "Fredoka One", cursive;
   font-display: swap;
 }
 
@@ -47,7 +47,6 @@ div#__next > div {
   background-color: #1e1e1e;
   border-radius: 10px;
 }
-
 
 .task-list-container {
   display: inline-block;

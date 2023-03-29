@@ -1,14 +1,18 @@
 import dynamic from 'next/dynamic'
 
-import { type PomodoroV1Props } from '@/components/pomodoro/type/pomodoroV1'
 import BackgroundWidget from './widget/background/backgroundWidget'
 // redux
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/store/store'
-import { type PomodoroV1State } from '../pomodoro/type/pomodoroV1'
+import {
+  type PomodoroV1State,
+  type PomodoroV1Props
+} from '../pomodoro/type/pomodoroV1'
 import ToDoListV1 from './widget/todo/TodoListV1'
 
-const PomodoroWidget = dynamic(async () => await import('./widget/middle/pomodoroWidget'))
+const PomodoroWidget = dynamic(
+  async () => await import('./widget/middle/pomodoroWidget')
+)
 const SpotifyPlayer = dynamic(
   async () => await import('./widget/musicPlayer/spotifyPlayer')
 )
@@ -21,10 +25,13 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     e.preventDefault()
   }
   return (
-    <div className="h-screen w-full overflow-hidden" onDragOver={(e) => {
-      e.preventDefault()
-      e.dataTransfer.dropEffect = 'move'
-    }}>
+    <div
+      className="h-screen w-full overflow-hidden"
+      onDragOver={(e) => {
+        e.preventDefault()
+        e.dataTransfer.dropEffect = 'move'
+      }}
+    >
       <div className="relative h-full block" onDragStart={preventDragHandler}>
         {/* setting */}
         <div

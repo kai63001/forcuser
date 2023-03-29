@@ -49,7 +49,9 @@ const PomodoroEditPage = (props: any) => {
   // 5 = image
 
   useEffect(() => {
-    getDataFromId().catch((err) => { console.log(err) })
+    getDataFromId().catch((err) => {
+      console.log(err)
+    })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -110,9 +112,20 @@ const PomodoroEditPage = (props: any) => {
       <div className=" w-12 fixed left-2 z-50 top-1/2 -translate-y-1/2">
         <div className="bg-black bg-opacity-90 flex flex-col items-center space-y-10 py-5 rounded-md">
           <div
+            className="text-white cursor-pointer px-3 h-[18px]"
+            id="timer widget"
+            onClick={() => {
+              openToggle(1)
+            }}
+          >
+            <i className="fi fi-rr-hourglass-end"></i>
+          </div>
+          <div
             className="text-white cursor-pointer px-3"
             id="music player"
-            onClick={() => { openToggle(4) }}
+            onClick={() => {
+              openToggle(4)
+            }}
           >
             <svg
               width="18"
@@ -138,7 +151,9 @@ const PomodoroEditPage = (props: any) => {
           <div
             className="text-white cursor-pointer px-3"
             id="upload image"
-            onClick={() => { openToggle(5) }}
+            onClick={() => {
+              openToggle(5)
+            }}
           >
             <svg
               width="16"
@@ -158,7 +173,9 @@ const PomodoroEditPage = (props: any) => {
           <div
             className="text-white cursor-pointer px-3"
             id="setting"
-            onClick={() => { openToggle(6) }}
+            onClick={() => {
+              openToggle(6)
+            }}
           >
             <svg
               width="16"

@@ -18,6 +18,7 @@ const PomodoroWidget = () => {
   )
   const dispatch = useDispatch()
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [listPomodoroTab, setListPomodoroTab] = useState([
     { name: 'POMODORO', time: 25 * 60 },
     { name: 'SHORT BREAK', time: 5 * 60 },

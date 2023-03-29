@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 /* eslint-disable react-hooks/exhaustive-deps */
 import axios from 'axios'
 import Image from 'next/image'
@@ -5,7 +7,7 @@ import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react'
 import spotifyMusic from './mock/spotify.json'
 import Draggable from 'react-draggable'
-import { type PomodoroV1Props, type PomodoroV1State } from '../../type/pomodoroV1'
+import { type PomodoroV1State } from '@/components/pomodoro/type/pomodoroV1'
 import { useRouter } from 'next/router'
 import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
 import { useSelector, useDispatch } from 'react-redux'
@@ -18,7 +20,7 @@ interface MusicPlayerInfoInterface {
   thumbnail_url: string
 }
 
-const SpotifyPlayer = (props: PomodoroV1Props) => {
+const SpotifyPlayer = () => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   )
@@ -48,18 +50,16 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
   const [isEdit, setIsEdit] = useState(false)
 
   const getDataSpotify = async () => {
-    try {
-      const data = await axios.get(
-        `https://open.spotify.com/oembed?url=${musicUrl}`
-      )
-      setMusicPlayerInfo(data.data)
-    } catch (error) {
-      throw error
-    }
+    const data = await axios.get(
+      `https://open.spotify.com/oembed?url=${musicUrl}`
+    )
+    setMusicPlayerInfo(data.data)
   }
 
   useEffect(() => {
-    getDataSpotify()
+    getDataSpotify().catch((err) => {
+      console.log(err)
+    })
     checkIsEdit()
   }, [])
 
@@ -110,7 +110,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
             if (percent >= 100 && !nexting) {
               nexting = true
               console.log('next', listMusicSelect)
-              // @ts-expect-error
               let next =
                 // @ts-expect-error
                 parseInt(document.querySelector('#indexMusic')?.innerHTML) + 1
@@ -168,7 +167,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
             episode.addEventListener('click', () => {
               setMusicProcress(0)
               console.log('next')
-              // @ts-expect-error
               let next =
                 // @ts-expect-error
                 parseInt(document.querySelector('#indexMusic')?.innerHTML) + 1
@@ -192,7 +190,6 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
             episode.addEventListener('click', () => {
               console.log('prev')
               setMusicProcress(0)
-              // @ts-expect-error
               const prev =
                 // @ts-expect-error
                 parseInt(document.querySelector('#indexMusic')?.innerHTML) - 1
@@ -227,7 +224,9 @@ const SpotifyPlayer = (props: PomodoroV1Props) => {
         selectedWidget: 'music'
       })
     )
-    if (Number.isNaN(position.x) || Number.isNaN(position.y)) { setPosition({ x: 0, y: 0 }) }
+    if (Number.isNaN(position.x) || Number.isNaN(position.y)) {
+      setPosition({ x: 0, y: 0 })
+    }
 
     setIsDragging(true)
   }

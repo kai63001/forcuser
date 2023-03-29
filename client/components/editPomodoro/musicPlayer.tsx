@@ -1,15 +1,15 @@
-import Image from "next/image";
-import { setTemplate } from "@/store/templateSlice";
-import { useSelector, useDispatch } from "react-redux";
-import type { RootState } from "@/store/store";
-import { PomodoroV1State } from "../pomodoro/type/pomodoroV1";
-import { useRef, useState } from "react";
+import Image from 'next/image'
+import { setTemplate } from '@/store/templateSlice'
+import { useSelector, useDispatch } from 'react-redux'
+import type { RootState } from '@/store/store'
+import { type PomodoroV1State } from '../pomodoro/type/pomodoroV1'
+import { useRef, useState } from 'react'
 
 const MusicPlayer = () => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
-  );
-  const dispatch = useDispatch();
+  )
+  const dispatch = useDispatch()
 
   const selectMusicPlayer = (id: number) => {
     if (template.music.widget == id) {
@@ -18,33 +18,34 @@ const MusicPlayer = () => {
           ...template,
           music: {
             ...template.music,
-            widget: -1,
-          },
+            widget: -1
+          }
         })
-      );
-      return;
+      )
+      return
     }
     dispatch(
       setTemplate({
         ...template,
         music: {
           ...template.music,
-          widget: id,
-        },
+          widget: id
+        }
       })
-    );
-  };
+    )
+  }
 
-  const [dragging, setDragging] = useState(false);
+  const [dragging, setDragging] = useState(false)
 
-  const thisWidget = useRef(null);
+  const thisWidget = useRef(null)
 
   const onDragagleEnd = (e: any, id: any) => {
-    e.preventDefault();
+    e.preventDefault()
     if (thisWidget.current) {
       const { top, left, right, bottom } =
-        //@ts-ignore
-        thisWidget.current?.getBoundingClientRect();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        thisWidget.current?.getBoundingClientRect()
       if (
         e.clientX < left ||
         e.clientX > right ||
@@ -59,17 +60,17 @@ const MusicPlayer = () => {
               widget: id,
               position: {
                 x: e.clientX,
-                y: e.clientY,
+                y: e.clientY
               },
-              //random int
-              draging: Math.floor(Math.random() * 1000).toString(),
-            },
+              // random int
+              draging: Math.floor(Math.random() * 1000).toString()
+            }
           })
-        );
+        )
       }
-      setDragging(false);
+      setDragging(false)
     }
-  };
+  }
 
   return (
     <div
@@ -82,18 +83,18 @@ const MusicPlayer = () => {
       <div className="overflow-y-scroll h-[60vh]">
         <div className="flex flex-col space-y-2">
           <div
-            onClick={() => selectMusicPlayer(0)}
+            onClick={() => { selectMusicPlayer(0) }}
             onDragStart={(e) => {
-              console.log("start");
-              setDragging(true);
+              console.log('start')
+              setDragging(true)
             }}
-            onDragEnd={(event) => onDragagleEnd(event, 0)}
+            onDragEnd={(event) => { onDragagleEnd(event, 0) }}
             className={`group cursor-pointer border-2 rounded-md ${
-              dragging ? "opacity-0" : "opacity-100"
+              dragging ? 'opacity-0' : 'opacity-100'
             } ${
               template.music.widget == 0
-                ? "bg-main border-main"
-                : "bg-black2 border-black2"
+                ? 'bg-main border-main'
+                : 'bg-black2 border-black2'
             } `}
           >
             <div className="rounded-md">
@@ -110,7 +111,7 @@ const MusicPlayer = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default MusicPlayer;
+export default MusicPlayer
