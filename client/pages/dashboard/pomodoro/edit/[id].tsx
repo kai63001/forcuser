@@ -1,11 +1,8 @@
-import UploadWallpaper from '@/components/editPomodoro/uploadWallpaper'
 import PomodoroV1 from '@/components/pomodoro/pomodoroV1'
 import axios from '@/lib/axios'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
-import MusicPlayer from '@/components/editPomodoro/musicPlayer'
 import { useSession } from 'next-auth/react'
-import SaveWidget from '@/components/editPomodoro/saveWidget'
 import UseAuth from '@/components/libs/useAuth'
 import Loading from '@/components/libs/Loading'
 
@@ -13,8 +10,25 @@ import Loading from '@/components/libs/Loading'
 import { setTemplate } from '@/store/templateSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '@/store/store'
-import SettingWidget from '@/components/editPomodoro/widget/settingWidget'
 import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
+
+// dynamic import
+import dynamic from 'next/dynamic'
+const TimerWidget = dynamic(
+  async () => await import('@/components/editPomodoro/timerWidget')
+)
+const MusicPlayer = dynamic(
+  async () => await import('@/components/editPomodoro/musicPlayer')
+)
+const UploadWallpaper = dynamic(
+  async () => await import('@/components/editPomodoro/uploadWallpaper')
+)
+const SettingWidget = dynamic(
+  async () => await import('@/components/editPomodoro/widget/settingWidget')
+)
+const SaveWidget = dynamic(
+  async () => await import('@/components/editPomodoro/saveWidget')
+)
 
 const PomodoroEditPage = (props: any) => {
   const { data: session }: any = useSession()
@@ -88,6 +102,8 @@ const PomodoroEditPage = (props: any) => {
 
   const renderEditWidget = () => {
     switch (dragableEditWidget.toggleId) {
+      case 1:
+        return <TimerWidget />
       case 4:
         return <MusicPlayer />
       case 5:
