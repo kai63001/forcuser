@@ -7,7 +7,6 @@ const PomodoroEditPage = () => {
   return (
     <div>
       <h1>Pomodoro Edit Page</h1>
-      <p>Pomodoro ID: {id}</p>
     </div>
   )
 }
