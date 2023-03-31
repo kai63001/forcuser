@@ -299,6 +299,7 @@ const SpotifyPlayer = () => {
           (window.innerHeight - thisWidget.current.clientHeight)
       })
     }
+    console.log(template)
   }, [template?.music.draging])
 
   const [isDragging, setIsDragging] = useState(false)

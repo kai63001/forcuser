@@ -2,13 +2,15 @@ import dynamic from 'next/dynamic'
 
 import BackgroundWidget from './widget/background/backgroundWidget'
 // redux
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import type { RootState } from '@/store/store'
 import {
   type PomodoroV1State,
   type PomodoroV1Props
 } from '../pomodoro/type/pomodoroV1'
 import ToDoListV1 from './widget/todo/TodoListV1'
+import { useEffect } from 'react'
+import { setTemplate } from '@/store/templateSlice'
 
 const PomodoroWidget = dynamic(
   async () => await import('./widget/middle/pomodoroWidget')
@@ -18,11 +20,42 @@ const SpotifyPlayer = dynamic(
 )
 
 const PomodoroV1 = (props: PomodoroV1Props) => {
+  const dispatch = useDispatch()
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   )
   const preventDragHandler = (e: any) => {
     e.preventDefault()
+  }
+  useEffect(() => {
+    checkGlobalState()
+    dispatch(
+      setTemplate({
+        ...template,
+        global: {
+          ...template.global,
+          position: {
+            x: window.innerWidth,
+            y: window.innerHeight
+          }
+        }
+      })
+    )
+  }, [])
+
+  // check if template is empty global state
+  const checkGlobalState = () => {
+    console.log(Object.keys(template))
+    // if globla position is empty
+    if (
+      template.global &&
+      (template.global.position == null ||
+        template.global.position == undefined)
+    ) {
+      return true
+    }
+
+    return false
   }
   return (
     <div

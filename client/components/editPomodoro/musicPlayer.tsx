@@ -83,16 +83,20 @@ const MusicPlayer = () => {
       <div className="overflow-y-scroll h-[60vh]">
         <div className="flex flex-col space-y-2">
           <div
-            onClick={() => { selectMusicPlayer(0) }}
+            onClick={() => {
+              selectMusicPlayer(0)
+            }}
             onDragStart={(e) => {
               console.log('start')
               setDragging(true)
             }}
-            onDragEnd={(event) => { onDragagleEnd(event, 0) }}
+            onDragEnd={(event) => {
+              onDragagleEnd(event, 0)
+            }}
             className={`group cursor-pointer border-2 rounded-md ${
               dragging ? 'opacity-0' : 'opacity-100'
             } ${
-              template.music.widget == 0
+              template?.music?.widget == 0
                 ? 'bg-main border-main'
                 : 'bg-black2 border-black2'
             } `}
