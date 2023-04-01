@@ -282,7 +282,7 @@ const SpotifyPlayer = () => {
 
   // useEffect check template.music.position change
   useEffect(() => {
-    console.log('change')
+    // console.log('change')
     if (
       template?.music.position &&
       template?.music?.position.x &&

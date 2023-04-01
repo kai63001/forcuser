@@ -18,11 +18,12 @@ const initialState: PomodoroV1State = {
     draging: ''
   },
   pomodoro: {
-    widget: 0,
+    widget: -1,
     position: {
       x: -1,
       y: -1
-    }
+    },
+    draging: ''
   },
   global: {
     position: {

@@ -23,6 +23,7 @@ export interface PomodoroV1State {
       x: number
       y: number
     }
+    draging: string
   }
   global: {
     position: {

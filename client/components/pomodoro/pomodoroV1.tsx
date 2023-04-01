@@ -108,7 +108,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         {template?.music?.widget == 0 && <SpotifyPlayer />}
 
         {/* position absolute middle of center */}
-        <PomodoroWidget />
+        {template?.pomodoro?.widget == 0 && <PomodoroWidget />}
         {/* make image transition black */}
         <div className="absolute z-10 top-0 left-0 w-full h-full bg-black opacity-20"></div>
 
