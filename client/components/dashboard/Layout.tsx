@@ -168,7 +168,6 @@ const DashboardLayout = (props: LayoutInterface) => {
                     alt="Picture of the author"
                     width={40}
                     height={40}
-                    unoptimized={true}
                     className="object-cover rounded-full"
                   />
                 </div>

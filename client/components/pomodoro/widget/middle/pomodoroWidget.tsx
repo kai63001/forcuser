@@ -44,7 +44,9 @@ const PomodoroWidget = () => {
       setTimer((prev) => prev - 1)
     }, 1000)
     setIntervalId(interval)
-    return () => { clearInterval(interval) }
+    return () => {
+      clearInterval(interval)
+    }
   }
 
   const pauseTimer = () => {
@@ -129,7 +131,8 @@ const PomodoroWidget = () => {
             (window.innerWidth - thisWidget.current.clientWidth),
           y:
             (template?.pomodoro.position.y /
-              (template?.global?.position.y - thisWidget.current.clientHeight)) *
+              (template?.global?.position.y -
+                thisWidget.current.clientHeight)) *
             (window.innerHeight - thisWidget.current.clientHeight)
         })
         // I GOT IT
@@ -155,6 +158,27 @@ const PomodoroWidget = () => {
   }, [])
 
   const [isDragging, setIsDragging] = useState(false)
+
+  // useEffect check template.music.position change
+  useEffect(() => {
+    if (
+      template?.pomodoro.position &&
+      template?.pomodoro?.position.x &&
+      template?.pomodoro?.position.y
+    ) {
+      setPosition({
+        x:
+          (template?.pomodoro.position.x /
+            (template?.global?.position.x - thisWidget.current.clientWidth)) *
+          (window.innerWidth - thisWidget.current.clientWidth),
+        y:
+          (template?.pomodoro.position.y /
+            (template?.global?.position.y - thisWidget.current.clientHeight)) *
+          (window.innerHeight - thisWidget.current.clientHeight)
+      })
+    }
+    console.log(template)
+  }, [template?.pomodoro.draging])
 
   return (
     <Draggable
@@ -186,7 +210,9 @@ const PomodoroWidget = () => {
               return (
                 <button
                   key={index}
-                  onClick={() => { tabSelect(index) }}
+                  onClick={() => {
+                    tabSelect(index)
+                  }}
                   className={` border-[3px] border-white rounded-full px-5 py-2 franger hover:bg-white hover:text-black duration-150 ${
                     tabSelectPomodoro === index
                       ? 'bg-white text-black '
@@ -206,7 +232,9 @@ const PomodoroWidget = () => {
             {isStart
               ? (
               <button
-                onClick={() => { pauseTimer() }}
+                onClick={() => {
+                  pauseTimer()
+                }}
                 className="text-black bg-white border-white border-[3px] rounded-full px-10 py-2 franger"
               >
                 PAUSE
@@ -221,7 +249,12 @@ const PomodoroWidget = () => {
               </button>
                 )}
 
-            <div onClick={() => { resetTimer() }} className="cursor-pointer">
+            <div
+              onClick={() => {
+                resetTimer()
+              }}
+              className="cursor-pointer"
+            >
               <svg
                 width="43"
                 height="37"
