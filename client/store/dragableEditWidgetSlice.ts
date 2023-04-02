@@ -1,16 +1,22 @@
 // react toolkit
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
-const initialState = {
+// type enum
+export interface DragableEditWidget {
+  selectedWidget?: string
+  toggleId?: '' | 'music' | 'timer' | 'uploadBackground' | 'todolist' | 'setting' | 'edit-music-player-1'
+}
+
+const initialState: DragableEditWidget = {
   selectedWidget: '',
-  toggleId: 0
+  toggleId: ''
 }
 
 export const dragableEditWidgetSlice = createSlice({
   name: 'dragableEditWidget',
   initialState,
   reducers: {
-    setDragableEditWidget: (state, action: PayloadAction<any>) => {
+    setDragableEditWidget: (state, action: PayloadAction<DragableEditWidget>) => {
       // console.log("playload", action.payload);
       return action.payload
     }

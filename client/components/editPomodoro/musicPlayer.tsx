@@ -12,7 +12,7 @@ const MusicPlayer = () => {
   const dispatch = useDispatch()
 
   const selectMusicPlayer = (id: number) => {
-    if (template.music.widget == id) {
+    if (template?.music?.widget == id) {
       dispatch(
         setTemplate({
           ...template,

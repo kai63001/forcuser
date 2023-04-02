@@ -1,6 +1,10 @@
-import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
+import {
+  type DragableEditWidget,
+  setDragableEditWidget
+} from '@/store/dragableEditWidgetSlice'
 import { type RootState } from '@/store/store'
 import { useDispatch, useSelector } from 'react-redux'
+import EditMusicPlayerToggleOpen from './toggleOpen'
 
 const SettingWidget = () => {
   const dragableEditWidget = useSelector(
@@ -8,18 +12,22 @@ const SettingWidget = () => {
   )
   const dispatch = useDispatch()
 
-  const openToggle = (id: number) => {
-    if (id == dragableEditWidget.toggleId) {
-      dispatch(setDragableEditWidget({
-        ...dragableEditWidget,
-        toggleId: 0
-      }))
+  const openToggle = ({ toggleId }: DragableEditWidget) => {
+    if (toggleId == dragableEditWidget.toggleId) {
+      dispatch(
+        setDragableEditWidget({
+          ...dragableEditWidget,
+          toggleId: ''
+        })
+      )
       return
     }
-    dispatch(setDragableEditWidget({
-      ...dragableEditWidget,
-      toggleId: id
-    }))
+    dispatch(
+      setDragableEditWidget({
+        ...dragableEditWidget,
+        toggleId
+      })
+    )
   }
 
   return (
@@ -29,7 +37,9 @@ const SettingWidget = () => {
         id="edit"
       >
         <div
-          onClick={(e) => { openToggle(991) }}
+          onClick={(e) => {
+            openToggle({ toggleId: 'edit-music-player-1' })
+          }}
           className="text-white cursor-pointer px-3"
           id="settingWidget"
         >
@@ -49,15 +59,8 @@ const SettingWidget = () => {
           </svg>
         </div>
       </div>
-      {dragableEditWidget.toggleId == 991 && (
-        <div
-          id="musicPlayerSetting"
-          className="absolute left-14 top-0 bg-black bg-opacity-90 rounded-md px-5 py-2 text-white w-96"
-        >
-          <h3 className="text-xl">Setting Music Player</h3>
-          <hr className="bg-gray-500 border-gray-500 my-2" />
-
-        </div>
+      {dragableEditWidget.toggleId == 'edit-music-player-1' && (
+        <EditMusicPlayerToggleOpen />
       )}
     </>
   )
