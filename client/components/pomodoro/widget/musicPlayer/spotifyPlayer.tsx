@@ -336,8 +336,9 @@ const SpotifyPlayer = () => {
           <div id="embed-iframe" className="border-none"></div>
         </div>
         {/* <div id="playMusic"> play</div> */}
-        <div className="bg-black bg-opacity-90 text-white rounded-md w-[370px]">
+        <div className="bg-opacity-90 text-white rounded-md w-[370px]" style={{ backgroundColor: template?.pomodoro?.theme?.backgroundColor || 'rgb(0 0 0)' }}>
           <div className="flex items-center justify-between">
+
             <div className="flex items-center space-x-3 px-3 py-3">
               <div
                 className="w-24 h-24 relative rounded-md cursor-pointer"

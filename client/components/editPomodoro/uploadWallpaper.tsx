@@ -74,7 +74,7 @@ const UploadWallpaper = () => {
 
   const uploadImage = (e: any) => {
     const file = e.target.files[0]
-    console.log(file)
+    if (!file) return
     if (!validateImageType(file)) {
       Toast.fire({
         icon: 'error',
@@ -100,7 +100,7 @@ const UploadWallpaper = () => {
 
   const validateImageType = (file: any) => {
     const validTypes = ['image/png', 'image/jpeg', 'image/gif', 'image/webp']
-    if (!validTypes.includes(file.type)) {
+    if (file && !validTypes.includes(file.type)) {
       return false
     }
     return true

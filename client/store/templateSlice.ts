@@ -19,6 +19,9 @@ const initialState: PomodoroV1State = {
   },
   pomodoro: {
     widget: -1,
+    theme: {
+      backgroundColor: '#000000'
+    },
     position: {
       x: -1,
       y: -1
