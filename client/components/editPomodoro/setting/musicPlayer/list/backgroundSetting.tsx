@@ -8,7 +8,7 @@ const BackgroundSetting = () => {
   const dispatch = useDispatch()
   const template = useSelector((state: RootState) => state.templateSlice)
   const [bgColor, setBgColor] = useState<string>(
-    template.music?.theme?.backgroundColor || ''
+    template.music?.theme?.backgroundColor || '#000000'
   )
   const [bgOpacity, setBgOpacity] = useState<number>((template.music?.theme?.opacity * 100) || 100)
   const onCustomColor = (e: any) => {
