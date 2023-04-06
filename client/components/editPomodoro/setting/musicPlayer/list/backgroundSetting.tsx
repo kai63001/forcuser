@@ -10,7 +10,7 @@ const BackgroundSetting = () => {
   const [bgColor, setBgColor] = useState<string>(
     template.music?.theme?.backgroundColor || ''
   )
-  const [bgOpacity, setBgOpacity] = useState<number>(100)
+  const [bgOpacity, setBgOpacity] = useState<number>((template.music?.theme?.opacity * 100) || 100)
   const onCustomColor = (e: any) => {
     setBgColor(e.target.value)
     dispatch(

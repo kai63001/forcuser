@@ -2,7 +2,12 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
-const FaqSelection = (props: any) => {
+interface FaqSelectionProps {
+  title: string
+  children: any
+}
+
+const FaqSelection = ({ children, title }: FaqSelectionProps) => {
   const [openToggle, setOpenToggle] = useState(false)
 
   const toggleOpen = (e: any) => {
@@ -16,13 +21,13 @@ const FaqSelection = (props: any) => {
         onClick={toggleOpen}
         className="flex cursor-pointer text-xl justify-between items-center"
       >
-        <div>Background Color</div>
+        <div>{title}</div>
         <FontAwesomeIcon
           icon={faAngleDown}
           className={`${openToggle && 'rotate-180'}`}
         />
       </div>
-      {openToggle && <div className='mt-2'>{props.children}</div>}
+      {openToggle && <div className='mt-2'>{children}</div>}
     </div>
   )
 }
