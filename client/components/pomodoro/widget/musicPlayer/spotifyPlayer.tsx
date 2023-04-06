@@ -348,8 +348,8 @@ const SpotifyPlayer = () => {
           className="bg-opacity-90 text-white rounded-md w-[370px]"
           style={{
             backgroundColor: convertHexToRgba(
-              template?.pomodoro?.theme?.backgroundColor,
-              template?.pomodoro?.theme?.opacity
+              template?.music?.theme?.backgroundColor,
+              template?.music?.theme?.opacity
             )
           }}
         >

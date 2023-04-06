@@ -11,6 +11,10 @@ const initialState: PomodoroV1State = {
     widget: -1,
     type: '',
     url: '',
+    theme: {
+      backgroundColor: '#000000',
+      opacity: 1
+    },
     position: {
       x: 0,
       y: 0

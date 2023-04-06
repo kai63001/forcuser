@@ -8,16 +8,17 @@ import Image from 'next/image'
 const EditMusicPlayerToggleOpen = () => {
   const dispatch = useDispatch()
   const template = useSelector((state: RootState) => state.templateSlice)
-  const [bgColor, setBgColor] = useState<string>('#000000')
+  const [bgColor, setBgColor] = useState<string>(template.music?.theme?.backgroundColor || '#000000')
+  const [bgOpacity, setBgOpacity] = useState<number>(100)
   const onCustomColor = (e: any) => {
     setBgColor(e.target.value)
     dispatch(
       setTemplate({
         ...template,
-        pomodoro: {
-          ...template.pomodoro,
+        music: {
+          ...template.music,
           theme: {
-            ...template.pomodoro.theme,
+            ...template.music.theme,
             backgroundColor: e.target.value
           }
         }
@@ -26,13 +27,14 @@ const EditMusicPlayerToggleOpen = () => {
   }
 
   const onOpacityChange = (e: any) => {
+    setBgOpacity(e.target.value)
     dispatch(
       setTemplate({
         ...template,
-        pomodoro: {
-          ...template.pomodoro,
+        music: {
+          ...template.music,
           theme: {
-            ...template.pomodoro.theme,
+            ...template.music.theme,
             opacity: e.target.value / 100
           }
         }
@@ -69,6 +71,7 @@ const EditMusicPlayerToggleOpen = () => {
           <input
             type="range"
             onChange={onOpacityChange}
+            value={bgOpacity}
             className="w-full h-2 rounded-lg appearance-none cursor-pointer bg-transparent absolute top-0 left-0 z-20"
           />
           <div className='h-[9px] relative'>
