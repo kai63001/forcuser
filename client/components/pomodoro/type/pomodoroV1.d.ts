@@ -21,6 +21,7 @@ export interface PomodoroV1State {
     widget: number
     theme: {
       backgroundColor: string
+      opacity: number
     }
     position: {
       x: number

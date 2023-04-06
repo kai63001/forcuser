@@ -20,7 +20,8 @@ const initialState: PomodoroV1State = {
   pomodoro: {
     widget: -1,
     theme: {
-      backgroundColor: '#000000'
+      backgroundColor: '#000000',
+      opacity: 1
     },
     position: {
       x: -1,
