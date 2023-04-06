@@ -1,13 +1,14 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons'
+import { faAngleDown, type IconDefinition } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 
 interface FaqSelectionProps {
   title: string
   children: any
+  icon: IconDefinition
 }
 
-const FaqSelection = ({ children, title }: FaqSelectionProps) => {
+const FaqSelection = ({ children, title, icon }: FaqSelectionProps) => {
   const [openToggle, setOpenToggle] = useState(false)
 
   const toggleOpen = (e: any) => {
@@ -16,12 +17,12 @@ const FaqSelection = ({ children, title }: FaqSelectionProps) => {
   }
 
   return (
-    <div>
+    <div className='select-none'>
       <div
         onClick={toggleOpen}
         className="flex cursor-pointer text-xl justify-between items-center"
       >
-        <div>{title}</div>
+        <div className='flex items-center'><FontAwesomeIcon icon={icon} className='mr-2' /> {title}</div>
         <FontAwesomeIcon
           icon={faAngleDown}
           className={`${openToggle && 'rotate-180'}`}
