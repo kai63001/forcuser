@@ -13,7 +13,8 @@ const initialState: PomodoroV1State = {
     url: '',
     theme: {
       backgroundColor: '#000000',
-      opacity: 1
+      opacity: 1,
+      fontColor: ['#ffffff', '#9ca3af']
     },
     position: {
       x: 0,

@@ -41,6 +41,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         }
       })
     )
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check if template is empty global state

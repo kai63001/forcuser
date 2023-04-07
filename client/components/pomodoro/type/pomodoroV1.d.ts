@@ -14,6 +14,7 @@ export interface PomodoroV1State {
     theme: {
       backgroundColor: string
       opacity: number
+      fontColor: string[]
     }
     position: {
       x: number

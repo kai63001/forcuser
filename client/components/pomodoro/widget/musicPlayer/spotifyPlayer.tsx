@@ -405,11 +405,14 @@ const SpotifyPlayer = () => {
                 )}
               </div>
               <div className="w-60">
-                <p className="text-sm font-semibold truncate animate-marquee">
+                <p className="text-sm font-semibold truncate animate-marquee" style={{ color: template?.music?.theme?.fontColor?.[0] ?? '#fffff' }}>
                   {musicPlayerInfo.title}
                 </p>
                 {/* playing */}
-                <div className="text-xs text-gray-400 mb-3 py-1">
+                <div
+                  className="text-xs mb-3 py-1"
+                  style={{ color: template?.music?.theme?.fontColor?.[1] ?? '#9ca3af' }}
+                >
                   <p className="truncate">
                     {listMusic.items[listMusicSelect].track.name} -{' '}
                     {listMusic.items[listMusicSelect].track.artists[0].name}
@@ -417,7 +420,9 @@ const SpotifyPlayer = () => {
                   <div id="persenMusic" className="h-0 w-0 opacity-0">
                     {musicProcress}
                   </div>
-                  <div id="indexMusic">{listMusicSelect}</div>
+                  <div id="indexMusic" className="opacity-0">
+                    {listMusicSelect}
+                  </div>
                   <div id="playing" className="h-0 w-0 opacity-0">
                     {playing ? 'playing' : 'puase'}
                   </div>
