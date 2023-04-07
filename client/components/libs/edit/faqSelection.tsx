@@ -17,7 +17,7 @@ const FaqSelection = ({ children, title, icon }: FaqSelectionProps) => {
   }
 
   return (
-    <div className='select-none'>
+    <div className='select-none mb-3'>
       <div
         onClick={toggleOpen}
         className="flex cursor-pointer text-xl justify-between items-center"
