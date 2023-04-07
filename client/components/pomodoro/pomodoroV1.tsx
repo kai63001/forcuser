@@ -46,7 +46,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
 
   // check if template is empty global state
   const checkGlobalState = () => {
-    console.log(Object.keys(template))
+    // console.log(Object.keys(template))
     // if globla position is empty
     if (
       template.global &&
