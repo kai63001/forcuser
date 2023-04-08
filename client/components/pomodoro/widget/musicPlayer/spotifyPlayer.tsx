@@ -261,6 +261,7 @@ const SpotifyPlayer = () => {
       template?.music?.position.x &&
       template?.music?.position.y
     ) {
+      console.log('init')
       setPosition({
         x:
           (template?.music.position.x /
@@ -362,7 +363,7 @@ const SpotifyPlayer = () => {
                 {/* background black opacity */}
                 <div className="absolute w-full h-full bg-black opacity-30 z-20 rounded-md"></div>
                 {/* middle play icon */}
-                <div className="absolute w-full h-full flex items-center justify-center z-30 group">
+                <div className="absolute w-full h-full flex items-center justify-center z-30 group select-none">
                   {playing
                     ? (
                     <svg

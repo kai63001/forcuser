@@ -28,7 +28,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     e.preventDefault()
   }
   useEffect(() => {
-    checkGlobalState()
+    if (!checkGlobalState()) return
     dispatch(
       setTemplate({
         ...template,
@@ -41,7 +41,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         }
       })
     )
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check if template is empty global state

@@ -1,12 +1,27 @@
 import FaqSelection from '@/components/libs/edit/faqSelection'
-import { faFont, faPalette } from '@fortawesome/free-solid-svg-icons'
+import { faFont, faMusic, faPalette } from '@fortawesome/free-solid-svg-icons'
 import dynamic from 'next/dynamic'
-import FontSetting from './list/fontSetting'
 
 const BackgroundSetting = dynamic(
   async () =>
     await import(
       '@/components/editPomodoro/setting/musicPlayer/list/backgroundSetting'
+    ),
+  { ssr: false }
+)
+
+const FontSetting = dynamic(
+  async () =>
+    await import(
+      '@/components/editPomodoro/setting/musicPlayer/list/fontSetting'
+    ),
+  { ssr: false }
+)
+
+const MusicPlaylistSetting = dynamic(
+  async () =>
+    await import(
+      '@/components/editPomodoro/setting/musicPlayer/list/musicPlaylistSetting'
     ),
   { ssr: false }
 )
@@ -22,6 +37,9 @@ const EditMusicPlayerToggleOpen = () => {
       </FaqSelection>
       <FaqSelection title="Font" icon={faFont}>
         <FontSetting />
+      </FaqSelection>
+      <FaqSelection title="Playlist Music" icon={faMusic}>
+        <MusicPlaylistSetting />
       </FaqSelection>
     </div>
   )
