@@ -41,6 +41,7 @@ const MusicPlayer = () => {
 
   const onDragagleEnd = (e: any, id: any) => {
     e.preventDefault()
+    console.log('template', template)
     if (thisWidget.current) {
       const { top, left, right, bottom } =
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -52,6 +53,7 @@ const MusicPlayer = () => {
         e.clientY < top ||
         e.clientY > bottom
       ) {
+        console.log('template 2', template)
         dispatch(
           setTemplate({
             ...template,

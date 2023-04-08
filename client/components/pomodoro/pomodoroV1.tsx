@@ -11,6 +11,7 @@ import {
 import ToDoListV1 from './widget/todo/TodoListV1'
 import { useEffect } from 'react'
 import { setTemplate } from '@/store/templateSlice'
+import { templateDefalut } from '@/lib/templateDefalut'
 
 const PomodoroWidget = dynamic(
   async () => await import('./widget/middle/pomodoroWidget')
@@ -30,41 +31,56 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     e.preventDefault()
   }
   useEffect(() => {
-    if (!checkGlobalState()) return
-    dispatch(
-      setTemplate({
-        ...template,
-        global: {
-          ...template.global,
-          position: {
-            x: window.innerWidth,
-            y: window.innerHeight
-          }
-        }
-      })
-    )
+    checkGlobalState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check if template is empty global state
   const checkGlobalState = () => {
-    // console.log(Object.keys(template))
-    // if globla position is empty
-    if (
-      template.global == undefined ||
-      (template.global.position == null ||
-        template.global.position == undefined ||
-        template.global.position.x == null ||
-        template.global.position.x == 0 ||
-        template.global.position.y == null ||
-        template.global.position.y == 0 ||
-        template.global.position.y == undefined ||
-        template.global.position.x == undefined)
-    ) {
-      return true
+    // check when template is empty
+    if (Object.keys(template).length === 0) {
+      dispatch(
+        setTemplate({
+          ...templateDefalut,
+          global: {
+            ...template.global,
+            position: {
+              x: window.innerWidth,
+              y: window.innerHeight
+            }
+          }
+        })
+      )
     }
+    // // console.log(Object.keys(template))
+    // // if globla position is empty
+    // if (
+    //   template.global == undefined ||
+    //   template.global.position == null ||
+    //   template.global.position == undefined ||
+    //   template.global.position.x == null ||
+    //   template.global.position.x == 0 ||
+    //   template.global.position.y == null ||
+    //   template.global.position.y == 0 ||
+    //   template.global.position.y == undefined ||
+    //   template.global.position.x == undefined
+    // ) {
+    //   dispatch(
+    //     setTemplate({
+    //       ...templateDefalut,
+    //       global: {
+    //         ...template.global,
+    //         position: {
+    //           x: window.innerWidth,
+    //           y: window.innerHeight
+    //         }
+    //       }
+    //     })
+    //   )
+    //   return true
+    // }
 
-    return false
+    // return false
   }
   return (
     <div
