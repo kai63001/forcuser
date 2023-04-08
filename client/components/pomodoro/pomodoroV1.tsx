@@ -52,35 +52,6 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         })
       )
     }
-    // // console.log(Object.keys(template))
-    // // if globla position is empty
-    // if (
-    //   template.global == undefined ||
-    //   template.global.position == null ||
-    //   template.global.position == undefined ||
-    //   template.global.position.x == null ||
-    //   template.global.position.x == 0 ||
-    //   template.global.position.y == null ||
-    //   template.global.position.y == 0 ||
-    //   template.global.position.y == undefined ||
-    //   template.global.position.x == undefined
-    // ) {
-    //   dispatch(
-    //     setTemplate({
-    //       ...templateDefalut,
-    //       global: {
-    //         ...template.global,
-    //         position: {
-    //           x: window.innerWidth,
-    //           y: window.innerHeight
-    //         }
-    //       }
-    //     })
-    //   )
-    //   return true
-    // }
-
-    // return false
   }
   return (
     <div
