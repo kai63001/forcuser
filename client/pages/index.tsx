@@ -39,7 +39,7 @@ export default function Home () {
           <Image
             src="https://i.pinimg.com/originals/cb/80/50/cb8050ca365c64ad71c3e0fe030499e0.gif"
             unoptimized={true}
-            alt="Focuser Background"
+            alt="Focusify Background"
             fill
             style={{ objectFit: 'cover' }}
           />
@@ -55,7 +55,7 @@ export default function Home () {
             Pomodoro Timer boost your productivity
           </h2>
           <p className="indent-12 my-5">
-            Focuser is a customizable Pomodoro timer to help you stay focused in
+            Focusify is a customizable Pomodoro timer to help you stay focused in
             small chunks of your work, like studying, coding and writing. With
             an interactive user interface using the principles of the Pomodoro
             Technique, this app will enable you to personalize your workflow and

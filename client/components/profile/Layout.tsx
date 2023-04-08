@@ -3,7 +3,9 @@ import { useRouter } from 'next/router'
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import { useEffect, useRef, useState } from 'react'
+import type { FC } from 'react'
 import dynamic from 'next/dynamic'
+
 interface LayoutInterface {
   title?: string | undefined
   des?: string | undefined
@@ -11,10 +13,11 @@ interface LayoutInterface {
   children?: any | undefined
 }
 
-const ModalCreatePomodoro = dynamic(async () => await import('./modal/createPomodoro'))
+const ModalCreatePomodoro = dynamic(
+  async () => await import('../../components/dashboard/modal/createPomodoro')
+)
 
-const DashboardLayout = (props: LayoutInterface) => {
-  // session from next
+const ProfileLayout: FC<LayoutInterface> = (props) => {
   const { data: session }: any = useSession()
 
   const [openModalCreate, setOpenModalCreate] = useState(false)
@@ -50,36 +53,38 @@ const DashboardLayout = (props: LayoutInterface) => {
 
   const listNavbar = [
     {
-      name: 'Home',
-      link: '/dashboard',
+      name: 'Your account',
+      link: '/profile',
       icon: (
         <svg
-          aria-hidden="true"
-          className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath === '/dashboard' ? 'text-white' : 'text-gray-500'
-          }  transition duration-75`}
-          fill="currentColor"
+          width="20"
+          height="20"
           viewBox="0 0 20 20"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+          <path
+            d="M3.8 15.6731C4.79872 14.9846 5.7923 14.451 6.78075 14.0721C7.76922 13.6933 8.84229 13.5038 9.99998 13.5038C11.1577 13.5038 12.2333 13.6933 13.2269 14.0721C14.2205 14.451 15.2166 14.9846 16.2154 15.6731C16.9423 14.8308 17.4823 13.9414 17.8355 13.0049C18.1887 12.0685 18.3654 11.0668 18.3654 9.99998C18.3654 7.64101 17.5609 5.65703 15.9519 4.04805C14.3429 2.43908 12.3589 1.6346 9.99998 1.6346C7.64101 1.6346 5.65703 2.43908 4.04805 4.04805C2.43908 5.65703 1.6346 7.64101 1.6346 9.99998C1.6346 11.0668 1.81377 12.0685 2.1721 13.0049C2.53043 13.9414 3.07307 14.8308 3.8 15.6731ZM9.99455 10.5673C9.0956 10.5673 8.3394 10.2587 7.72595 9.64165C7.11248 9.02458 6.80575 8.26658 6.80575 7.36763C6.80575 6.46869 7.11429 5.71249 7.73138 5.09903C8.34844 4.48558 9.10645 4.17885 10.0054 4.17885C10.9044 4.17885 11.6606 4.48738 12.274 5.10445C12.8875 5.72152 13.1942 6.47953 13.1942 7.37848C13.1942 8.27743 12.8857 9.03362 12.2686 9.64707C11.6515 10.2605 10.8935 10.5673 9.99455 10.5673ZM10.0117 19.5C8.69491 19.5 7.45956 19.2519 6.30563 18.7557C5.15171 18.2596 4.1437 17.5798 3.2816 16.7163C2.41952 15.8528 1.7404 14.8468 1.24425 13.6981C0.748083 12.5495 0.5 11.3161 0.5 9.99813C0.5 8.68013 0.748083 7.44742 1.24425 6.3C1.7404 5.15257 2.4202 4.14712 3.28365 3.28365C4.14712 2.4202 5.15318 1.7404 6.30183 1.24425C7.45049 0.748083 8.68383 0.5 10.0018 0.5C11.3198 0.5 12.5525 0.748083 13.7 1.24425C14.8474 1.7404 15.8528 2.4202 16.7163 3.28365C17.5798 4.14712 18.2596 5.15283 18.7557 6.3008C19.2519 7.44877 19.5 8.67793 19.5 9.98828C19.5 11.305 19.2519 12.5404 18.7557 13.6943C18.2596 14.8482 17.5798 15.8563 16.7163 16.7184C15.8528 17.5804 14.8471 18.2596 13.6992 18.7557C12.5512 19.2519 11.322 19.5 10.0117 19.5ZM9.99998 18.3654C10.9295 18.3654 11.8461 18.2176 12.75 17.9221C13.6538 17.6266 14.5051 17.1487 15.3038 16.4884C14.5051 15.9012 13.6593 15.4461 12.7663 15.123C11.8734 14.8 10.9513 14.6384 9.99998 14.6384C9.04869 14.6384 8.12498 14.7984 7.22883 15.1182C6.33266 15.4381 5.49163 15.8948 4.70575 16.4884C5.49805 17.1487 6.34613 17.6266 7.24998 17.9221C8.15383 18.2176 9.07049 18.3654 9.99998 18.3654ZM10.0013 9.43268C10.5991 9.43268 11.0916 9.23864 11.4788 8.85058C11.866 8.46249 12.0596 7.96954 12.0596 7.37173C12.0596 6.77389 11.8656 6.28138 11.4775 5.8942C11.0894 5.50702 10.5965 5.31343 9.99863 5.31343C9.40081 5.31343 8.90831 5.50747 8.52113 5.89555C8.13394 6.28362 7.94035 6.77657 7.94035 7.3744C7.94035 7.97222 8.13439 8.46472 8.52248 8.8519C8.91054 9.23908 9.40349 9.43268 10.0013 9.43268Z"
+            fill={router.asPath === '/profile' ? 'white' : 'grey'}
+          />
         </svg>
       )
     },
     {
-      name: 'Users',
-      link: '/dashboard/users',
+      name: 'Login & security',
+      link: '/profile/security',
       icon: (
         <svg
-          aria-hidden="true"
-          className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath === '/dashboard/users' ? 'text-white' : 'text-gray-500'
-          }  transition duration-75`}
-          fill="currentColor"
-          viewBox="0 0 20 20"
+          width="16"
+          height="20"
+          viewBox="0 0 16 20"
+          fill="none"
           xmlns="http://www.w3.org/2000/svg"
         >
-          <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+          <path
+            d="M1.94232 19.4999C1.54906 19.4999 1.21035 19.3578 0.9262 19.0737C0.642066 18.7896 0.5 18.4508 0.5 18.0576V8.0538C0.5 7.65557 0.642066 7.31563 0.9262 7.03398C1.21035 6.75233 1.54906 6.6115 1.94232 6.6115H3.6827V4.31727C3.6827 3.11911 4.10302 2.10003 4.94367 1.26003C5.78432 0.420008 6.80419 0 8.00327 0C9.20234 0 10.2211 0.420008 11.0596 1.26003C11.898 2.10003 12.3172 3.11911 12.3172 4.31727V6.6115H14.0576C14.4509 6.6115 14.7896 6.75233 15.0737 7.03398C15.3579 7.31563 15.5 7.65557 15.5 8.0538V18.0576C15.5 18.4508 15.3579 18.7896 15.0737 19.0737C14.7896 19.3578 14.4509 19.4999 14.0576 19.4999H1.94232ZM1.94232 18.3653H14.0576C14.1474 18.3653 14.2211 18.3365 14.2788 18.2788C14.3365 18.2211 14.3654 18.1473 14.3654 18.0576V8.0538C14.3654 7.96405 14.3365 7.89032 14.2788 7.83262C14.2211 7.77492 14.1474 7.74608 14.0576 7.74608H1.94232C1.85257 7.74608 1.77885 7.77492 1.72115 7.83262C1.66345 7.89032 1.6346 7.96405 1.6346 8.0538V18.0576C1.6346 18.1473 1.66345 18.2211 1.72115 18.2788C1.77885 18.3365 1.85257 18.3653 1.94232 18.3653ZM8.00417 14.7499C8.47061 14.7499 8.86888 14.5871 9.199 14.2616C9.52913 13.9361 9.6942 13.5444 9.6942 13.0865C9.6942 12.6442 9.52773 12.2461 9.1948 11.8923C8.86187 11.5384 8.46219 11.3615 7.99577 11.3615C7.52934 11.3615 7.13107 11.5384 6.80095 11.8923C6.47082 12.2461 6.30575 12.6483 6.30575 13.099C6.30575 13.5496 6.47222 13.9374 6.80515 14.2624C7.13808 14.5874 7.53776 14.7499 8.00417 14.7499ZM4.8173 6.6115H11.1827V4.31727C11.1827 3.43319 10.8736 2.68173 10.2554 2.06288C9.63723 1.44401 8.88659 1.13457 8.00348 1.13457C7.12038 1.13457 6.36857 1.44401 5.74805 2.06288C5.12755 2.68173 4.8173 3.43319 4.8173 4.31727V6.6115Z"
+            fill={router.asPath === '/profile/security' ? 'white' : 'grey'}
+          />
         </svg>
       )
     }
@@ -92,7 +97,7 @@ const DashboardLayout = (props: LayoutInterface) => {
           <ModalCreatePomodoro setOpenModalCreate={setOpenModalCreate} />
         )}
 
-        <aside className="" aria-label="Sidebar">
+        <aside aria-label="Sidebar">
           <div className="py-4 overflow-y-auto w-64 h-full bg-background fixed z-10 border-r-2">
             <div className="ml-5 text-2xl franger mb-4">Focusify</div>
             <ul className="space-y-2 px-5 mt-10">
@@ -100,12 +105,11 @@ const DashboardLayout = (props: LayoutInterface) => {
                 return (
                   <li key={index}>
                     <a
-                      href="#"
-                      className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${
-                        router.asPath === item.link
-                          ? 'text-white bg-main'
-                          : 'text-gray-500'
-                      }`}
+                      href={item.link}
+                      className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${router.asPath === item.link
+                        ? 'text-white bg-green1'
+                        : 'text-gray-500'
+                        }`}
                     >
                       {item.icon}
                       <span className="ml-3">{item.name}</span>
@@ -153,7 +157,9 @@ const DashboardLayout = (props: LayoutInterface) => {
                 </div>
                 <button
                   className="bg-main text-white px-5 py-2 rounded-md"
-                  onClick={() => { setOpenModalCreate(true) }}
+                  onClick={() => {
+                    setOpenModalCreate(true)
+                  }}
                 >
                   Create a Focus
                 </button>
@@ -161,9 +167,12 @@ const DashboardLayout = (props: LayoutInterface) => {
                 <div
                   className="flex items-center cursor-pointer bg-main rounded-full"
                   ref={userImageDropdown}
-                  onClick={() => { setOpenDropdown((b) => !b) }}
+                  onClick={() => {
+                    setOpenDropdown((b) => !b)
+                  }}
                 >
                   <Image
+                    unoptimized
                     src={session?.user?.image || '/icon/man.png'}
                     alt="Picture of the author"
                     width={40}
@@ -177,7 +186,10 @@ const DashboardLayout = (props: LayoutInterface) => {
                     ref={dropdown}
                     className="absolute top-14 right-2 bg-background px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
                   >
-                    <div onClick={()=>window.location.href = "/profile"} className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
+                    <div
+                      onClick={() => (window.location.href = '/profile')}
+                      className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md"
+                    >
                       Profile
                     </div>
                     <div className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
@@ -198,11 +210,10 @@ const DashboardLayout = (props: LayoutInterface) => {
               </div>
             </div>
           </div>
-          <div className="ml-72 mt-24">{props.children}</div>
+          <div className="ml-72 mt-24 bg-background">{props.children}</div>
         </main>
       </div>
     </>
   )
 }
-
-export default DashboardLayout
+export default ProfileLayout

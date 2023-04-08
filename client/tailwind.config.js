@@ -11,6 +11,8 @@ module.exports = {
         darkMain: "#b81c3d",
         background: "#fafafa",
         black2: "#1d1a21",
+        blue2: "#0C60DC",
+        green1: "#00C1A2",
       },
     },
   },
