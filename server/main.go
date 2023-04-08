@@ -38,5 +38,8 @@ func main() {
 	app.Post("/pomodoro/edit/:id", router.EditPomodoro)
 	app.Get("/pomodoro/my", router.GetMyPomodoroList)
 
+	//spotify
+	router.SpotifyRouter(app)
+
 	app.Listen(":4000")
 }
