@@ -126,16 +126,18 @@ const Profile: FC = () => {
         <div className='mt-8 mb-4 text-[20px] text-[700]'>Name</div>
         <div className='mb-8 flex justify-between items-center'>
           {isRename
-            ? <Input name='Name' onChange={handleRenameInput} type='text' placeholder={Name !== '' ? Name : 'Tosakan_911'} className='h-8 px-2 focus:outline-0' />
-            : <div>{Name !== '' ? Name : 'Tosakan_911'}</div>}
+            ? <Input name='Name' onChange={handleRenameInput} type='text' placeholder={Name !== '' ? Name : 'Tosakan_911'} />
+            : <div>{Name !== '' ? Name : 'Tosakaan_911'}</div>}
           {renderNameButton(isRename)}
         </div>
         <Divider />
         <div className='mt-8 mb-4 text-[20px] text-[700]'>Email address</div>
         <div className='mb-8 flex justify-between items-center'>
           {isChangeEmail
-            ? <Input name={'Email'} type="text" onChange={handleChangeEmailInput}
-              placeholder={Email !== '' ? Email : 'Tosakan_prp_4418@hotmail.com'} className='h-8 px-2 w-[300px] focus:outline-0' />
+            ? <div className='w-4/12'>
+              <Input name={'Email'} type="text" onChange={handleChangeEmailInput}
+                placeholder={Email !== '' ? Email : 'Tosakan_prp_4418@hotmail.com'} />
+            </div>
             : <div>{Email !== '' ? Email : 'Tosakan_prp_4418@hotmail.com'}</div>}
           {renderEmailButton(isChangeEmail)}
         </div>
