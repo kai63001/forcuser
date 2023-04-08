@@ -20,6 +20,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
   const save = async () => {
     if (saving) return
     setSaving(true)
+    console.log('saving', template)
     try {
       // set global position
       const templater = {
@@ -31,6 +32,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
           }
         }
       }
+      console.log('templater', templater)
 
       const { data } = await axios.post(
         `/pomodoro/edit/${props.id}`,

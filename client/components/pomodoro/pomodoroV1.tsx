@@ -24,6 +24,8 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   )
+
+  // console.log('pomodoro v1 template', template)
   const preventDragHandler = (e: any) => {
     e.preventDefault()
   }
@@ -49,9 +51,15 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
     // console.log(Object.keys(template))
     // if globla position is empty
     if (
-      template.global &&
+      template.global == undefined ||
       (template.global.position == null ||
-        template.global.position == undefined)
+        template.global.position == undefined ||
+        template.global.position.x == null ||
+        template.global.position.x == 0 ||
+        template.global.position.y == null ||
+        template.global.position.y == 0 ||
+        template.global.position.y == undefined ||
+        template.global.position.x == undefined)
     ) {
       return true
     }
