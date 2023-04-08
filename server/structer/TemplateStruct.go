@@ -13,6 +13,11 @@ type EditPomodoroDataType struct {
 			X float64 `json:"x"`
 			Y float64 `json:"y"`
 		} `json:"position"`
+		Theme struct {
+			BackgroundColor string   `json:"backgroundColor" bson:"backgroundColor"`
+			FontColor       []string `json:"fontColor" bson:"fontColor"`
+			Opacity         float64  `json:"opacity"`
+		} `json:"theme"`
 	} `json:"music"`
 	Pomodoro struct {
 		Position struct {

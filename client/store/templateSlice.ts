@@ -11,6 +11,11 @@ const initialState: PomodoroV1State = {
     widget: -1,
     type: '',
     url: '',
+    theme: {
+      backgroundColor: '#000000',
+      opacity: 1,
+      fontColor: ['#ffffff', '#9ca3af']
+    },
     position: {
       x: 0,
       y: 0
@@ -19,6 +24,10 @@ const initialState: PomodoroV1State = {
   },
   pomodoro: {
     widget: -1,
+    theme: {
+      backgroundColor: '#000000',
+      opacity: 1
+    },
     position: {
       x: -1,
       y: -1

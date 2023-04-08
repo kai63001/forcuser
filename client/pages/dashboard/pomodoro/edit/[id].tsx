@@ -10,7 +10,7 @@ import Loading from '@/components/libs/Loading'
 import { setTemplate } from '@/store/templateSlice'
 import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '@/store/store'
-import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
+import { type DragableEditWidget, setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
 
 // dynamic import
 import dynamic from 'next/dynamic'
@@ -24,7 +24,7 @@ const UploadWallpaper = dynamic(
   async () => await import('@/components/editPomodoro/uploadWallpaper')
 )
 const SettingWidget = dynamic(
-  async () => await import('@/components/editPomodoro/widget/settingWidget')
+  async () => await import('@/components/editPomodoro/setting/musicPlayer/settingWidget')
 )
 const SaveWidget = dynamic(
   async () => await import('@/components/editPomodoro/saveWidget')
@@ -82,12 +82,12 @@ const PomodoroEditPage = (props: any) => {
     }
   }
 
-  const openToggle = (id: number) => {
-    if (id === dragableEditWidget.toggleId) {
+  const openToggle = ({ toggleId }: DragableEditWidget) => {
+    if (toggleId === dragableEditWidget.toggleId) {
       dispatch(
         setDragableEditWidget({
           ...dragableEditWidget,
-          toggleId: 0
+          toggleId: ''
         })
       )
       return
@@ -95,20 +95,20 @@ const PomodoroEditPage = (props: any) => {
     dispatch(
       setDragableEditWidget({
         ...dragableEditWidget,
-        toggleId: id
+        toggleId
       })
     )
   }
 
   const renderEditWidget = () => {
     switch (dragableEditWidget.toggleId) {
-      case 1:
+      case 'timer':
         return <TimerWidget />
-      case 4:
+      case 'music':
         return <MusicPlayer />
-      case 5:
+      case 'uploadBackground':
         return <UploadWallpaper />
-      case 6:
+      case 'setting':
         return <MusicPlayer />
       default:
         return null
@@ -131,7 +131,7 @@ const PomodoroEditPage = (props: any) => {
             className="text-white cursor-pointer px-3 h-[18px]"
             id="timer widget"
             onClick={() => {
-              openToggle(1)
+              openToggle({ toggleId: 'timer' })
             }}
           >
             <i className="fi fi-rr-hourglass-end"></i>
@@ -140,7 +140,7 @@ const PomodoroEditPage = (props: any) => {
             className="text-white cursor-pointer px-3"
             id="music player"
             onClick={() => {
-              openToggle(4)
+              openToggle({ toggleId: 'music' })
             }}
           >
             <svg
@@ -168,7 +168,7 @@ const PomodoroEditPage = (props: any) => {
             className="text-white cursor-pointer px-3"
             id="upload image"
             onClick={() => {
-              openToggle(5)
+              openToggle({ toggleId: 'uploadBackground' })
             }}
           >
             <svg
@@ -190,7 +190,7 @@ const PomodoroEditPage = (props: any) => {
             className="text-white cursor-pointer px-3"
             id="setting"
             onClick={() => {
-              openToggle(6)
+              openToggle({ toggleId: 'setting' })
             }}
           >
             <svg

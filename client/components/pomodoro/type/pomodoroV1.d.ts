@@ -11,6 +11,11 @@ export interface PomodoroV1State {
     widget: number
     type: string
     url: string
+    theme: {
+      backgroundColor: string
+      opacity: number
+      fontColor: string[]
+    }
     position: {
       x: number
       y: number
@@ -19,6 +24,10 @@ export interface PomodoroV1State {
   }
   pomodoro: {
     widget: number
+    theme: {
+      backgroundColor: string
+      opacity: number
+    }
     position: {
       x: number
       y: number

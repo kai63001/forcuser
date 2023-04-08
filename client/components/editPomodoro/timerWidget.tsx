@@ -12,7 +12,7 @@ const TimerWidget = () => {
   const dispatch = useDispatch()
 
   const selectTimerWidget = (id: number) => {
-    if (template?.pomodoro.widget == id) {
+    if (template?.pomodoro?.widget == id) {
       dispatch(
         setTemplate({
           ...template,

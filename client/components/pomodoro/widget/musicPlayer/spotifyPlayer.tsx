@@ -261,6 +261,7 @@ const SpotifyPlayer = () => {
       template?.music?.position.x &&
       template?.music?.position.y
     ) {
+      console.log('init')
       setPosition({
         x:
           (template?.music.position.x /
@@ -299,8 +300,16 @@ const SpotifyPlayer = () => {
           (window.innerHeight - thisWidget.current.clientHeight)
       })
     }
-    console.log(template)
+    // console.log(template)
   }, [template?.music.draging])
+
+  const convertHexToRgba = (hex: string = '#000000', opacity: number = 1) => {
+    const r = parseInt(hex.slice(1, 3), 16)
+    const g = parseInt(hex.slice(3, 5), 16)
+    const b = parseInt(hex.slice(5, 7), 16)
+
+    return `rgba(${r}, ${g}, ${b}, ${opacity})`
+  }
 
   const [isDragging, setIsDragging] = useState(false)
 
@@ -336,7 +345,15 @@ const SpotifyPlayer = () => {
           <div id="embed-iframe" className="border-none"></div>
         </div>
         {/* <div id="playMusic"> play</div> */}
-        <div className="bg-black bg-opacity-90 text-white rounded-md w-[370px]">
+        <div
+          className="bg-opacity-90 text-white rounded-md w-[370px]"
+          style={{
+            backgroundColor: convertHexToRgba(
+              template?.music?.theme?.backgroundColor,
+              template?.music?.theme?.opacity
+            )
+          }}
+        >
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-3 px-3 py-3">
               <div
@@ -346,7 +363,7 @@ const SpotifyPlayer = () => {
                 {/* background black opacity */}
                 <div className="absolute w-full h-full bg-black opacity-30 z-20 rounded-md"></div>
                 {/* middle play icon */}
-                <div className="absolute w-full h-full flex items-center justify-center z-30 group">
+                <div className="absolute w-full h-full flex items-center justify-center z-30 group select-none">
                   {playing
                     ? (
                     <svg
@@ -389,11 +406,14 @@ const SpotifyPlayer = () => {
                 )}
               </div>
               <div className="w-60">
-                <p className="text-sm font-semibold truncate animate-marquee">
+                <p className="text-sm font-semibold truncate animate-marquee" style={{ color: template?.music?.theme?.fontColor?.[0] ?? '#fffff' }}>
                   {musicPlayerInfo.title}
                 </p>
                 {/* playing */}
-                <div className="text-xs text-gray-400 mb-3 py-1">
+                <div
+                  className="text-xs mb-3 py-1"
+                  style={{ color: template?.music?.theme?.fontColor?.[1] ?? '#9ca3af' }}
+                >
                   <p className="truncate">
                     {listMusic.items[listMusicSelect].track.name} -{' '}
                     {listMusic.items[listMusicSelect].track.artists[0].name}
@@ -401,7 +421,9 @@ const SpotifyPlayer = () => {
                   <div id="persenMusic" className="h-0 w-0 opacity-0">
                     {musicProcress}
                   </div>
-                  <div id="indexMusic">{listMusicSelect}</div>
+                  <div id="indexMusic" className="opacity-0">
+                    {listMusicSelect}
+                  </div>
                   <div id="playing" className="h-0 w-0 opacity-0">
                     {playing ? 'playing' : 'puase'}
                   </div>
