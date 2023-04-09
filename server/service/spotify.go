@@ -1,4 +1,4 @@
-package controller
+package service
 
 import (
 	"bytes"
@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"focuser.com/server/db"
-	"github.com/gofiber/fiber/v2"
 )
 
 type SpotifyToken struct {
@@ -21,8 +20,7 @@ type SpotifyToken struct {
 
 var ctx = context.Background()
 
-func GetToken(c *fiber.Ctx) error {
-
+func GetToken() (string, error) {
 	expTokenStr, err := db.Rdb.Get(ctx, "timeOutSpotifyToken").Result()
 	if err != nil {
 		fmt.Println("not found")
@@ -39,9 +37,9 @@ func GetToken(c *fiber.Ctx) error {
 			// if not expired return token
 			token, err := db.Rdb.Get(ctx, "spotifyToken").Result()
 			if err != nil {
-				fmt.Println(err)
+				return "", err
 			}
-			return c.Status(200).JSON(fiber.Map{"status": "success", "token": token})
+			return token, nil
 		}
 	}
 
@@ -64,16 +62,59 @@ func GetToken(c *fiber.Ctx) error {
 	token := &SpotifyToken{}
 	derr := json.NewDecoder(res.Body).Decode(token)
 	if derr != nil {
-		fmt.Println(derr)
+		return "", derr
 	}
 	//set token to redis
 	errRedisSetTime := db.Rdb.Set(ctx, "timeOutSpotifyToken", time.Now().Unix(), 0).Err()
 	if errRedisSetTime != nil {
-		fmt.Println(errRedisSetTime)
+		return "", errRedisSetTime
 	}
 	errRedisSet := db.Rdb.Set(ctx, "spotifyToken", token.AccessToken, 0).Err()
 	if errRedisSet != nil {
-		fmt.Println(errRedisSet)
+		return "", errRedisSet
 	}
-	return c.Status(200).JSON(fiber.Map{"status": "success", "token": token.AccessToken})
+	return token.AccessToken, nil
+}
+
+type SpotifyPlaylist struct {
+	Items []struct {
+		Track struct {
+			Name    string `json:"name"`
+			URI     string `json:"uri"`
+			Artists []struct {
+				Name string `json:"name"`
+			} `json:"artists"`
+		} `json:"track"`
+	} `json:"items"`
+}
+
+func GetPlaylistTracks(token string) (interface{}, error) {
+	// https://api.spotify.com/v1/playlists/{playlist_id}/tracks
+	// items(track(name,uri,artists(name)))
+	r, err := http.NewRequest("GET", "https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M/tracks", nil)
+	if err != nil {
+		return SpotifyPlaylist{}, err
+	}
+	r.Header.Add("Authorization", "Bearer "+token)
+	r.Header.Add("Content-Type", "application/json")
+	// r.URL.Query().Add("fields", "items(track(name,uri,artists(name)))")
+	q := r.URL.Query()
+	q.Add("fields", "items(track(name,uri,artists(name)))")
+	r.URL.RawQuery = q.Encode()
+	client := &http.Client{}
+	res, err := client.Do(r)
+	if err != nil {
+		return SpotifyPlaylist{}, err
+	}
+	defer res.Body.Close()
+	spotifyPlaylist := &SpotifyPlaylist{}
+	derr := json.NewDecoder(res.Body).Decode(spotifyPlaylist)
+	if derr != nil {
+		return SpotifyPlaylist{}, derr
+	}
+
+	fmt.Print(spotifyPlaylist)
+
+	return spotifyPlaylist, nil
+
 }

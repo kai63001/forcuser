@@ -166,6 +166,7 @@ const SpotifyPlayer = () => {
           document.querySelectorAll('#nextMusic').forEach((episode: any) => {
             episode.addEventListener('click', () => {
               setMusicProcress(0)
+              setPreviewOrNot(false)
               console.log('next')
               let next =
                 // @ts-expect-error

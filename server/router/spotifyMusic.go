@@ -10,4 +10,5 @@ import (
 func SpotifyRouter(app *fiber.App) {
 	api := app.Group("/spotify", logger.New(), middleware.AuthMiddleware)
 	api.Get("/token", controller.GetToken)
+	api.Post("/playlist-data", controller.GetDataPlaylist)
 }
