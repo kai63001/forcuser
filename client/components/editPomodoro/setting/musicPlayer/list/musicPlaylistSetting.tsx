@@ -1,24 +1,26 @@
 import Input from '@/components/libs/Input'
 import { useState } from 'react'
-// items(track(name,uri,artists(name)))
+import { addMusicPlaylistSpotify } from 'services/musicPlayerApi'
+
 const MusicPlaylistSetting = () => {
+  const [listMusic, setListMusic] = useState<any[]>([])
   const [error, setError] = useState({ spotify: '' })
-  const handleAddMusic = (e: any) => {
+  const handleAddMusic = async (e: any) => {
     e.preventDefault()
     setError({ spotify: '' })
-    const { spotify } = e.target
-    // check if spotify is empty and regex to check if it is spotify link
-    if (spotify.value == '') return
-    if (
-      !spotify.value.match(
-        /^(https?:\/\/)?(www\.)?open\.spotify\.com\/playlist\/[a-zA-Z0-9]+$/
-      )
-    ) {
-      setError({ spotify: 'Invalid spotify link' })
-      return
+    const {
+      spotify: { value }
+    } = e.target
+    if (value == '') return
+    try {
+      const playList = await addMusicPlaylistSpotify(value)
+      setListMusic(playList.data)
+      console.log(listMusic)
+    } catch (error: any) {
+      setError({ spotify: error.toString() })
     }
-    console.log('add music')
   }
+
   return (
     <>
       <p className="mb-1">Spotify playlist</p>
