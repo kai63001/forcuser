@@ -4,9 +4,11 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
+	"regexp"
 	"strconv"
 	"time"
 
@@ -88,10 +90,20 @@ type SpotifyPlaylist struct {
 	} `json:"items"`
 }
 
-func GetPlaylistTracks(token string) (interface{}, error) {
+func GetPlaylistTracks(token string, url string) (interface{}, error) {
 	// https://api.spotify.com/v1/playlists/{playlist_id}/tracks
 	// items(track(name,uri,artists(name)))
-	r, err := http.NewRequest("GET", "https://api.spotify.com/v1/playlists/37i9dQZF1DXcBWIGoYBM5M/tracks", nil)
+	// regex check url is spotify playlist
+
+	match, _ := regexp.MatchString(`^(https?:\/\/)?(www\.)?open\.spotify\.com\/playlist\/[a-zA-Z0-9]+$`, url)
+	fmt.Println(match)
+	if !match {
+		return nil, errors.New("url is not spotify playlist")
+	}
+	//get id playlist
+	playlistID := url[len(url)-22:]
+
+	r, err := http.NewRequest("GET", "https://api.spotify.com/v1/playlists/"+playlistID+"/tracks", nil)
 	if err != nil {
 		return SpotifyPlaylist{}, err
 	}
@@ -112,8 +124,6 @@ func GetPlaylistTracks(token string) (interface{}, error) {
 	if derr != nil {
 		return SpotifyPlaylist{}, derr
 	}
-
-	fmt.Print(spotifyPlaylist)
 
 	return spotifyPlaylist, nil
 
