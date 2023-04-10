@@ -1,9 +1,11 @@
 import Input from '@/components/libs/Input'
+import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { addMusicPlaylistSpotify } from 'services/musicPlayerApi'
 
 const MusicPlaylistSetting = () => {
-  const [listMusic, setListMusic] = useState<any[]>([])
+  const [listMusic, setListMusic] = useState<any>({ items: [] })
   const [error, setError] = useState({ spotify: '' })
   const handleAddMusic = async (e: any) => {
     e.preventDefault()
@@ -15,7 +17,8 @@ const MusicPlaylistSetting = () => {
     try {
       const playList = await addMusicPlaylistSpotify(value)
       setListMusic(playList.data)
-      console.log(listMusic)
+      // clear input
+      e.target.spotify.value = ''
     } catch (error: any) {
       setError({ spotify: error.toString() })
     }
@@ -37,6 +40,17 @@ const MusicPlaylistSetting = () => {
           Add
         </button>
       </form>
+      <div className="">
+        <p className="text-lg my-2">Playlist</p>
+        <div className="flex flex-col space-y-3">
+          {listMusic?.items.map((item: any, index: number) => (
+            <div key={index} className='grid grid-cols-10 gap-4'>
+              <div className='col-span-9'>{index + 1} {item.track.name}</div>
+              <div className='col-span-1'><FontAwesomeIcon icon={faTrashCan} /></div>
+            </div>
+          ))}
+        </div>
+      </div>
     </>
   )
 }
