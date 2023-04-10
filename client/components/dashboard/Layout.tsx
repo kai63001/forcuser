@@ -55,9 +55,8 @@ const DashboardLayout = (props: LayoutInterface) => {
       icon: (
         <svg
           aria-hidden="true"
-          className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath === '/dashboard' ? 'text-white' : 'text-gray-500'
-          }  transition duration-75`}
+          className={`flex-shrink-0 w-6 h-6 ${router.asPath === '/dashboard' ? 'text-white' : 'text-gray-500'
+            }  transition duration-75`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -72,9 +71,8 @@ const DashboardLayout = (props: LayoutInterface) => {
       icon: (
         <svg
           aria-hidden="true"
-          className={`flex-shrink-0 w-6 h-6 ${
-            router.asPath === '/dashboard/users' ? 'text-white' : 'text-gray-500'
-          }  transition duration-75`}
+          className={`flex-shrink-0 w-6 h-6 ${router.asPath === '/dashboard/users' ? 'text-white' : 'text-gray-500'
+            }  transition duration-75`}
           fill="currentColor"
           viewBox="0 0 20 20"
           xmlns="http://www.w3.org/2000/svg"
@@ -101,11 +99,10 @@ const DashboardLayout = (props: LayoutInterface) => {
                   <li key={index}>
                     <a
                       href="#"
-                      className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${
-                        router.asPath === item.link
-                          ? 'text-white bg-main'
-                          : 'text-gray-500'
-                      }`}
+                      className={`flex items-center pl-5 py-3 text-base font-normal rounded-md ${router.asPath === item.link
+                        ? 'text-white bg-main'
+                        : 'text-gray-500'
+                        }`}
                     >
                       {item.icon}
                       <span className="ml-3">{item.name}</span>
@@ -177,7 +174,7 @@ const DashboardLayout = (props: LayoutInterface) => {
                     ref={dropdown}
                     className="absolute top-14 right-2 bg-background px-3 py-2 shadow-md rounded-lg w-40 flex flex-col space-y-1"
                   >
-                    <div onClick={()=>window.location.href = "/profile"} className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
+                    <div onClick={() => { window.location.href = '/profile' }} className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
                       Profile
                     </div>
                     <div className="cursor-pointer py-1 hover:bg-main hover:text-white px-3 rounded-md">
