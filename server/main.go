@@ -15,6 +15,7 @@ func main() {
 	app := fiber.New()
 	app.Use(cors.New())
 	db.Mongodb()
+	db.ConnectToRedis()
 
 	//env
 	err := godotenv.Load()
@@ -37,6 +38,8 @@ func main() {
 	app.Post("/pomodoro/create", router.CreatePomodoro)
 	app.Post("/pomodoro/edit/:id", router.EditPomodoro)
 	app.Get("/pomodoro/my", router.GetMyPomodoroList)
+
+	router.SpotifyRouter(app)
 
 	app.Listen(":4000")
 }

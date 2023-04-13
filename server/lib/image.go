@@ -108,7 +108,7 @@ func UploadImage(base64String string) (string, error) {
 		if err != nil {
 			fmt.Println("Error converting image:", err)
 		}
-		processed, err = bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 960, Height: 540})
+		processed, err = bimg.NewImage(converted).Process(bimg.Options{Quality: 95, Compression: 6, Width: 1920, Height: 1080})
 	}
 
 	// fmt.Println("converted:", []byte(base64))
