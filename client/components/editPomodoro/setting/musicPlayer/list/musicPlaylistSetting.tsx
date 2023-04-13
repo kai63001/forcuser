@@ -1,11 +1,16 @@
 import Input from '@/components/libs/Input'
+import { type RootState } from '@/store/store'
+import { setTemplate } from '@/store/templateSlice'
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { addMusicPlaylistSpotify } from 'services/musicPlayerApi'
 
 const MusicPlaylistSetting = () => {
-  const [listMusic, setListMusic] = useState<any>({ items: [] })
+  const dispatch = useDispatch()
+  const template = useSelector((state: RootState) => state.templateSlice)
+  const [listMusic, setListMusic] = useState<any>({ items: template?.music?.playlist })
   const [error, setError] = useState({ spotify: '' })
   const handleAddMusic = async (e: any) => {
     e.preventDefault()
@@ -15,10 +20,21 @@ const MusicPlaylistSetting = () => {
     } = e.target
     if (value == '') return
     try {
+      console.log(template)
       const playList = await addMusicPlaylistSpotify(value)
-      setListMusic(playList.data)
-      // clear input
       e.target.spotify.value = ''
+      setListMusic(playList.data)
+      console.log(playList.data)
+      dispatch(
+        setTemplate({
+          ...template,
+          music: {
+            ...template.music,
+            playlist: playList.data.items
+          }
+        })
+      )
+      // clear input
     } catch (error: any) {
       setError({ spotify: error.toString() })
     }
@@ -40,17 +56,23 @@ const MusicPlaylistSetting = () => {
           Add
         </button>
       </form>
-      <div className="">
-        <p className="text-lg my-2">Playlist</p>
-        <div className="flex flex-col space-y-3">
-          {listMusic?.items.map((item: any, index: number) => (
-            <div key={index} className='grid grid-cols-10 gap-4'>
-              <div className='col-span-9'>{index + 1} {item.track.name}</div>
-              <div className='col-span-1'><FontAwesomeIcon icon={faTrashCan} /></div>
-            </div>
-          ))}
+      {listMusic?.items?.length > 0 && (
+        <div className="">
+          <p className="text-lg my-2">{listMusic.items.length} Playlist</p>
+          <div className="flex flex-col space-y-3">
+            {listMusic?.items.map((item: any, index: number) => (
+              <div key={index} className="grid grid-cols-10 gap-4">
+                <div className="col-span-9">
+                  {index + 1} {item.track.name}
+                </div>
+                <div className="col-span-1">
+                  <FontAwesomeIcon icon={faTrashCan} />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
-      </div>
+      )}
     </>
   )
 }
