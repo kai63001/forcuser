@@ -19,6 +19,10 @@ type EditPomodoroDataType struct {
 			Opacity         float64  `json:"opacity"`
 		} `json:"theme"`
 		Playlist interface{} `json:"playlist"`
+		Info     struct {
+			Title     string `json:"title"`
+			Thumbnail string `json:"thumbnail"`
+		}
 	} `json:"music"`
 	Pomodoro struct {
 		Position struct {

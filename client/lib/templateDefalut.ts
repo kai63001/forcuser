@@ -14,6 +14,10 @@ export const templateDefalut: PomodoroV1State = {
       opacity: 1,
       fontColor: ['#ffffff', '#9ca3af']
     },
+    info: {
+      title: 'Lofi 💿 for study, chill, and more',
+      thumbnail: 'https://i.scdn.co/image/ab67706c0000da842a07ae7bf4baaed76ac0db21'
+    },
     position: {
       x: 0,
       y: 0

@@ -20,6 +20,10 @@ export interface PomodoroV1State {
       x: number
       y: number
     }
+    info: {
+      title: string
+      thumbnail: string
+    }
     playlist?: [any]
     draging: string
   }

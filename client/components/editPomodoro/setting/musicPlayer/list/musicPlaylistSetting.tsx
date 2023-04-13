@@ -5,38 +5,58 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { addMusicPlaylistSpotify } from 'services/musicPlayerApi'
+import { addMusicPlaylistSpotify, getMusicPlaylistSpotify } from 'services/musicPlayerApi'
 
 const MusicPlaylistSetting = () => {
   const dispatch = useDispatch()
   const template = useSelector((state: RootState) => state.templateSlice)
+  const [, setInfoMusic] = useState(template?.music?.info ?? {
+    title: 'Lofi 💿 for study, chill, and more',
+    thumbnail: 'https://i.scdn.co/image/ab67706c0000da842a07ae7bf4baaed76ac0db21'
+  })
   const [listMusic, setListMusic] = useState<any>({ items: template?.music?.playlist })
   const [error, setError] = useState({ spotify: '' })
+  const [loading, setLoading] = useState(false)
   const handleAddMusic = async (e: any) => {
     e.preventDefault()
+    setLoading(true)
     setError({ spotify: '' })
     const {
       spotify: { value }
     } = e.target
-    if (value == '') return
+    if (value == '') {
+      setError({ spotify: 'Please enter a valid URL' })
+      setLoading(false)
+      return
+    }
     try {
-      console.log(template)
       const playList = await addMusicPlaylistSpotify(value)
+      const info = await getMusicPlaylistSpotify(value)
+      setInfoMusic({
+        title: info?.title,
+        thumbnail: info?.thumbnail_url
+      })
+      console.log(info?.title)
       e.target.spotify.value = ''
       setListMusic(playList.data)
-      console.log(playList.data)
       dispatch(
         setTemplate({
           ...template,
           music: {
             ...template.music,
+            info: {
+              title: info?.title,
+              thumbnail: info?.thumbnail_url
+            },
             playlist: playList.data.items
           }
         })
       )
+      setLoading(false)
       // clear input
     } catch (error: any) {
       setError({ spotify: error.toString() })
+      setLoading(false)
     }
   }
 
@@ -52,7 +72,7 @@ const MusicPlaylistSetting = () => {
             placeholder="https://open.spotify.com/playlist/4Zjli1P13J5mmSCD5iKAXK"
           />
         </div>
-        <button className="w-2/12 bg-main text-white rounded-md h-full py-2">
+        <button disabled={loading} className="w-2/12 bg-main text-white rounded-md h-full py-2">
           Add
         </button>
       </form>

@@ -16,8 +16,7 @@ import { setTemplate } from '@/store/templateSlice'
 
 interface MusicPlayerInfoInterface {
   title: string
-  description: string
-  thumbnail_url: string
+  thumbnail: string
 }
 
 const SpotifyPlayer = () => {
@@ -31,15 +30,12 @@ const SpotifyPlayer = () => {
   // get route path
   const router = useRouter()
 
-  const musicUrl = 'https://open.spotify.com/playlist/4Zjli1P13J5mmSCD5iKAXK'
-
-  const [listMusic, setListMusic]: any = useState(spotifyMusic)
+  const [listMusic, setListMusic]: any = useState(template.music.playlist ?? spotifyMusic.items)
   const [listMusicSelect, setListMusicSelect] = useState(0)
   const [musicPlayerInfo, setMusicPlayerInfo] =
     useState<MusicPlayerInfoInterface>({
       title: '',
-      description: '',
-      thumbnail_url: ''
+      thumbnail: ''
     })
   const [playing, setPlaying] = useState(false)
 
@@ -50,10 +46,10 @@ const SpotifyPlayer = () => {
   const [isEdit, setIsEdit] = useState(false)
 
   const getDataSpotify = async () => {
-    const data = await axios.get(
-      `https://open.spotify.com/oembed?url=${musicUrl}`
-    )
-    setMusicPlayerInfo(data.data)
+    // const data = await axios.get(
+    //   `https://open.spotify.com/oembed?url=${musicUrl}`
+    // )
+    setMusicPlayerInfo(template.music.info)
   }
 
   useEffect(() => {
@@ -85,7 +81,7 @@ const SpotifyPlayer = () => {
         const options = {
           width: '0',
           height: '0',
-          uri: listMusic.items[listMusicSelect].track.uri,
+          uri: listMusic[listMusicSelect].track.uri,
           theme: '0'
         }
         const callback = (EmbedController: any) => {
@@ -114,12 +110,12 @@ const SpotifyPlayer = () => {
                 // @ts-expect-error
                 parseInt(document.querySelector('#indexMusic')?.innerHTML) + 1
               console.log(document.querySelector('#indexMusic')?.innerHTML)
-              if (next >= listMusic.items.length) {
+              if (next >= listMusic.length) {
                 next = 0
               }
               // @ts-expect-error
               document.querySelector('#indexMusic').innerHTML = next.toString()
-              EmbedController.loadUri(listMusic.items[next].track.uri)
+              EmbedController.loadUri(listMusic[next].track.uri)
               EmbedController.play()
               setListMusicSelect(next)
               setTimeout(() => {
@@ -159,7 +155,7 @@ const SpotifyPlayer = () => {
                 document.querySelector('#playing').innerHTML = 'playing'
               }
               console.log('play', persenMusic)
-              // EmbedController.loadUri(listMusic.items[next].track.uri);
+              // EmbedController.loadUri(listMusic[next].track.uri);
             })
           })
           // ? next music
@@ -172,12 +168,12 @@ const SpotifyPlayer = () => {
                 // @ts-expect-error
                 parseInt(document.querySelector('#indexMusic')?.innerHTML) + 1
               console.log(document.querySelector('#indexMusic')?.innerHTML)
-              if (next >= listMusic.items.length) {
+              if (next >= listMusic.length) {
                 next = 0
               }
               // @ts-expect-error
               document.querySelector('#indexMusic').innerHTML = next.toString()
-              EmbedController.loadUri(listMusic.items[next].track.uri)
+              EmbedController.loadUri(listMusic[next].track.uri)
               EmbedController.play()
               setListMusicSelect(next)
               // ? playing
@@ -199,7 +195,7 @@ const SpotifyPlayer = () => {
                 // @ts-expect-error
                 document.querySelector('#indexMusic').innerHTML =
                   prev.toString()
-                EmbedController.loadUri(listMusic.items[prev].track.uri)
+                EmbedController.loadUri(listMusic[prev].track.uri)
                 EmbedController.play()
                 setListMusicSelect(prev)
                 // ? playing
@@ -395,9 +391,9 @@ const SpotifyPlayer = () => {
                     </svg>
                       )}
                 </div>
-                {musicPlayerInfo.thumbnail_url && (
+                {musicPlayerInfo.thumbnail && (
                   <Image
-                    src={musicPlayerInfo.thumbnail_url}
+                    src={musicPlayerInfo.thumbnail}
                     fill
                     style={{ objectFit: 'cover' }}
                     className="rounded-md"
@@ -416,8 +412,8 @@ const SpotifyPlayer = () => {
                   style={{ color: template?.music?.theme?.fontColor?.[1] ?? '#9ca3af' }}
                 >
                   <p className="truncate">
-                    {listMusic.items[listMusicSelect].track.name} -{' '}
-                    {listMusic.items[listMusicSelect].track.artists[0].name}
+                    {listMusic[listMusicSelect].track.name} -{' '}
+                    {listMusic[listMusicSelect].track.artists[0].name}
                   </p>
                   <div id="persenMusic" className="h-0 w-0 opacity-0">
                     {musicProcress}
