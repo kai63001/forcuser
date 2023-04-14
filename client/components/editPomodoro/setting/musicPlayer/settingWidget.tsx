@@ -1,33 +1,26 @@
-import {
-  type DragableEditWidget,
-  setDragableEditWidget
-} from '@/store/dragableEditWidgetSlice'
+// import {
+//   type DragableEditWidget,
+//   setDragableEditWidget
+// } from '@/store/dragableEditWidgetSlice'
 import { type RootState } from '@/store/store'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import EditMusicPlayerToggleOpen from './toggleOpen'
+import { useState } from 'react'
 
 const SettingWidget = () => {
   const dragableEditWidget = useSelector(
     (state: RootState) => state.dragableEditWidgetSlice
   )
-  const dispatch = useDispatch()
 
-  const openToggle = ({ toggleId }: DragableEditWidget) => {
-    if (toggleId == dragableEditWidget.toggleId) {
-      dispatch(
-        setDragableEditWidget({
-          ...dragableEditWidget,
-          toggleId: ''
-        })
-      )
-      return
+  const [toggleId, setToggleId]: any = useState('')
+
+  const openToggle = () => {
+    console.log('toggleId', toggleId)
+    if (toggleId == '') {
+      setToggleId(dragableEditWidget.toggleId)
+    } else {
+      setToggleId('')
     }
-    dispatch(
-      setDragableEditWidget({
-        ...dragableEditWidget,
-        toggleId
-      })
-    )
   }
 
   return (
@@ -38,7 +31,7 @@ const SettingWidget = () => {
       >
         <div
           onClick={(e) => {
-            openToggle({ toggleId: 'edit-music-player-1' })
+            openToggle()
           }}
           className="text-white cursor-pointer px-3"
           id="settingWidget"
@@ -59,8 +52,9 @@ const SettingWidget = () => {
           </svg>
         </div>
       </div>
-      {dragableEditWidget.toggleId == 'edit-music-player-1' && (
-        <EditMusicPlayerToggleOpen />
+      {toggleId == 'edit-music-player-1' && <EditMusicPlayerToggleOpen />}
+      {toggleId == 'edit-music-player-spotify-iframe' && (
+        <EditMusicPlayerToggleOpen iframe={true} />
       )}
     </>
   )

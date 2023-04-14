@@ -41,7 +41,8 @@ const IframeSpotyPlayer = () => {
     dispatch(
       setDragableEditWidget({
         ...dragableEditWidget,
-        selectedWidget: 'edit-music-player-1'
+        selectedWidget: 'music',
+        toggleId: 'edit-music-player-spotify-iframe'
       })
     )
     if (Number.isNaN(position.x) || Number.isNaN(position.y)) {
@@ -94,7 +95,22 @@ const IframeSpotyPlayer = () => {
       })
     }
     // console.log(template)
-  }, [template?.global?.position.x, template?.global?.position.y, template?.music.draging, template?.music.position])
+  }, [
+    template?.global?.position.x,
+    template?.global?.position.y,
+    template?.music.draging,
+    template?.music.position
+  ])
+
+  const getIdfromUrlSpotify = (url: string) => {
+    // get id from url regex
+    const regex = /playlist\/([a-zA-Z0-9]+)/
+    const id = url.match(regex)
+    if (id) {
+      return `https://open.spotify.com/embed/playlist/${id[1]}?theme=0`
+    }
+    return null
+  }
   return (
     <Draggable
       onStart={handleStart}
@@ -120,16 +136,18 @@ const IframeSpotyPlayer = () => {
         }`}
       >
         {isEdit && <div className="w-full h-full z-50 absolute"></div>}
-        <iframe
-          id="spotify"
-          width="370px"
-          height="100%"
-          frameBorder="0"
-          allowFullScreen
-          data-src="https://open.spotify.com/embed/playlist/4Zjli1P13J5mmSCD5iKAXK?theme=0"
-          src="https://open.spotify.com/embed/playlist/4Zjli1P13J5mmSCD5iKAXK?theme=0"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        ></iframe>
+        {template?.music?.info?.uri && (
+            <iframe
+            id="spotify"
+            width="370px"
+            height="100%"
+            frameBorder="0"
+            allowFullScreen
+            data-src={getIdfromUrlSpotify(template?.music.info.uri)}
+            src={getIdfromUrlSpotify(template?.music.info.uri) ?? ''}
+            allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          ></iframe>
+        )}
       </div>
     </Draggable>
   )

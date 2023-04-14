@@ -4,14 +4,18 @@ import { useSelector, useDispatch } from 'react-redux'
 import type { RootState } from '@/store/store'
 import { type PomodoroV1State } from '../pomodoro/type/pomodoroV1'
 import { useRef, useState } from 'react'
+import { setDragableEditWidget } from '@/store/dragableEditWidgetSlice'
 
 const MusicPlayer = () => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   )
+  const dragableEditWidget = useSelector(
+    (state: RootState) => state.dragableEditWidgetSlice
+  )
   const dispatch = useDispatch()
 
-  const selectMusicPlayer = (id: number) => {
+  const selectMusicPlayer = (id: number, toggleId: any) => {
     if (template?.music?.widget == id) {
       dispatch(
         setTemplate({
@@ -20,6 +24,12 @@ const MusicPlayer = () => {
             ...template.music,
             widget: -1
           }
+        })
+      )
+      dispatch(
+        setDragableEditWidget({
+          ...dragableEditWidget,
+          toggleId
         })
       )
       return
@@ -33,15 +43,20 @@ const MusicPlayer = () => {
         }
       })
     )
+    dispatch(
+      setDragableEditWidget({
+        ...dragableEditWidget,
+        toggleId: ''
+      })
+    )
   }
 
   const [, setDragging] = useState(false)
 
   const thisWidget = useRef(null)
 
-  const onDragagleEnd = (e: any, id: any) => {
+  const onDragagleEnd = (e: any, id: any, toggleId: any) => {
     e.preventDefault()
-    console.log('template', template)
     if (thisWidget.current) {
       const { top, left, right, bottom } =
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -69,6 +84,12 @@ const MusicPlayer = () => {
             }
           })
         )
+        dispatch(
+          setDragableEditWidget({
+            ...dragableEditWidget,
+            toggleId
+          })
+        )
       }
       setDragging(false)
     }
@@ -85,16 +106,16 @@ const MusicPlayer = () => {
       <div className="overflow-y-scroll h-[60vh]">
         <div className="flex flex-col space-y-2">
         <div
-            className="rounded-md"
+            className="rounded-md cursor-grab"
             onClick={() => {
-              selectMusicPlayer(1)
+              selectMusicPlayer(1, 'edit-music-player-spotify-iframe')
             }}
             onDragStart={(e) => {
               console.log('start')
               setDragging(true)
             }}
             onDragEnd={(event) => {
-              onDragagleEnd(event, 1)
+              onDragagleEnd(event, 1, 'edit-music-player-spotify-iframe')
             }}
           >
             <Image
@@ -106,16 +127,16 @@ const MusicPlayer = () => {
             />
           </div>
           <div
-            className="rounded-md"
+            className="rounded-md cursor-grab"
             onClick={() => {
-              selectMusicPlayer(0)
+              selectMusicPlayer(0, 'edit-music-player-1')
             }}
             onDragStart={(e) => {
               console.log('start')
               setDragging(true)
             }}
             onDragEnd={(event) => {
-              onDragagleEnd(event, 0)
+              onDragagleEnd(event, 0, 'edit-music-player-1')
             }}
           >
             <Image

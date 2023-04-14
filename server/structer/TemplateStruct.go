@@ -20,6 +20,7 @@ type EditPomodoroDataType struct {
 		} `json:"theme"`
 		Playlist interface{} `json:"playlist"`
 		Info     struct {
+			Uri       string `json:"uri"`
 			Title     string `json:"title"`
 			Thumbnail string `json:"thumbnail"`
 		}

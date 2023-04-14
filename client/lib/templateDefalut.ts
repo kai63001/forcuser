@@ -15,6 +15,7 @@ export const templateDefalut: PomodoroV1State = {
       fontColor: ['#ffffff', '#9ca3af']
     },
     info: {
+      uri: 'https://open.spotify.com/playlist/4Zjli1P13J5mmSCD5iKAXK',
       title: 'Lofi 💿 for study, chill, and more',
       thumbnail: 'https://i.scdn.co/image/ab67706c0000da842a07ae7bf4baaed76ac0db21'
     },
