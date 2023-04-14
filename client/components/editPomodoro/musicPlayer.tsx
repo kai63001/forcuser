@@ -35,7 +35,7 @@ const MusicPlayer = () => {
     )
   }
 
-  const [dragging, setDragging] = useState(false)
+  const [, setDragging] = useState(false)
 
   const thisWidget = useRef(null)
 
@@ -84,7 +84,49 @@ const MusicPlayer = () => {
       {/* scroll here */}
       <div className="overflow-y-scroll h-[60vh]">
         <div className="flex flex-col space-y-2">
+        <div
+            className="rounded-md"
+            onClick={() => {
+              selectMusicPlayer(1)
+            }}
+            onDragStart={(e) => {
+              console.log('start')
+              setDragging(true)
+            }}
+            onDragEnd={(event) => {
+              onDragagleEnd(event, 1)
+            }}
+          >
+            <Image
+              className="rounded-md"
+              src="/widget/music/iframeSpofityPlayer.png"
+              width={400}
+              height={200}
+              alt="music player spotify iframe"
+            />
+          </div>
           <div
+            className="rounded-md"
+            onClick={() => {
+              selectMusicPlayer(0)
+            }}
+            onDragStart={(e) => {
+              console.log('start')
+              setDragging(true)
+            }}
+            onDragEnd={(event) => {
+              onDragagleEnd(event, 0)
+            }}
+          >
+            <Image
+              className="rounded-md"
+              src="/widget/music/musicPlayer.png"
+              width={400}
+              height={200}
+              alt="music player 1"
+            />
+          </div>
+          {/* <div
             onClick={() => {
               selectMusicPlayer(0)
             }}
@@ -113,7 +155,7 @@ const MusicPlayer = () => {
               />
             </div>
             <div className="px-2 py-1 text-purple-50">Spotify Music Player</div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

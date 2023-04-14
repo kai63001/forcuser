@@ -12,6 +12,7 @@ import ToDoListV1 from './widget/todo/TodoListV1'
 import { useEffect } from 'react'
 import { setTemplate } from '@/store/templateSlice'
 import { templateDefalut } from '@/lib/templateDefalut'
+import IframeSpotyPlayer from './widget/musicPlayer/iframeSpotifyPlayer'
 
 const PomodoroWidget = dynamic(
   async () => await import('./widget/middle/pomodoroWidget')
@@ -102,6 +103,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         <ToDoListV1 />
         {/* Music Player */}
         {template?.music?.widget == 0 && <SpotifyPlayer />}
+        {template?.music?.widget == 1 && <IframeSpotyPlayer />}
 
         {/* position absolute middle of center */}
         {template?.pomodoro?.widget == 0 && <PomodoroWidget />}

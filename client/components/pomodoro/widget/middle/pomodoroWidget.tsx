@@ -225,9 +225,9 @@ const PomodoroWidget = () => {
             })}
           </div>
           <div className="text-9xl franger text-white my-6">{timerShow()}</div>
-          <p className="text-xl franger text-white">
+          {/* <p className="text-xl franger text-white">
             &quot; Time management method where you work &quot;
-          </p>
+          </p> */}
           <div className="flex items-center space-x-5 my-4">
             {isStart
               ? (
