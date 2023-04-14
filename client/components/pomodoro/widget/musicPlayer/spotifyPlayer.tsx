@@ -218,7 +218,8 @@ const SpotifyPlayer = () => {
     dispatch(
       setDragableEditWidget({
         ...dragableEditWidget,
-        selectedWidget: 'music'
+        selectedWidget: 'music',
+        toggleId: 'edit-music-player-1'
       })
     )
     if (Number.isNaN(position.x) || Number.isNaN(position.y)) {

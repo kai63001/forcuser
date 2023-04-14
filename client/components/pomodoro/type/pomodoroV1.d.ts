@@ -21,6 +21,7 @@ export interface PomodoroV1State {
       y: number
     }
     info: {
+      uri: string
       title: string
       thumbnail: string
     }

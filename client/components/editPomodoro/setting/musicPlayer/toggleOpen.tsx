@@ -26,7 +26,7 @@ const MusicPlaylistSetting = dynamic(
   { ssr: false }
 )
 
-const EditMusicPlayerToggleOpen = () => {
+const EditMusicPlayerToggleOpen = (props: any) => {
   return (
     <div
       id="musicPlayerSetting"
@@ -35,14 +35,18 @@ const EditMusicPlayerToggleOpen = () => {
       <h2 className="text-2xl">Music Setting</h2>
       <hr className="bg-gray-500 border-gray-500 my-2" />
       <div className="overflow-y-scroll px-2 h-[60vh]">
-        <FaqSelection title="Background" icon={faPalette}>
-          <BackgroundSetting />
-        </FaqSelection>
-        <FaqSelection title="Font" icon={faFont}>
-          <FontSetting />
-        </FaqSelection>
+        {!props.iframe && (
+          <>
+            <FaqSelection title="Background" icon={faPalette}>
+              <BackgroundSetting />
+            </FaqSelection>
+            <FaqSelection title="Font" icon={faFont}>
+              <FontSetting />
+            </FaqSelection>
+          </>
+        )}
         <FaqSelection title="Playlist Music" icon={faMusic}>
-          <MusicPlaylistSetting />
+          <MusicPlaylistSetting iframe={props.iframe} />
         </FaqSelection>
       </div>
     </div>

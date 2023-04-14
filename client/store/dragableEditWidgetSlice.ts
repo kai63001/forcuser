@@ -4,7 +4,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 // type enum
 export interface DragableEditWidget {
   selectedWidget?: string
-  toggleId?: '' | 'music' | 'timer' | 'uploadBackground' | 'todolist' | 'setting' | 'edit-music-player-1'
+  toggleId?: '' | 'music' | 'timer' | 'uploadBackground' | 'todolist' | 'setting' | 'edit-music-player-1' | 'edit-music-player-spotify-iframe'
 }
 
 const initialState: DragableEditWidget = {

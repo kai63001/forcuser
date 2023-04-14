@@ -7,7 +7,7 @@ import { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { addMusicPlaylistSpotify, getMusicPlaylistSpotify } from 'services/musicPlayerApi'
 
-const MusicPlaylistSetting = () => {
+const MusicPlaylistSetting = (props: any) => {
   const dispatch = useDispatch()
   const template = useSelector((state: RootState) => state.templateSlice)
   const [, setInfoMusic] = useState(template?.music?.info ?? {
@@ -21,6 +21,7 @@ const MusicPlaylistSetting = () => {
     e.preventDefault()
     setLoading(true)
     setError({ spotify: '' })
+
     const {
       spotify: { value }
     } = e.target
@@ -29,10 +30,38 @@ const MusicPlaylistSetting = () => {
       setLoading(false)
       return
     }
+    // check if url is not playlist
+    if (!value.includes('playlist')) {
+      setError({ spotify: 'Please enter a valid playlist URL' })
+      setLoading(false)
+      return
+    }
     try {
+      if (props.iframe) {
+        setListMusic({
+          items: []
+        })
+        dispatch(
+          setTemplate({
+            ...template,
+            music: {
+              ...template.music,
+              info: {
+                ...template.music.info,
+                uri: value
+              }
+            }
+          })
+        )
+        setLoading(false)
+        // clear
+        e.target.spotify.value = ''
+        return
+      }
       const playList = await addMusicPlaylistSpotify(value)
       const info = await getMusicPlaylistSpotify(value)
       setInfoMusic({
+        uri: info?.uri,
         title: info?.title,
         thumbnail: info?.thumbnail_url
       })
@@ -45,6 +74,7 @@ const MusicPlaylistSetting = () => {
           music: {
             ...template.music,
             info: {
+              uri: info?.uri,
               title: info?.title,
               thumbnail: info?.thumbnail_url
             },
@@ -73,7 +103,7 @@ const MusicPlaylistSetting = () => {
           />
         </div>
         <button disabled={loading} className="w-2/12 bg-main text-white rounded-md h-full py-2">
-          Add
+          Submit
         </button>
       </form>
       {listMusic?.items?.length > 0 && (
