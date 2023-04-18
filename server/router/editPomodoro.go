@@ -21,7 +21,7 @@ func EditPomodoro(c *fiber.Ctx) error {
 	}
 
 	//check if type is equal 0 upload image
-	if editPomodoro.Wallpaper.Type == 0 {
+	if editPomodoro.Wallpaper.Type == 0 && editPomodoro.Wallpaper.URL != "" {
 		//read type base64 image
 
 		//upload image

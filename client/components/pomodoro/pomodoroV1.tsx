@@ -11,6 +11,8 @@ import {
 import ToDoListV1 from './widget/todo/TodoListV1'
 import { useEffect } from 'react'
 import { setTemplate } from '@/store/templateSlice'
+import { templateDefalut } from '@/lib/templateDefalut'
+import IframeSpotyPlayer from './widget/musicPlayer/iframeSpotifyPlayer'
 
 const PomodoroWidget = dynamic(
   async () => await import('./widget/middle/pomodoroWidget')
@@ -24,39 +26,33 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
   const template: PomodoroV1State = useSelector(
     (state: RootState) => state.templateSlice
   )
+
+  // console.log('pomodoro v1 template', template)
   const preventDragHandler = (e: any) => {
     e.preventDefault()
   }
   useEffect(() => {
-    if (!checkGlobalState()) return
-    dispatch(
-      setTemplate({
-        ...template,
-        global: {
-          ...template.global,
-          position: {
-            x: window.innerWidth,
-            y: window.innerHeight
-          }
-        }
-      })
-    )
+    checkGlobalState()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   // check if template is empty global state
   const checkGlobalState = () => {
-    // console.log(Object.keys(template))
-    // if globla position is empty
-    if (
-      template.global &&
-      (template.global.position == null ||
-        template.global.position == undefined)
-    ) {
-      return true
+    // check when template is empty
+    if (Object.keys(template).length === 0) {
+      dispatch(
+        setTemplate({
+          ...templateDefalut,
+          global: {
+            ...template.global,
+            position: {
+              x: window.innerWidth,
+              y: window.innerHeight
+            }
+          }
+        })
+      )
     }
-
-    return false
   }
   return (
     <div
@@ -107,6 +103,7 @@ const PomodoroV1 = (props: PomodoroV1Props) => {
         <ToDoListV1 />
         {/* Music Player */}
         {template?.music?.widget == 0 && <SpotifyPlayer />}
+        {template?.music?.widget == 1 && <IframeSpotyPlayer />}
 
         {/* position absolute middle of center */}
         {template?.pomodoro?.widget == 0 && <PomodoroWidget />}

@@ -9,6 +9,8 @@ import { useState } from 'react'
 // redux
 import { useSelector } from 'react-redux'
 import type { RootState } from '@/store/store'
+import { faFloppyDisk } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const SaveWidget = (props: PomodoroV1Props) => {
   const [saving, setSaving] = useState(false)
@@ -20,6 +22,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
   const save = async () => {
     if (saving) return
     setSaving(true)
+    console.log('saving', template)
     try {
       // set global position
       const templater = {
@@ -31,6 +34,7 @@ const SaveWidget = (props: PomodoroV1Props) => {
           }
         }
       }
+      console.log('templater', templater)
 
       const { data } = await axios.post(
         `/pomodoro/edit/${props.id}`,
@@ -61,7 +65,8 @@ const SaveWidget = (props: PomodoroV1Props) => {
             disabled={saving}
             onClick={save}
           >
-            {saving && (
+            {saving
+              ? (
               <svg
                 className="animate-spin -ml-1 mr-1 h-5 w-5 text-white"
                 xmlns="http://www.w3.org/2000/svg"
@@ -82,8 +87,9 @@ const SaveWidget = (props: PomodoroV1Props) => {
                   d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                 ></path>
               </svg>
-            )}
-            Save
+                )
+              : (<FontAwesomeIcon className='-ml-1 mr-1' icon={faFloppyDisk} />)}
+             Save
           </button>
         </div>
       </div>
