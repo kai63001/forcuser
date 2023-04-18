@@ -1,6 +1,6 @@
 # docker next js
 
-FROM node:16-alpine
+FROM node:19-alpine
 
 WORKDIR /app
 
@@ -13,4 +13,4 @@ COPY . .
 
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+CMD ["pnpm", "dev"]
