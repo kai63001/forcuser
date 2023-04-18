@@ -22,8 +22,8 @@ export default function Home() {
             <Link href="/auth/login" className="text-lg border-white border-solid border-2 rounded-lg px-4 py-2 hover:bg-white hover:text-black duration-200">
               Login
             </Link>
-            <Link href="/auth/login" className="text-lg bg-green1 border-green1 border-solid border-2 rounded-lg px-4 py-2 hover:bg-green1 hover:text-black duration-200">
-              Login
+            <Link href="/auth/register" className="text-lg bg-green1 border-green1 border-solid border-2 rounded-lg px-4 py-2 hover:bg-green1 hover:text-black duration-200">
+              Register
             </Link>
           </div>
           {/* position absolute middle of center */}
