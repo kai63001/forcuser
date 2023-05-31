@@ -9,6 +9,7 @@ interface InputInterface {
   className?: string
   name: string
   label?: string
+  onChange?: (value: any) => void
   error?: string
 }
 const Input = (e: InputInterface) => {
@@ -23,6 +24,7 @@ const Input = (e: InputInterface) => {
       )}
       <div className="relative">
         <input
+          onChange={e.onChange}
           id={e.name}
           name={e.name}
           type={e.type == 'password' ? showPassword ? 'text' : 'password' : e.type ?? 'text'}
